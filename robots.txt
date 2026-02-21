@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://kafe-143b5.web.app/sitemap.xml

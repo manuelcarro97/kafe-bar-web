@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kafé – Kocina Gallega Auténtica</title>
+    <meta name="description"
+        content="Kafé, el bar donde la tradición gallega se encuentra con la kocina moderna. Ven a disfrutar de nuestra karta, horarios y ubicación en A Coruña." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@300;400;500;600&family=Lobster&family=Bebas+Neue&family=Dancing+Script:wght@700&family=Abril+Fatface&family=Righteous&family=Permanent+Marker&family=Russo+One&family=Pacifico&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+
+    <!-- ======================================================
+       CABECERA FIJA
+  ====================================================== -->
+    <header id="cabecera">
+        <div class="header-inner">
+            <a href="#inicio" class="logo" aria-label="Kafé inicio">
+                <img src="imagenes/logo-transparente.png" alt="Kafé" class="logo-img" />
+            </a>
+            <nav aria-label="Navegación principal">
+                <ul class="nav-list">
+                    <li><a href="#inicio" class="nav-link active" id="nav-inicio" data-i18n="nav.inicio">Inicio</a></li>
+                    <li><a href="#carta" class="nav-link" id="nav-carta" data-i18n="nav.carta">Karta</a></li>
+                    <li><a href="#info" class="nav-link" id="nav-info" data-i18n="nav.contacto">Kontacto</a></li>
+                    <li><a href="#nosotros" class="nav-link" id="nav-nosotros" data-i18n="nav.nosotros">Nosotros</a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="header-right">
+                <button class="lang-toggle" id="lang-toggle" aria-label="Cambiar idioma">
+                    <span class="lang-opt active">ES</span>
+                    <span class="lang-opt">GL</span>
+                </button>
+                <a href="#" class="btn-reserva btn-abrir-reserva" data-i18n="nav.reservar">Reservar</a>
+                <button class="hamburger" id="hamburger" aria-label="Menú móvil" aria-expanded="false">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ======================================================
+       1. INICIO (HERO)
+  ====================================================== -->
+    <section id="inicio" class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-overlay"></div>
+
+        <!-- INTRO ANIMATION OVERLAY -->
+        <div class="hero-intro">
+            <div class="intro-logo">
+                <span class="intro-k" id="intro-k">K</span>
+                <div class="intro-text-wrap">
+                    <span class="intro-text">afé</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="hero-inner">
+            <div class="hero-content">
+                <p class="hero-tag">— Est. 2025 —</p>
+                <h1 class="hero-title">
+                    Sabores<br />
+                    <span class="hero-accent">Auténticos</span><br />
+                    de Galicia.
+                </h1>
+                <p class="hero-subtitle" data-i18n="hero.subtitle">
+                    Vive la esencia de la kocina gallega en un ambiente perfecto.<br />
+                    El mejor Kafé y las recetas de toda la vida.
+                </p>
+                <div class="hero-actions">
+                    <a href="#nosotros" class="btn-text" data-i18n="hero.cta.historia">Nuestra Historia</a>
+                    <a href="#" class="btn-ghost btn-abrir-reserva" data-i18n="nav.reservar">Reservar</a>
+                    <a href="menu-printable.html" target="_blank" class="btn-ghost" data-i18n="hero.cta.carta">Ver Karta
+                        &rarr;</a>
+                </div>
+            </div>
+            <div class="hero-image-wrap">
+                <div class="hero-image-card">
+                    <img src="https://hips.hearstapps.com/hmg-prod/images/mejor-tortilla-madrid-2024-restaurante-balear-elle-gourmet-2-65e5df2ef4089.jpg?crop=0.669xw:1.00xh;0.0173xw,0&resize=640:*"
+                        alt="Tortilla de patatas signature de Kafé" class="hero-dish" loading="eager"
+                        onerror="this.onerror=null; this.src='https://placehold.co/600x400?text=Tortilla';" />
+                    <div class="hero-label">
+                        <span class="label-script">Signature</span>
+                        <span class="label-sub">TORTILLA DE PATATAS</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a href="#carta" class="scroll-hint" aria-label="Desplazarse hacia abajo">
+            <span class="scroll-arrow"></span>
+        </a>
+    </section>
+
+    <!-- ======================================================
+       2. CARTA
+  ====================================================== -->
+    <section id="carta" class="carta-section">
+        <div class="container">
+            <div class="carta-header">
+                <p class="section-tag" data-i18n="carta.tag">&#9829; Nuestra Karta</p>
+                <h2 class="section-title" data-i18n="carta.title">Platos Estrella</h2>
+                <p class="carta-desc" data-i18n="carta.desc">Nuestra selección más querida de la karta tradicional.</p>
+            </div>
+
+            <div class="carta-grid">
+
+                <!-- Bloque 1: Tapas con foto derecha -->
+                <div class="carta-block">
+                    <div class="carta-menu-list">
+                        <p class="carta-cat-label" data-i18n="carta.cat1.label">&#9829; TAPAS Y ENTRANTES</p>
+                        <h3 class="carta-cat-title" data-i18n="carta.cat1.title">Tapas de Siempre</h3>
+                        <div class="menu-item">
+                            <div class="menu-item-info">
+                                <span class="menu-item-name">Tortilla De Patata</span>
+                            </div>
+                            <span class="menu-item-price">2,50 €</span>
+                        </div>
+                        <div class="menu-divider"></div>
+                        <div class="menu-item">
+                            <div class="menu-item-info">
+                                <span class="menu-item-name">Tortilla De Patata Especialidad</span>
+                            </div>
+                            <span class="menu-item-price">3,00 €</span>
+                        </div>
+                        <div class="menu-divider"></div>
+                        <div class="menu-item">
+                            <div class="menu-item-info">
+                                <span class="menu-item-name">Kroquetas De Jamón (Ud)</span>
+                            </div>
+                            <span class="menu-item-price">1,50 €</span>
+                        </div>
+                        <div class="menu-divider"></div>
+                        <div class="menu-item">
+                            <div class="menu-item-info">
+                                <span class="menu-item-name">Raxo De Pollo Al Roquefort</span>
+                            </div>
+                            <span class="menu-item-price">5,50 €</span>
+                        </div>
+                        <p class="more-dishes" data-i18n="carta.more">... y muchos más</p>
+                    </div>
+                    <div class="carta-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=600&q=80"
+                            alt="Tapas en Kafé" loading="lazy" />
+                    </div>
+                </div>
+
+                <!-- Bloque 2: Platos principales con foto izquierda -->
+                <div class="carta-block reverse">
+                    <div class="carta-img-wrap">
+                        <img src="imagenes/comida1.png" alt="Desayunos en Kafé" loading="lazy" width="382"
+                            height="510" />
+                    </div>
+                    <div class="carta-menu-list">
+                        <p class="carta-cat-label" data-i18n="carta.cat2.label">&#9829; NUESTROS DESAYUNOS</p>
+                        <h3 class="carta-cat-title" data-i18n="carta.cat2.title">Empezar Bien el Día</h3>
+                        <p class="menu-subcat">Tostas</p>
+                        <div class="menu-item">
+                            <div class="menu-item-info">
+                                <span class="menu-item-name">Aceite Y Tomate</span>
+                            </div>
+                            <span class="menu-item-price">3,50 €</span>
+                        </div>
+                        <div class="menu-divider"></div>
+                        <div class="menu-item">
+                            <div class="menu-item-info">
+                                <span class="menu-item-name">Aceite, Tomate Y Jamón</span>
+                            </div>
+                            <span class="menu-item-price">4,50 €</span>
+                        </div>
+                        <div class="menu-divider"></div>
+                        <div class="menu-item">
+                            <div class="menu-item-info">
+                                <span class="menu-item-name">Queso Krema, Nueces Y Miel</span>
+                            </div>
+                            <span class="menu-item-price">4,50 €</span>
+                        </div>
+                        <div class="menu-divider"></div>
+                        <div class="menu-item">
+                            <div class="menu-item-info">
+                                <span class="menu-item-name">Mantequilla Y Mermelada</span>
+                            </div>
+                            <span class="menu-item-price">3,00 €</span>
+                        </div>
+                        <p class="menu-subcat">Baggels</p>
+                        <div class="menu-item">
+                            <div class="menu-item-info">
+                                <span class="menu-item-name">Queso Krema, Salmón Y Rúcula</span>
+                            </div>
+                            <span class="menu-item-price">5,00 €</span>
+                        </div>
+                        <div class="menu-divider"></div>
+                        <div class="menu-item">
+                            <div class="menu-item-info">
+                                <span class="menu-item-name">Queso Krema Y Jamón</span>
+                            </div>
+                            <span class="menu-item-price">5,00 €</span>
+                        </div>
+                        <p class="more-dishes" data-i18n="carta.more">... y muchos más</p>
+                    </div>
+                </div>
+
+                <!-- Bloque 3: Postres con foto derecha -->
+                <div class="carta-block">
+                    <div class="carta-menu-list">
+                        <p class="carta-cat-label">&#9829; NUESTROS POSTRES</p>
+                        <h3 class="carta-cat-title">Dulces Finales</h3>
+                        <div class="menu-item">
+                            <div class="menu-item-info">
+                                <span class="menu-item-name">Tarta De Queso (Especialidad)</span>
+                            </div>
+                            <span class="menu-item-price">5,50 €</span>
+                        </div>
+                        <div class="menu-divider"></div>
+                        <div class="menu-item">
+                            <div class="menu-item-info">
+                                <span class="menu-item-name">Tarta De Queso Del Mes</span>
+                            </div>
+                            <span class="menu-item-price">6,00 €</span>
+                        </div>
+                        <div class="menu-divider"></div>
+                        <div class="menu-item">
+                            <div class="menu-item-info">
+                                <span class="menu-item-name">Brownie Con Helado</span>
+                            </div>
+                            <span class="menu-item-price">6,00 €</span>
+                        </div>
+                        <div class="menu-divider"></div>
+                        <div class="menu-item">
+                            <div class="menu-item-info">
+                                <span class="menu-item-name">Torrisú</span>
+                            </div>
+                            <span class="menu-item-price">7,00 €</span>
+                        </div>
+                        <p class="more-dishes">... y muchos más</p>
+                    </div>
+                    <div class="carta-img-wrap">
+                        <img src="imagenes/postre.png" alt="Postres en Kafé" loading="lazy" width="638" height="510" />
+                    </div>
+                </div>
+
+            </div><!-- .carta-grid -->
+
+            <div class="carta-footer-cta">
+                <p data-i18n="carta.footer.text">¿Quieres ver la karta kompleta?</p>
+                <div class="carta-buttons">
+                    <button type="button" class="btn-primary btn-abrir-reserva" data-i18n="carta.footer.cta">Reserva una
+                        Mesa</button>
+                    <a href="menu-printable.html" target="_blank" class="btn-primary" data-i18n="carta.footer.pdf">Ver
+                        Karta</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ======================================================
+       3. CONTACTO / INFO
+  ====================================================== -->
+    <section id="info" class="info-section">
+        <div class="info-top-bg">
+            <div class="container">
+                <div class="info-header">
+                    <p class="section-tag light" data-i18n="info.tag">&#9829; Enkuéntranos</p>
+                    <h2 class="section-title light" data-i18n="info.title">Ven a Visitarnos</h2>
+                    <p class="info-lead" data-i18n="info.lead">Estamos en el centro de A Coruña, esperándote con una
+                        mesa y una kopa.</p>
+                </div>
+
+                <div class="info-cards">
+
+                    <!-- Horario -->
+                    <div class="info-card">
+                        <div class="info-card-icon">&#128336;</div>
+                        <h3 class="info-card-title" data-i18n="info.card1.title">Horario</h3>
+                        <div class="horario-list">
+                            <div class="horario-row">
+                                <span class="horario-dia" data-i18n="info.horario.lv">Lun – Vie</span>
+                                <span class="horario-hora">7:15 – 23:00</span>
+                            </div>
+                            <div class="horario-row">
+                                <span class="horario-dia" data-i18n="info.horario.sab">Sábado</span>
+                                <span class="horario-hora">10:00 – 23:00</span>
+                            </div>
+                            <div class="horario-row">
+                                <span class="horario-dia" data-i18n="info.horario.dom">Domingo</span>
+                                <span class="horario-hora">10:00 – 16:15</span>
+                            </div>
+                        </div>
+                        <p class="info-card-note" data-i18n="info.card1.note">Las kocinas cierran 30 min antes del
+                            cierre.</p>
+                    </div>
+
+                    <!-- Contacto -->
+                    <div class="info-card" id="kontacto">
+                        <div class="info-card-icon">&#128222;</div>
+                        <h3 class="info-card-title" data-i18n="info.card2.title">Kontacto</h3>
+                        <ul class="contact-list">
+                            <li>
+                                <span class="contact-icon">&#128205;</span>
+                                <span>Rúa Nebrija, 1,<br />15005 A Coruña</span>
+                            </li>
+                            <li>
+                                <span class="contact-icon">&#128222;</span>
+                                <a href="tel:+34981318260">981 31 82 60</a>
+                            </li>
+                            <li>
+                                <span class="contact-icon">&#9993;</span>
+                                <a href="mailto:hola@kaferestaurant.com">hola@kaferestaurant.com</a>
+                            </li>
+                        </ul>
+                        <a href="mailto:hola@kaferestaurant.com" class="btn-outline-light"
+                            data-i18n="info.card2.cta">Escríbenos</a>
+                    </div>
+
+                    <!-- Localización -->
+                    <div class="info-card">
+                        <div class="info-card-icon">&#127759;</div>
+                        <h3 class="info-card-title" data-i18n="info.card3.title">Cómo Llegar</h3>
+                        <p class="info-card-text" data-i18n="info.card3.text">Estamos en el centro de A Coruña. Varias
+                            líneas de bus paran cerca y hay parking disponible en los alrededores.</p>
+                        <a href="https://maps.google.com/?q=Rúa+Nebrija+1+A+Coruña" target="_blank"
+                            rel="noopener noreferrer" class="btn-outline-light" id="ver-mapa-btn"
+                            data-i18n="info.card3.map">Ver en Google Maps &#8599;</a>
+                    </div>
+
+                </div><!-- .info-cards -->
+            </div>
+        </div>
+
+        <!-- MAPA EMBED -->
+        <div class="mapa-wrap">
+            <iframe id="google-map" title="Ubicación de Kafé en A Coruña"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2896.123456789!2d-8.4065!3d43.3623!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd2e7c7b0c7b0c7b%3A0x0!2sR%C3%BAa+Nebrija+1%2C+A+Coru%C3%B1a!5e0!3m2!1ses!2ses!4v1700000000000!5m2!1ses!2ses"
+                width="100%" height="420" style="border:0;" allowfullscreen="" loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+    </section>
+
+    <!-- ======================================================
+       4. NOSOTROS
+  ====================================================== -->
+    <section id="nosotros" class="nosotros">
+        <div class="container nosotros-grid">
+            <div class="nosotros-img-wrap">
+                <img src="imagenes/duo.png" alt="Chef de Kafé preparando tapas en la kocina" class="nosotros-img"
+                    loading="lazy" width="976" height="794" />
+                <div class="nosotros-badge">
+                    <span class="badge-num">+15</span>
+                    <span class="badge-txt" data-i18n="nosotros.badge">experiencia combinada</span>
+                </div>
+            </div>
+            <div class="nosotros-content">
+                <p class="section-tag" data-i18n="nosotros.tag">&#9829; Quiénes somos</p>
+                <h2 class="section-title" data-i18n="nosotros.title">Sumérgete en una<br /><em>experiencia gallega.</em>
+                </h2>
+                <div class="nosotros-features">
+                    <div class="feature">
+                        <div class="feature-icon">&#127807;</div>
+                        <div>
+                            <strong data-i18n="nosotros.feat1.title">Producto Gallego</strong>
+                            <p data-i18n="nosotros.feat1.desc">Trabajamos con productores gallegos y del entorno para
+                                garantizar la máxima frescura y calidad en cada plato.</p>
+                        </div>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">&#127869;</div>
+                        <div>
+                            <strong data-i18n="nosotros.feat2.title">La Visión del Chef</strong>
+                            <p data-i18n="nosotros.feat2.desc">Kafé apuesta por la riqueza del kafé y la tierra gallega,
+                                con elaboraciones honestas y llenas de sabor.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="nosotros-cta">
+                    <a href="menu-printable.html" target="_blank" class="btn-primary" data-i18n="nosotros.cta.carta">Ver
+                        Karta</a>
+                    <a href="tel:+34981318260" class="cta-tel">&#128222; 981 31 82 60</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ======================================================
+       FOOTER
+  ====================================================== -->
+    <footer class="footer">
+        <div class="container footer-inner">
+            <div class="footer-brand">
+                <img src="imagenes/logo-transparente.png" alt="Kafé" class="logo-img footer-logo" />
+                <p class="footer-tagline" data-i18n="footer.tagline">Celebrando el alma kulinaria de Galicia a través de
+                    la honestidad, el producto y la maestría.</p>
+            </div>
+            <div class="footer-nav">
+                <h4 data-i18n="footer.nav.title">Navegación</h4>
+                <ul>
+                    <li><a href="#inicio" data-i18n="nav.inicio">Inicio</a></li>
+                    <li><a href="#carta" data-i18n="nav.carta">Karta</a></li>
+                    <li><a href="#info" data-i18n="nav.contacto">Kontacto</a></li>
+                    <li><a href="#nosotros" data-i18n="nav.nosotros">Nosotros</a></li>
+                </ul>
+            </div>
+            <div class="footer-hours">
+                <h4 data-i18n="info.card1.title">Horario</h4>
+                <p data-i18n="footer.hours.lv">Lun – Vie: 7:15 – 23:00</p>
+                <p data-i18n="footer.hours.sab">Sáb: 10:00 – 23:00</p>
+                <p data-i18n="footer.hours.dom">Dom: 10:00 – 16:15</p>
+            </div>
+            <div class="footer-contact">
+                <h4 data-i18n="info.card2.title">Kontacto</h4>
+                <p>Rúa Nebrija, 1<br />15005 A Coruña</p>
+                <p><a href="tel:+34981318260">981 31 82 60</a></p>
+                <p><a href="mailto:hola@kaferestaurant.com">hola@kaferestaurant.com</a></p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Kafé Restaurant. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- MODAL RESERVA -->
+    <div class="modal-overlay" id="modal-reserva" aria-hidden="true" role="dialog" aria-labelledby="modal-title">
+        <div class="modal-content">
+            <button class="modal-close" id="modal-close" aria-label="Cerrar">&times;</button>
+            <form id="reserva-form" novalidate>
+                <div class="modal-header">
+                    <p class="section-tag" data-i18n="reserva.tag">&#9829; Reserva</p>
+                    <h2 class="section-title" id="modal-title" data-i18n="reserva.title">Reserva tu Mesa</h2>
+                </div>
+                <div class="form-group">
+                    <label for="reserva-nombre" data-i18n="reserva.nombre">Nombre</label>
+                    <input type="text" id="reserva-nombre" required placeholder="Tu nombre" />
+                </div>
+                <div class="form-group">
+                    <label for="reserva-telefono" data-i18n="reserva.telefono">Teléfono</label>
+                    <input type="tel" id="reserva-telefono" required placeholder="666 123 456" inputmode="numeric" />
+                    <span class="form-error" id="telefono-error">Introduce un teléfono válido</span>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="reserva-fecha" data-i18n="reserva.fecha">Fecha</label>
+                        <input type="date" id="reserva-fecha" required />
+                    </div>
+                    <div class="form-group">
+                        <label data-i18n="reserva.hora">Hora</label>
+                        <input type="hidden" id="reserva-hora" required />
+                        <div class="custom-select" id="hora-select">
+                            <div class="custom-select-trigger" id="hora-trigger">
+                                <span id="hora-label" data-i18n="reserva.horaPlaceholder">Selecciona hora</span>
+                                <svg width="12" height="8" viewBox="0 0 12 8">
+                                    <path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.5" fill="none"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                            </div>
+                            <div class="custom-select-dropdown" id="hora-dropdown"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="reserva-personas" data-i18n="reserva.personas">Personas</label>
+                    <input type="number" id="reserva-personas" min="1" max="40" required placeholder="2" />
+                </div>
+                <fieldset class="form-group">
+                    <legend data-i18n="reserva.tipo">Tipo de komida</legend>
+                    <div class="radio-group">
+                        <label class="radio-label">
+                            <input type="radio" name="tipo-comida" value="karta" checked />
+                            <span data-i18n="reserva.tipoCarta">De Karta</span>
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="tipo-comida" value="personalizado" />
+                            <span data-i18n="reserva.tipoPersonalizado">Menú personalizado</span>
+                        </label>
+                    </div>
+                    <p class="menu-personalizado-nota" id="nota-personalizado" hidden
+                        data-i18n="reserva.notaPersonalizado">
+                        Para konkretar los detalles del menú personalizado, kontacta kon nosotros por teléfono al
+                        <a href="tel:+34981318260">981 31 82 60</a>.
+                    </p>
+                </fieldset>
+                <button type="submit" class="btn-primary btn-submit" id="btn-enviar-reserva" data-i18n="reserva.enviar">
+                    Enviar Reserva &rarr;
+                </button>
+                <p class="reserva-alt" data-i18n="reserva.alt">
+                    Si lo prefieres, también puedes reservar llamando al
+                    <a href="tel:+34981318260">981 31 82 60</a>
+                </p>
+            </form>
+            <div class="reserva-confirmacion" id="reserva-confirmacion" hidden>
+                <div class="confirmacion-icon">&#10003;</div>
+                <h3 data-i18n="reserva.confirmacion.titulo">Solicitud recibida</h3>
+                <p data-i18n="reserva.confirmacion.texto">Te llamaremos lo antes posible para konfirmar tu reserva.</p>
+                <div class="confirmacion-aviso">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="check-entendido" />
+                        <span data-i18n="reserva.confirmacion.aviso">Entiendo que esto es una solicitud de reserva, no
+                            una konfirmación. Mi reserva será konfirmada cuando el restaurante me kontacte.</span>
+                    </label>
+                </div>
+                <button type="button" class="btn-primary" id="btn-cerrar-confirmacion" disabled
+                    data-i18n="reserva.confirmacion.cerrar">Entendido</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+
+</html>
