@@ -14,7 +14,6 @@
   --gris-medio: #e8ecf2;
   --texto: #0d2137;
   --texto-suave: #4a6080;
-  --gold: #c8a96e;
 
   --font-serif: 'Playfair Display', Georgia, serif;
   --font-sans: 'Inter', system-ui, sans-serif;
@@ -390,9 +389,7 @@ ul {
   background-size: 28px 28px;
 }
 
-.hero-overlay {
-  display: none;
-}
+
 
 /* --- Animación Intro --- */
 .hero-intro {
@@ -451,8 +448,15 @@ ul {
 }
 
 @keyframes fontFlash {
-  0% { opacity: 0.6; transform: scale(0.95); }
-  100% { opacity: 1; transform: scale(1); }
+  0% {
+    opacity: 0.6;
+    transform: scale(0.95);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 /* Efecto final al fijar la fuente definitiva */
@@ -461,9 +465,19 @@ ul {
 }
 
 @keyframes lockIn {
-  0% { transform: scale(1.15); opacity: 0.8; }
-  50% { transform: scale(0.95); }
-  100% { transform: scale(1); opacity: 1; }
+  0% {
+    transform: scale(1.15);
+    opacity: 0.8;
+  }
+
+  50% {
+    transform: scale(0.95);
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 .intro-text-wrap {
@@ -686,7 +700,7 @@ ul {
   object-fit: contain;
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-lg);
-  background-color: #0d2137;
+  background-color: var(--azul-oscuro);
 }
 
 .nosotros-badge {
@@ -724,16 +738,7 @@ ul {
   line-height: 1.3;
 }
 
-.nosotros-quote {
-  font-family: var(--font-serif);
-  font-size: 1.1rem;
-  font-style: italic;
-  color: var(--texto-suave);
-  border-left: 3px solid var(--azul-acento);
-  padding-left: 1.25rem;
-  margin-bottom: 2rem;
-  line-height: 1.7;
-}
+
 
 .nosotros-features {
   display: flex;
@@ -1037,7 +1042,7 @@ ul {
 .horario-dia {
   font-size: 0.88rem;
   font-weight: 500;
-  color: rgba(255, 255, 255, 0.75);
+  color: rgba(255, 255, 255, 0.85);
 }
 
 .horario-hora {
@@ -1462,7 +1467,7 @@ fieldset.form-group {
   margin-top: 0.3rem;
 }
 
-.form-group input.invalid + .form-error {
+.form-group input.invalid+.form-error {
   display: block;
 }
 
@@ -1763,26 +1768,7 @@ fieldset.form-group {
   }
 }
 
-/* Boton Outline Dark (para fondo blanco) */
-.btn-outline-dark {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  background: transparent;
-  color: var(--azul-oscuro);
-  font-size: 0.85rem;
-  font-weight: 600;
-  padding: 0.625rem 1.4rem;
-  border-radius: 50px;
-  border: 1.5px solid var(--azul-oscuro);
-  transition: all var(--transition);
-  text-decoration: none;
-}
 
-.btn-outline-dark:hover {
-  background: var(--azul-oscuro);
-  color: var(--blanco);
-}
 
 .more-dishes {
   display: block;
