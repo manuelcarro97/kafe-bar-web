@@ -1980,6 +1980,15 @@ fieldset.form-group {
   .form-row {
     grid-template-columns: 1fr;
   }
+
+  .resena-card {
+    flex: 0 0 85vw;
+  }
+
+  .marquee-container::before,
+  .marquee-container::after {
+    width: 24px;
+  }
 }
 
 
