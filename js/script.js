@@ -16,6 +16,7 @@ const translations = {
     'nav.inicio': 'Inicio',
     'nav.nosotros': 'Nosotros',
     'nav.carta': 'Karta',
+    'nav.resenas': 'Reseñas',
     'nav.contacto': 'Kontacto',
     'nav.verCarta': 'Ver Karta →',
     'nav.reservar': 'Reservar',
@@ -91,11 +92,23 @@ const translations = {
     'reserva.confirmacion.texto': 'Te llamaremos lo antes posible para konfirmar tu reserva.',
     'reserva.confirmacion.aviso': 'Entiendo que esto es una solicitud de reserva, no una konfirmación. Mi reserva será konfirmada cuando el restaurante me kontacte.',
     'reserva.confirmacion.cerrar': 'Entendido',
+
+    'resenas.tag': '♥ Lo Que Dicen de Nosotros',
+    'resenas.title': 'Nuestros Klientes Hablan',
+    'resenas.desc': 'Reseñas reales de Google Maps. ¡Gracias a todos!',
+    'resenas.cta': 'Ver Más en Google Maps ↗',
+    'resenas.r1.date': 'Febrero 2026',
+    'resenas.r2.date': 'Enero 2026',
+    'resenas.r3.date': 'Noviembre 2025',
+    'resenas.r4.date': 'Octubre 2025',
+    'resenas.r5.date': 'Septiembre 2025',
+    'resenas.r6.date': 'Diciembre 2025',
   },
   gl: {
     'nav.inicio': 'Inicio',
     'nav.nosotros': 'Nós',
     'nav.carta': 'Karta',
+    'nav.resenas': 'Reseñas',
     'nav.contacto': 'Kontacto',
     'nav.verCarta': 'Ver Karta →',
     'nav.reservar': 'Reservar',
@@ -171,6 +184,17 @@ const translations = {
     'reserva.confirmacion.texto': 'Chamarémoste o antes posible para konfirmar a túa reserva.',
     'reserva.confirmacion.aviso': 'Entendo que isto é unha solicitude de reserva, non unha konfirmación. A miña reserva será konfirmada cando o restaurante me kontacte.',
     'reserva.confirmacion.cerrar': 'Entendido',
+
+    'resenas.tag': '♥ O Que Din de Nós',
+    'resenas.title': 'Os Nosos Klientes Falan',
+    'resenas.desc': 'Recensións reais de Google Maps. Grazas a todos!',
+    'resenas.cta': 'Ver Máis en Google Maps ↗',
+    'resenas.r1.date': 'Febreiro 2026',
+    'resenas.r2.date': 'Xaneiro 2026',
+    'resenas.r3.date': 'Novembro 2025',
+    'resenas.r4.date': 'Outubro 2025',
+    'resenas.r5.date': 'Setembro 2025',
+    'resenas.r6.date': 'Decembro 2025',
   }
 };
 
@@ -394,7 +418,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const fadeElements = document.querySelectorAll(
     '.nosotros-img-wrap, .nosotros-content, ' +
     '.carta-block, .info-card, ' +
-    '.carta-header, .info-header'
+    '.carta-header, .info-header, ' +
+    '.resenas-header, .resenas-cta'
   );
 
   fadeElements.forEach(el => el.classList.add('fade-up'));
@@ -422,8 +447,142 @@ document.addEventListener('DOMContentLoaded', () => {
     card.style.transitionDelay = `${i * 0.12}s`;
   });
 
+
+  /* ---------- 8a. Parallax sutil en hero ---------- */
+  const heroBg = document.querySelector('.hero-bg');
+  if (heroBg) {
+    window.addEventListener('scroll', () => {
+      const scrollY = window.scrollY;
+      if (scrollY < window.innerHeight) {
+        heroBg.style.transform = `translateY(${scrollY * 0.3}px)`;
+      }
+    }, { passive: true });
+  }
+
+  /* ---------- 8b. Counter animado en badge ---------- */
+  const badgeNum = document.querySelector('.badge-num');
+  if (badgeNum && 'IntersectionObserver' in window) {
+    const targetNum = parseInt(badgeNum.textContent.replace('+', ''), 10);
+    let counted = false;
+
+    const counterObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !counted) {
+          counted = true;
+          counterObserver.unobserve(entry.target);
+          animateCounter(badgeNum, targetNum);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    counterObserver.observe(badgeNum);
+
+    function animateCounter(el, target) {
+      el.classList.add('counting');
+      let current = 0;
+      const duration = 1200;
+      const stepTime = duration / target;
+
+      const timer = setInterval(() => {
+        current++;
+        el.textContent = '+' + current;
+        if (current >= target) {
+          clearInterval(timer);
+          el.classList.remove('counting');
+        }
+      }, stepTime);
+    }
+  }
+
   // Inicializar idioma
   applyLanguage(currentLang);
+
+  /* ---------- 8. Carrusel de Reseñas (scroll JS + drag) ---------- */
+  (function initReviewsMarquee() {
+    const track = document.getElementById('resenas-track');
+    if (!track) return;
+
+    // Las tarjetas son HTML estático generado por scripts/scrape-reviews.js
+    // Este bloque solo clona las tarjetas existentes para el scroll infinito
+    const originalCards = Array.from(track.children);
+    if (originalCards.length === 0) return;
+
+    const SETS = 4;
+    const fragment = document.createDocumentFragment();
+    for (let i = 0; i < SETS; i++) {
+      originalCards.forEach(card => fragment.appendChild(card.cloneNode(true)));
+    }
+    track.innerHTML = '';
+    track.appendChild(fragment);
+
+    // Reemplazar animación CSS con scroll controlado por JS
+    track.style.animation = 'none';
+    track.style.willChange = 'transform';
+
+    const AUTO_SPEED = 0.5; // px por frame (~30px/s a 60fps)
+    let pos = 0;
+    let velocity = 0;
+    let isDragging = false;
+    let dragStartX = 0;
+    let posOnDragStart = 0;
+    let lastDragX = 0;
+
+    function getLoopWidth() {
+      return track.scrollWidth / SETS;
+    }
+
+    function wrap(p) {
+      const lw = getLoopWidth();
+      return ((p % lw) + lw) % lw;
+    }
+
+    function tick() {
+      if (!isDragging) {
+        velocity *= 0.92;
+        if (Math.abs(velocity) < 0.01) velocity = 0;
+        pos += AUTO_SPEED + velocity;
+      }
+      pos = wrap(pos);
+      track.style.transform = `translateX(${-pos}px)`;
+      requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+
+    const container = track.parentElement;
+    container.style.cursor = 'grab';
+
+    function onDragStart(clientX) {
+      isDragging = true;
+      dragStartX = clientX;
+      posOnDragStart = pos;
+      lastDragX = clientX;
+      velocity = 0;
+      container.style.cursor = 'grabbing';
+    }
+
+    function onDragMove(clientX) {
+      velocity = lastDragX - clientX;
+      lastDragX = clientX;
+      pos = wrap(posOnDragStart + (dragStartX - clientX));
+    }
+
+    function onDragEnd() {
+      isDragging = false;
+      container.style.cursor = 'grab';
+    }
+
+    // Mouse
+    container.addEventListener('mousedown', e => { onDragStart(e.clientX); e.preventDefault(); });
+    document.addEventListener('mousemove', e => { if (isDragging) onDragMove(e.clientX); });
+    document.addEventListener('mouseup', onDragEnd);
+
+    // Touch (móvil)
+    container.addEventListener('touchstart', e => { onDragStart(e.touches[0].clientX); }, { passive: true });
+    container.addEventListener('touchmove', e => {
+      if (isDragging) { onDragMove(e.touches[0].clientX); e.preventDefault(); }
+    }, { passive: false });
+    container.addEventListener('touchend', onDragEnd);
+  })();
 
   /* ---------- 8. Modal de Reserva ---------- */
   (function reservaModal() {
