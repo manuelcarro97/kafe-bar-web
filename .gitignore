@@ -13,6 +13,12 @@ firebase-debug.*.log
 # Cloudflare
 .wrangler/
 
+
+# Docs / planes internos
+
+# Tooling logs
+error_dump.html
+
 # OS
 .DS_Store
 Thumbs.db

@@ -1,0 +1,27 @@
+{
+  "name": "kafe",
+  "version": "1.0.0",
+  "description": "![Kafe Bar Logo](imagenes/logo.png)",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/manuelcarro97/kafe-bar-web.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/manuelcarro97/kafe-bar-web/issues"
+  },
+  "homepage": "https://github.com/manuelcarro97/kafe-bar-web#readme",
+  "dependencies": {
+    "cheerio": "^1.2.0",
+    "playwright": "^1.58.2"
+  }
+}
