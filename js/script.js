@@ -452,6 +452,14 @@ document.addEventListener('DOMContentLoaded', () => {
     fadeElements.forEach(el => el.classList.add('visible'));
   }
 
+  // Asignar transition-delay a precios según índice real de .menu-item
+  document.querySelectorAll('.carta-block').forEach(block => {
+    block.querySelectorAll('.menu-item').forEach((item, i) => {
+      const price = item.querySelector('.menu-item-price');
+      if (price) price.style.transitionDelay = (0.3 + i * 0.15) + 's';
+    });
+  });
+
   /* ---------- 7. Delay escalonado en info-cards ---------- */
   document.querySelectorAll('.info-card').forEach((card, i) => {
     card.style.transitionDelay = `${i * 0.12}s`;
