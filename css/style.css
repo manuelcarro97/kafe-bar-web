@@ -2180,10 +2180,13 @@ fieldset.form-group {
   }
 
   /* Intro animación móvil */
-  /* svh = small viewport height: incluye la barra del navegador, centra en lo realmente visible */
-  .hero {
-    min-height: 100vh;     /* fallback navegadores sin soporte svh */
-    min-height: 100svh;    /* viewport real con URL bar visible */
+  /* svh = small viewport height: incluye la barra del navegador.
+     Al fijar height en lugar de depender del parent, el flex centering
+     actúa sobre exactamente lo que el usuario ve, no sobre el hero completo. */
+  .hero-intro {
+    height: 100vh;    /* fallback */
+    height: 100svh;   /* viewport real con URL bar visible */
+    bottom: auto;     /* anula el bottom: 0 de inset para que height tenga efecto */
   }
 
   .intro-logo {
