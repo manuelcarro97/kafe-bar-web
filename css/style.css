@@ -199,6 +199,7 @@ ul {
   border-bottom: 1px solid var(--gris-medio);
   transition: box-shadow var(--transition), background var(--transition);
   --scroll-progress: 0%;
+  overflow: hidden;
 }
 
 #cabecera::before {
