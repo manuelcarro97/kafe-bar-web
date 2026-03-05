@@ -707,7 +707,9 @@ ul {
    ===================================================== */
 .nosotros {
   padding: 7rem 0;
-  background: var(--blanco);
+  background-color: var(--blanco);
+  background-image: radial-gradient(rgba(13, 33, 55, 0.04) 1px, transparent 1px);
+  background-size: 28px 28px;
   position: relative;
 }
 
@@ -843,7 +845,9 @@ ul {
    ===================================================== */
 .carta-section {
   padding: 7rem 0;
-  background: var(--gris-claro);
+  background-color: var(--gris-claro);
+  background-image: radial-gradient(rgba(13, 33, 55, 0.04) 1px, transparent 1px);
+  background-size: 28px 28px;
   position: relative;
 }
 
@@ -1037,7 +1041,9 @@ ul {
    ===================================================== */
 .resenas-section {
   padding: 5rem 0 4rem;
-  background: var(--blanco);
+  background-color: var(--blanco);
+  background-image: radial-gradient(rgba(13, 33, 55, 0.04) 1px, transparent 1px);
+  background-size: 28px 28px;
   overflow: hidden;
 }
 
@@ -1406,7 +1412,9 @@ ul {
    FOOTER
    ===================================================== */
 .footer {
-  background: var(--azul-oscuro);
+  background-color: var(--azul-oscuro);
+  background-image: radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 28px 28px;
   color: rgba(255, 255, 255, 0.75);
 }
 
