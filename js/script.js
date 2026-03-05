@@ -241,6 +241,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (!kEl) return;
 
+    // Saltar animación si ya se mostró en esta sesión de navegador
+    if (sessionStorage.getItem('kafe_intro_shown')) {
+      if (heroIntro) heroIntro.style.display = 'none';
+      if (heroContent) heroContent.classList.add('show');
+      if (heroImageWrap) heroImageWrap.classList.add('show');
+      return;
+    }
+
     const fonts = [
       { family: "'Bebas Neue', sans-serif", weight: 400 },
       { family: "'Lobster', cursive", weight: 400 },
@@ -300,6 +308,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 heroIntro.classList.add('fade-out');
                 if (heroContent) heroContent.classList.add('show');
                 if (heroImageWrap) heroImageWrap.classList.add('show');
+                sessionStorage.setItem('kafe_intro_shown', '1');
               }, 1200);
             }, 400);
           }, 150);
