@@ -706,6 +706,7 @@ ul {
   height: 80px;
   background: linear-gradient(to bottom, transparent, var(--azul-oscuro));
   pointer-events: none;
+  z-index: 1;
 }
 
 .nosotros-grid {
@@ -1225,6 +1226,7 @@ ul {
   background-image:
     radial-gradient(rgba(59, 158, 255, 0.08) 1px, transparent 1px);
   background-size: 32px 32px;
+  z-index: 1;
 }
 
 .info-top-bg::after {
