@@ -740,10 +740,9 @@ ul {
 .nosotros-img {
   width: 100%;
   aspect-ratio: 4/5;
-  object-fit: contain;
+  object-fit: cover;
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-lg);
-  background-color: var(--azul-oscuro);
 }
 
 .nosotros-badge {
