@@ -943,7 +943,7 @@ ul {
   }
 
   .menu-item:hover {
-    transform: scale(1.02);
+    transform: translateY(-1px);
     box-shadow: 0 4px 16px rgba(13, 33, 55, 0.08);
     background: rgba(59, 158, 255, 0.04);
   }
