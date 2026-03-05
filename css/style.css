@@ -2098,7 +2098,10 @@ fieldset.form-group {
   }
 
   .nosotros-img {
-    aspect-ratio: 16/9;
+    aspect-ratio: unset;
+    max-height: 220px;
+    width: 100%;
+    object-fit: cover;
   }
 
   .nosotros-badge {
