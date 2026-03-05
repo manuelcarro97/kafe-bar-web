@@ -2180,8 +2180,10 @@ fieldset.form-group {
   }
 
   /* Intro animación móvil */
-  .hero-intro {
-    padding-top: 60px; /* compensa la cabecera fija para centrar en el área visible */
+  /* svh = small viewport height: incluye la barra del navegador, centra en lo realmente visible */
+  .hero {
+    min-height: 100vh;     /* fallback navegadores sin soporte svh */
+    min-height: 100svh;    /* viewport real con URL bar visible */
   }
 
   .intro-logo {
