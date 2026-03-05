@@ -22,13 +22,6 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@300;400;500;600&display=swap"
         rel="stylesheet" />
-    <!-- Fonts de animación intro: carga diferida (no bloquean render) -->
-    <link
-        href="https://fonts.googleapis.com/css2?family=Lobster&family=Bebas+Neue&family=Dancing+Script:wght@700&family=Abril+Fatface&family=Righteous&family=Permanent+Marker&family=Russo+One&family=Pacifico&display=swap"
-        rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" />
-    <noscript>
-        <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Bebas+Neue&family=Dancing+Script:wght@700&family=Abril+Fatface&family=Righteous&family=Permanent+Marker&family=Russo+One&family=Pacifico&display=swap" rel="stylesheet" />
-    </noscript>
     <link rel="icon" href="favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="css/style.css" />
     <script type="application/ld+json">
@@ -130,9 +123,24 @@
         <!-- INTRO ANIMATION OVERLAY -->
         <div class="hero-intro">
             <div class="intro-logo">
-                <span class="intro-k" id="intro-k">K</span>
-                <div class="intro-text-wrap">
-                    <span class="intro-text">afé</span>
+                <div class="intro-reveal-stage">
+                    <!-- Nombre del local: clip-path revela izq→der mientras la taza sale -->
+                    <span class="intro-brand-text" id="intro-brand">Kafé</span>
+                    <!-- Taza CSS pura: aparece, se llena, echa vapor, sale a la derecha -->
+                    <div class="intro-cup" id="intro-cup">
+                        <div class="intro-steam">
+                            <span class="steam-line"></span>
+                            <span class="steam-line"></span>
+                            <span class="steam-line"></span>
+                        </div>
+                        <div class="intro-cup-container">
+                            <div class="intro-cup-body">
+                                <div class="intro-cup-liquid"></div>
+                            </div>
+                            <div class="intro-cup-handle"></div>
+                        </div>
+                        <div class="intro-cup-saucer"></div>
+                    </div>
                 </div>
             </div>
         </div>

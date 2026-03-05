@@ -230,16 +230,15 @@ function applyLanguage(lang) {
    ===================================================== */
 document.addEventListener('DOMContentLoaded', () => {
 
-  /* ---------- 0. Animación Intro: ciclo de fuentes en la K ---------- */
+  /* ---------- 0. Animación Intro: taza de café ---------- */
   (function introAnimation() {
-    const kEl = document.getElementById('intro-k');
-    const introLogo = document.querySelector('.intro-logo');
-    const textWrap = document.querySelector('.intro-text-wrap');
     const heroIntro = document.querySelector('.hero-intro');
     const heroContent = document.querySelector('.hero-content');
     const heroImageWrap = document.querySelector('.hero-image-wrap');
+    const cup = document.getElementById('intro-cup');
+    const brand = document.getElementById('intro-brand');
 
-    if (!kEl) return;
+    if (!cup) return;
 
     // Saltar animación si ya se mostró en esta sesión de navegador
     if (sessionStorage.getItem('kafe_intro_shown')) {
@@ -249,82 +248,28 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    const fonts = [
-      { family: "'Bebas Neue', sans-serif", weight: 400 },
-      { family: "'Lobster', cursive", weight: 400 },
-      { family: "'Permanent Marker', cursive", weight: 400 },
-      { family: "'Abril Fatface', serif", weight: 400 },
-      { family: "'Dancing Script', cursive", weight: 700 },
-      { family: "'Russo One', sans-serif", weight: 400 },
-      { family: "'Righteous', sans-serif", weight: 400 },
-      { family: "'Pacifico', cursive", weight: 400 },
-      { family: "Georgia, serif", weight: 700 },
-      { family: "Impact, sans-serif", weight: 400 },
-      { family: "'Courier New', monospace", weight: 700 },
-      { family: "'Playfair Display', Georgia, serif", weight: 700 },
-    ];
+    // 1. Taza aparece centrada en pantalla
+    setTimeout(() => { cup.classList.add('visible'); }, 250);
 
-    const finalFont = fonts[fonts.length - 1];
-    let cycleIndex = 0;
-    let cycleSpeed = 100;
-    const totalCycles = 18;
-    let cycleCount = 0;
+    // 2. Líquido sube
+    setTimeout(() => { cup.classList.add('filling'); }, 550);
 
-    // Mostrar la K con la primera fuente
+    // 3. Vapor aparece mientras se llena
+    setTimeout(() => { cup.classList.add('steaming'); }, 750);
+
+    // 4. Vapor para, nombre se desliza desde la izquierda empujando la taza a su lado
     setTimeout(() => {
-      kEl.style.fontFamily = fonts[0].family;
-      kEl.style.fontWeight = fonts[0].weight;
-      kEl.classList.add('visible');
-    }, 200);
+      cup.classList.remove('steaming');
+      if (brand) brand.classList.add('reveal');
+    }, 2100);
 
-    // Empezar a ciclar fuentes
+    // 5. Breve pausa para apreciar [Kafé ☕] → fadeout al hero
     setTimeout(() => {
-      function cycle() {
-        cycleCount++;
-        cycleIndex = (cycleIndex + 1) % (fonts.length - 1); // No incluir la final en el ciclo
-        const font = fonts[cycleIndex];
-
-        kEl.style.fontFamily = font.family;
-        kEl.style.fontWeight = font.weight;
-        kEl.classList.remove('switching');
-        void kEl.offsetWidth; // Force reflow
-        kEl.classList.add('switching');
-
-        if (cycleCount >= totalCycles) {
-          // Fijar fuente definitiva
-          setTimeout(() => {
-            kEl.style.fontFamily = finalFont.family;
-            kEl.style.fontWeight = finalFont.weight;
-            kEl.classList.remove('switching');
-            kEl.classList.add('locked');
-
-            // Revelar "afé" y deslizar
-            setTimeout(() => {
-              textWrap.classList.add('reveal');
-              introLogo.classList.add('slide');
-
-              // Hacer fadeout del intro y mostrar hero
-              setTimeout(() => {
-                heroIntro.classList.add('fade-out');
-                if (heroContent) heroContent.classList.add('show');
-                if (heroImageWrap) heroImageWrap.classList.add('show');
-                sessionStorage.setItem('kafe_intro_shown', '1');
-              }, 1200);
-            }, 400);
-          }, 150);
-          return;
-        }
-
-        // Desacelerar progresivamente
-        if (cycleCount > totalCycles * 0.6) {
-          cycleSpeed += 30;
-        }
-
-        setTimeout(cycle, cycleSpeed);
-      }
-
-      cycle();
-    }, 600);
+      if (heroIntro) heroIntro.classList.add('fade-out');
+      if (heroContent) heroContent.classList.add('show');
+      if (heroImageWrap) heroImageWrap.classList.add('show');
+      sessionStorage.setItem('kafe_intro_shown', '1');
+    }, 3800);
   })();
 
   /* ---------- Referencias ---------- */
