@@ -198,6 +198,19 @@ ul {
   -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--gris-medio);
   transition: box-shadow var(--transition), background var(--transition);
+  --scroll-progress: 0%;
+}
+
+#cabecera::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 3px;
+  width: var(--scroll-progress);
+  background: var(--azul-claro);
+  z-index: 1;
+  transition: width 0.1s linear;
 }
 
 #cabecera.scrolled {

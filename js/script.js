@@ -331,6 +331,12 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
       cabecera.classList.remove('scrolled');
     }
+
+    // Barra de progreso de scroll
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = docHeight > 0 ? Math.round((window.scrollY / docHeight) * 100) : 0;
+    cabecera.style.setProperty('--scroll-progress', progress + '%');
+
     updateActiveNav();
   };
 
