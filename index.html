@@ -18,9 +18,17 @@
         content="Kafé, el bar donde la tradición gallega se encuentra con la kocina moderna. Ven a disfrutar de nuestra karta, horarios y ubicación en A Coruña." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Fonts permanentes: bloquean render solo las necesarias -->
     <link
-        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@300;400;500;600&family=Lobster&family=Bebas+Neue&family=Dancing+Script:wght@700&family=Abril+Fatface&family=Righteous&family=Permanent+Marker&family=Russo+One&family=Pacifico&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@300;400;500;600&display=swap"
         rel="stylesheet" />
+    <!-- Fonts de animación intro: carga diferida (no bloquean render) -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Lobster&family=Bebas+Neue&family=Dancing+Script:wght@700&family=Abril+Fatface&family=Righteous&family=Permanent+Marker&family=Russo+One&family=Pacifico&display=swap"
+        rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    <noscript>
+        <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Bebas+Neue&family=Dancing+Script:wght@700&family=Abril+Fatface&family=Righteous&family=Permanent+Marker&family=Russo+One&family=Pacifico&display=swap" rel="stylesheet" />
+    </noscript>
     <link rel="icon" href="favicon.ico" type="image/png" />
     <link rel="stylesheet" href="css/style.css" />
 </head>
