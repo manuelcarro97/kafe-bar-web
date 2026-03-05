@@ -237,10 +237,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const heroImageWrap = document.querySelector('.hero-image-wrap');
     const cup = document.getElementById('intro-cup');
     const brand = document.getElementById('intro-brand');
+    const tagline = document.getElementById('intro-tagline');
 
     if (!cup) return;
 
-    // Saltar animación si ya se mostró en esta sesión de navegador
+    // Saltar animación si ya se mostró (la clase intro-skip en <html> ya oculta el overlay)
     if (sessionStorage.getItem('kafe_intro_shown')) {
       if (heroIntro) heroIntro.style.display = 'none';
       if (heroContent) heroContent.classList.add('show');
@@ -257,19 +258,32 @@ document.addEventListener('DOMContentLoaded', () => {
     // 3. Vapor aparece mientras se llena
     setTimeout(() => { cup.classList.add('steaming'); }, 750);
 
-    // 4. Vapor para, nombre se desliza desde la izquierda empujando la taza a su lado
+    // 4. Nombre se desliza desde la izquierda (vapor sigue durante el reveal)
     setTimeout(() => {
-      cup.classList.remove('steaming');
       if (brand) brand.classList.add('reveal');
+    }, 1700);
+
+    // 5. Tagline aparece mientras el nombre todavía se desliza
+    setTimeout(() => {
+      if (tagline) tagline.classList.add('reveal');
     }, 2100);
 
-    // 5. Breve pausa para apreciar [Kafé ☕] → fadeout al hero
+    // 6. Vapor para: estado final [Kafe ☕] estático y limpio
     setTimeout(() => {
-      if (heroIntro) heroIntro.classList.add('fade-out');
+      cup.classList.remove('steaming');
+    }, 3000);
+
+    // 7. Hero empieza a aparecer (cross-fade)
+    setTimeout(() => {
       if (heroContent) heroContent.classList.add('show');
       if (heroImageWrap) heroImageWrap.classList.add('show');
+    }, 3700);
+
+    // 8. Intro overlay desaparece
+    setTimeout(() => {
+      if (heroIntro) heroIntro.classList.add('fade-out');
       sessionStorage.setItem('kafe_intro_shown', '1');
-    }, 3800);
+    }, 3900);
   })();
 
   /* ---------- Referencias ---------- */

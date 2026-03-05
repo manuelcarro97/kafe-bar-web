@@ -22,8 +22,11 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@300;400;500;600&display=swap"
         rel="stylesheet" />
+    <link rel="preload" as="image" href="imagenes/tortilla-hero.jpg" />
     <link rel="icon" href="favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="css/style.css" />
+    <!-- Evitar flash: marcar skip de intro antes de que el DOM se pinte -->
+    <script>if(sessionStorage.getItem('kafe_intro_shown'))document.documentElement.classList.add('intro-skip');</script>
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -124,9 +127,9 @@
         <div class="hero-intro">
             <div class="intro-logo">
                 <div class="intro-reveal-stage">
-                    <!-- Nombre del local: clip-path revela izq→der mientras la taza sale -->
+                    <!-- Nombre del local: max-width revela izq→der empujando la taza -->
                     <span class="intro-brand-text" id="intro-brand">Kafe</span>
-                    <!-- Taza CSS pura: aparece, se llena, echa vapor, sale a la derecha -->
+                    <!-- Taza CSS pura: aparece, se llena, echa vapor, se queda al lado -->
                     <div class="intro-cup" id="intro-cup">
                         <div class="intro-steam">
                             <span class="steam-line"></span>
@@ -142,6 +145,7 @@
                         <div class="intro-cup-saucer"></div>
                     </div>
                 </div>
+                <p class="intro-tagline" id="intro-tagline">— Est. 2025 —</p>
             </div>
         </div>
 
