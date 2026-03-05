@@ -11,6 +11,8 @@
 /* =====================================================
    TRADUCCIONES
    ===================================================== */
+document.documentElement.classList.add('js');
+
 const translations = {
   es: {
     'nav.inicio': 'Inicio',
