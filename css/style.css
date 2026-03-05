@@ -934,6 +934,21 @@ ul {
   background: var(--gris-medio);
 }
 
+@media (hover: hover) {
+  .menu-item {
+    border-radius: 6px;
+    padding-inline: 0.625rem;
+    margin-inline: -0.625rem;
+    transition: transform 0.2s ease-out, box-shadow 0.2s ease-out, background 0.2s ease-out;
+  }
+
+  .menu-item:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 16px rgba(13, 33, 55, 0.08);
+    background: rgba(59, 158, 255, 0.04);
+  }
+}
+
 .menu-subcat {
   font-size: 10px;
   font-weight: 700;
