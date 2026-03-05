@@ -989,6 +989,25 @@ ul {
   }
 }
 
+/* Micro-animación en precios al hacer scroll */
+.carta-block .menu-item-price {
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.35s ease-out, transform 0.35s ease-out;
+}
+
+.carta-block.visible .menu-item-price {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.carta-block.visible .menu-item:nth-child(1) .menu-item-price { transition-delay: 0.5s; }
+.carta-block.visible .menu-item:nth-child(2) .menu-item-price { transition-delay: 0.65s; }
+.carta-block.visible .menu-item:nth-child(3) .menu-item-price { transition-delay: 0.8s; }
+.carta-block.visible .menu-item:nth-child(4) .menu-item-price { transition-delay: 0.95s; }
+.carta-block.visible .menu-item:nth-child(5) .menu-item-price { transition-delay: 1.1s; }
+.carta-block.visible .menu-item:nth-child(6) .menu-item-price { transition-delay: 1.25s; }
+
 .menu-subcat {
   font-size: 10px;
   font-weight: 700;
