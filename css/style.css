@@ -2084,9 +2084,13 @@ fieldset.form-group {
     justify-content: center;
   }
 
+  .nosotros {
+    padding: 4rem 0;
+  }
+
   .nosotros-grid {
     grid-template-columns: 1fr;
-    gap: 3rem;
+    gap: 2rem;
   }
 
   .nosotros-img-wrap {
