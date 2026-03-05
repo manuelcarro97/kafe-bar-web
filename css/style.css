@@ -1310,8 +1310,9 @@ ul {
 }
 
 .info-card-icon {
-  font-size: 2rem;
   margin-bottom: 1rem;
+  color: var(--azul-claro);
+  display: flex;
 }
 
 .info-card-title {
