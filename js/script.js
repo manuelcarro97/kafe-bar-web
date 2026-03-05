@@ -411,7 +411,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* ---------- 5. Toggle de idioma ---------- */
   langToggle.addEventListener('click', () => {
-    applyLanguage(currentLang === 'es' ? 'gl' : 'es');
+    const newLang = currentLang === 'es' ? 'gl' : 'es';
+    applyLanguage(newLang);
+    if (typeof gtag !== 'undefined') gtag('event', 'language_change', { language: newLang });
   });
 
   /* ---------- 6. Animaciones de entrada fade-up ---------- */
@@ -496,6 +498,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Inicializar idioma
   applyLanguage(currentLang);
+
+  /* ---------- Analytics: clicks en enlaces clave ---------- */
+  if (typeof gtag !== 'undefined') {
+    document.querySelectorAll('a[href^="tel:"]').forEach(el => {
+      el.addEventListener('click', () => gtag('event', 'click_phone'));
+    });
+    document.querySelectorAll('a[href^="mailto:"]').forEach(el => {
+      el.addEventListener('click', () => gtag('event', 'click_email'));
+    });
+    document.querySelectorAll('a[href*="instagram.com"]').forEach(el => {
+      el.addEventListener('click', () => gtag('event', 'click_instagram'));
+    });
+    document.querySelectorAll('a[href*="maps.google.com"]').forEach(el => {
+      el.addEventListener('click', () => gtag('event', 'click_maps'));
+    });
+    document.querySelectorAll('a[href*="menu-printable"]').forEach(el => {
+      el.addEventListener('click', () => gtag('event', 'view_full_menu'));
+    });
+  }
 
   /* ---------- 8. Carrusel de Reseñas (scroll JS + drag) ---------- */
   (function initReviewsMarquee() {
@@ -674,6 +695,7 @@ document.addEventListener('DOMContentLoaded', () => {
       modal.classList.add('active');
       modal.setAttribute('aria-hidden', 'false');
       document.body.style.overflow = 'hidden';
+      if (typeof gtag !== 'undefined') gtag('event', 'reservation_open');
       // Fecha mínima = hoy, pre-seleccionar hoy
       const today = new Date().toISOString().split('T')[0];
       fechaInput.min = today;
@@ -797,6 +819,12 @@ document.addEventListener('DOMContentLoaded', () => {
           return response.json();
         })
         .then(data => {
+          if (typeof gtag !== 'undefined') {
+            gtag('event', 'reservation_submit', {
+              personas: document.getElementById('reserva-personas').value,
+              tipo: document.querySelector('input[name="tipo-comida"]:checked').value
+            });
+          }
           // Mostrar confirmación
           form.hidden = true;
           confirmacion.hidden = false;

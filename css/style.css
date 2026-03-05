@@ -1406,6 +1406,22 @@ ul {
   margin-inline: auto;
 }
 
+.footer-credit {
+  margin-top: 0.25rem;
+  font-size: 0.72rem;
+  color: rgba(255, 255, 255, 0.25);
+}
+
+.footer-credit a {
+  color: rgba(255, 255, 255, 0.4);
+  text-decoration: none;
+  transition: color var(--transition);
+}
+
+.footer-credit a:hover {
+  color: rgba(255, 255, 255, 0.7);
+}
+
 /* =====================================================
    ANIMACIONES ENTRADA (Intersection Observer)
    ===================================================== */

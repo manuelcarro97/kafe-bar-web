@@ -16,6 +16,9 @@ firebase-debug.*.log
 
 # Docs / planes internos
 
+# Screenshots temporales (Playwright MCP)
+docs/screenshots/
+
 # Tooling logs
 error_dump.html
 
