@@ -694,6 +694,18 @@ ul {
 .nosotros {
   padding: 7rem 0;
   background: var(--blanco);
+  position: relative;
+}
+
+.nosotros::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 80px;
+  background: linear-gradient(to bottom, transparent, var(--azul-oscuro));
+  pointer-events: none;
 }
 
 .nosotros-grid {
@@ -817,6 +829,19 @@ ul {
 .carta-section {
   padding: 7rem 0;
   background: var(--gris-claro);
+  position: relative;
+}
+
+.carta-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 80px;
+  background: linear-gradient(to bottom, var(--azul-oscuro), transparent);
+  pointer-events: none;
+  z-index: 1;
 }
 
 .carta-header {
@@ -1200,6 +1225,18 @@ ul {
   background-image:
     radial-gradient(rgba(59, 158, 255, 0.08) 1px, transparent 1px);
   background-size: 32px 32px;
+}
+
+.info-top-bg::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 80px;
+  background: linear-gradient(to bottom, var(--blanco), transparent);
+  pointer-events: none;
+  z-index: 2;
 }
 
 .info-header {
