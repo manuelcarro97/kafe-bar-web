@@ -2180,6 +2180,10 @@ fieldset.form-group {
   }
 
   /* Intro animación móvil */
+  .hero-intro {
+    padding-top: 60px; /* compensa la cabecera fija para centrar en el área visible */
+  }
+
   .intro-logo {
     transform: none !important;
     gap: 8px;
