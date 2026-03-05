@@ -850,7 +850,9 @@ document.addEventListener('DOMContentLoaded', () => {
               tipo: document.querySelector('input[name="tipo-comida"]:checked').value
             });
           }
-          // Mostrar confirmación
+          // Limpiar error si lo había y mostrar confirmación
+          const errEl = document.getElementById('reserva-error');
+          if (errEl) errEl.hidden = true;
           form.hidden = true;
           confirmacion.hidden = false;
           enConfirmacion = true;
@@ -864,7 +866,11 @@ document.addEventListener('DOMContentLoaded', () => {
           console.error("Error reserva:", error);
           btnEnviar.disabled = false;
           btnEnviar.textContent = 'Enviar Reserva →';
-          alert('Error al enviar. Inténtalo de nuevo o llama al 981 31 82 60.');
+          const errEl = document.getElementById('reserva-error');
+          if (errEl) {
+            errEl.textContent = 'Error al enviar. Inténtalo de nuevo o llama al 981 31 82 60.';
+            errEl.hidden = false;
+          }
         });
     });
 

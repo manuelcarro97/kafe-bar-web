@@ -1540,6 +1540,16 @@ ul {
 /* =====================================================
    MODAL RESERVA
    ===================================================== */
+
+.form-error {
+  color: #c0392b;
+  background: #fdf0ef;
+  border: 1px solid #e8b4b0;
+  border-radius: var(--radius);
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  margin-bottom: 0.75rem;
+}
 .modal-overlay {
   position: fixed;
   inset: 0;
