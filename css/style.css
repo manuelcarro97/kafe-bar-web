@@ -2085,12 +2085,12 @@ fieldset.form-group {
   }
 
   .nosotros {
-    padding: 4rem 0;
+    padding: 2.5rem 0;
   }
 
   .nosotros-grid {
     grid-template-columns: 1fr;
-    gap: 2rem;
+    gap: 1.5rem;
   }
 
   .nosotros-img-wrap {
@@ -2098,7 +2098,7 @@ fieldset.form-group {
   }
 
   .nosotros-img {
-    aspect-ratio: 3/2;
+    aspect-ratio: 16/9;
   }
 
   .nosotros-badge {
