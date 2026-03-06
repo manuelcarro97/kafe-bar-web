@@ -2085,7 +2085,7 @@ fieldset.form-group {
   }
 
   .nosotros {
-    padding: 1rem 0;
+    padding: 3rem 0 2rem;
   }
 
   .nosotros-grid {
@@ -2095,6 +2095,11 @@ fieldset.form-group {
 
   .nosotros-img-wrap {
     transform: translateX(0);
+    order: 2;
+  }
+
+  .nosotros-content {
+    order: 1;
   }
 
   .nosotros-img {
