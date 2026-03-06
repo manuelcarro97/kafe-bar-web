@@ -2085,7 +2085,7 @@ fieldset.form-group {
   }
 
   .nosotros {
-    padding: 2.5rem 0;
+    padding: 1rem 0;
   }
 
   .nosotros-grid {
@@ -2098,10 +2098,7 @@ fieldset.form-group {
   }
 
   .nosotros-img {
-    aspect-ratio: unset;
-    max-height: 220px;
-    width: 100%;
-    object-fit: cover;
+    aspect-ratio: 4/3;
   }
 
   .nosotros-badge {
@@ -2191,9 +2188,12 @@ fieldset.form-group {
      Al fijar height en lugar de depender del parent, el flex centering
      actúa sobre exactamente lo que el usuario ve, no sobre el hero completo. */
   .hero-intro {
-    height: 100vh;    /* fallback */
-    height: 100svh;   /* viewport real con URL bar visible */
-    bottom: auto;     /* anula el bottom: 0 de inset para que height tenga efecto */
+    height: 100vh;
+    /* fallback */
+    height: 100svh;
+    /* viewport real con URL bar visible */
+    bottom: auto;
+    /* anula el bottom: 0 de inset para que height tenga efecto */
   }
 
   .intro-logo {
@@ -2226,9 +2226,17 @@ fieldset.form-group {
     width: 3px;
   }
 
-  .steam-line:nth-child(1) { height: 14px; }
-  .steam-line:nth-child(2) { height: 21px; }
-  .steam-line:nth-child(3) { height: 16px; }
+  .steam-line:nth-child(1) {
+    height: 14px;
+  }
+
+  .steam-line:nth-child(2) {
+    height: 21px;
+  }
+
+  .steam-line:nth-child(3) {
+    height: 16px;
+  }
 
   .intro-cup-body {
     width: 66px;
