@@ -13,10 +13,9 @@ firebase-debug.*.log
 # Cloudflare
 .wrangler/
 
+# Editor / tooling config
 
-# Docs / planes internos
-
-# Screenshots temporales (Playwright MCP)
+# Docs internos
 docs/screenshots/
 
 # Tooling logs
