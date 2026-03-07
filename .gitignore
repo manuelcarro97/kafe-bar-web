@@ -13,12 +13,12 @@ firebase-debug.*.log
 # Cloudflare
 .wrangler/
 
-# Editor / tooling config
+# Local config
 
 # Docs internos
 docs/screenshots/
 
-# Tooling logs
+# Local tooling
 error_dump.html
 
 # OS
