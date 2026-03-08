@@ -84,10 +84,11 @@ const HTML_FILE = path.join(__dirname, '..', 'index.html');
             await reviewsTab.waitFor({ state: 'attached', timeout: 15000 });
         } catch (e) {
             console.error('ERROR: No se encontró la pestaña de reseñas.');
-            console.log('--- DUMP DE LA PÁGINA ---');
+            console.log('URL en el momento del error: ' + page.url());
             const html = await page.content();
             fs.writeFileSync('error_dump.html', html);
-            console.log('HTML guardado en error_dump.html');
+            await page.screenshot({ path: 'error_screenshot.png', fullPage: true });
+            console.log('HTML y captura guardados.');
             throw e;
         }
 

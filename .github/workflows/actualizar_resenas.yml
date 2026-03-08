@@ -35,7 +35,9 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: error-dump
-          path: error_dump.html
+          path: |
+            error_dump.html
+            error_screenshot.png
 
       - name: Hacer commit y push del nuevo index.html
         run: |
