@@ -1,0 +1,42 @@
+name: Actualizar Reseñas Semanal
+
+on:
+  schedule:
+    # Se ejecuta todos los lunes a las 08:00 UTC
+    - cron: '0 8 * * 1'
+  workflow_dispatch: # Botón manual para pruebas
+
+permissions:
+  contents: write
+
+jobs:
+  scrape-y-guarda:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Descargar el código
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Instalar dependencias y Playwright
+        run: |
+          npm ci
+          npx playwright install --with-deps chromium
+
+      - name: Ejecutar el scraper (con pantalla virtual)
+        run: xvfb-run --auto-servernum -- node scripts/scrape-reviews.js
+
+      - name: Hacer commit y push del nuevo index.html
+        run: |
+          git config --global user.name "GitHub Actions Bot"
+          git config --global user.email "actions@github.com"
+          git add index.html
+          git diff --staged --quiet || git commit -m "Actualizar resenas de Google Maps"
+          git push
+
+      - name: Deploy a Firebase Hosting
+        run: npx firebase-tools deploy --only hosting --token "${{ secrets.FIREBASE_TOKEN }}" --project kafe-143b5

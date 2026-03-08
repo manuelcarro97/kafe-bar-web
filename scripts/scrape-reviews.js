@@ -187,7 +187,7 @@ const HTML_FILE = path.join(__dirname, '..', 'index.html');
                     validReviews.push({ authorName, dateText: formatDate(dateText), reviewText, rating, initials });
                 }
 
-                if (validReviews.length === 10) break;
+                if (validReviews.length === 15) break;
             } catch (err) {
                 // ignorar
             }
