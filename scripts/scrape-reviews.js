@@ -259,7 +259,9 @@ const HTML_FILE = path.join(__dirname, '..', 'index.html');
 
     } catch (error) {
         console.error('Error durante el scraping:', error);
-    } finally {
         await browser.close();
+        process.exit(1);
+    } finally {
+        await browser.close().catch(() => {});
     }
 })();
