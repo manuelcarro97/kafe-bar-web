@@ -30,6 +30,13 @@ jobs:
       - name: Ejecutar el scraper (con pantalla virtual)
         run: xvfb-run --auto-servernum -- node scripts/scrape-reviews.js
 
+      - name: Subir HTML de error si falló (para diagnóstico)
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: error-dump
+          path: error_dump.html
+
       - name: Hacer commit y push del nuevo index.html
         run: |
           git config --global user.name "GitHub Actions Bot"

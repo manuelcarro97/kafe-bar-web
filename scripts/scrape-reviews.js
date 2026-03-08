@@ -56,23 +56,19 @@ const HTML_FILE = path.join(__dirname, '..', 'index.html');
         // 1. ACEPTAR COOKIES
         try {
             console.log('Comprobando diálogo de cookies...');
-            // Esperar un poco a que cargue la redirección inicial
             await page.waitForTimeout(3000);
-            if (page.url().includes('consent.google')) {
-                console.log('Página de cookies detectada, intentando aceptar...');
-                await page.evaluate(() => {
-                    const forms = Array.from(document.querySelectorAll('form'));
-                    for (const f of forms) {
-                        const btns = Array.from(f.querySelectorAll('button'));
-                        const accept = btns.find(b => b.innerText && (/aceptar todo|accept all/i).test(b.innerText));
-                        if (accept) {
-                            accept.click();
-                            return;
-                        }
-                    }
-                });
+            console.log('URL actual tras carga inicial: ' + page.url());
+
+            // Buscar botón de aceptar cookies en cualquier página (redirección o overlay)
+            const acceptBtn = page.locator('button').filter({ hasText: /aceptar todo|accept all/i }).first();
+            if (await acceptBtn.isVisible({ timeout: 5000 })) {
+                console.log('Botón de cookies encontrado, aceptando...');
+                await acceptBtn.click();
                 await page.waitForNavigation({ waitUntil: 'domcontentloaded', timeout: 15000 }).catch(() => { });
                 await page.waitForTimeout(3000);
+                console.log('URL tras aceptar cookies: ' + page.url());
+            } else {
+                console.log('No se detectó diálogo de cookies.');
             }
         } catch (e) {
             console.log('Error manejando cookies:', e.message);
