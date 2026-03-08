@@ -27,8 +27,8 @@ jobs:
           npm ci
           npx playwright install --with-deps chromium
 
-      - name: Ejecutar el scraper (con pantalla virtual)
-        run: xvfb-run --auto-servernum -- node scripts/scrape-reviews.js
+      - name: Ejecutar el scraper
+        run: node scripts/scrape-reviews.js
 
       - name: Subir HTML de error si falló (para diagnóstico)
         if: failure()

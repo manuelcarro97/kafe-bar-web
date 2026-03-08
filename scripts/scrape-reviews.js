@@ -36,7 +36,7 @@ const HTML_FILE = path.join(__dirname, '..', 'index.html');
     console.log('Iniciando extracción de reseñas de Google Maps...');
 
     // Abrir navegador en modo no-headless para evitar bloqueos de Google
-    const browser = await chromium.launch({ headless: false });
+    const browser = await chromium.launch({ headless: true });
     const context = await browser.newContext({
         viewport: { width: 1280, height: 800 },
         userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
