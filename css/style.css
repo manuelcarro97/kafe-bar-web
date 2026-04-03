@@ -2022,12 +2022,21 @@ fieldset.form-group {
   line-height: 1.5;
 }
 
+@keyframes flash-aviso {
+  0%, 100% { box-shadow: none; }
+  25%, 65%  { box-shadow: 0 0 0 2px rgba(192, 57, 43, 0.55); }
+}
+
 .confirmacion-aviso {
   background: var(--gris-claro);
   border-radius: var(--radius);
   padding: 1rem;
   margin-bottom: 1.5rem;
   text-align: left;
+}
+
+.confirmacion-aviso.flash {
+  animation: flash-aviso 0.9s ease;
 }
 
 .checkbox-label {
@@ -2049,6 +2058,12 @@ fieldset.form-group {
 .reserva-confirmacion .btn-primary {
   min-width: 160px;
   justify-content: center;
+}
+
+.btn-primary.btn-inactive {
+  opacity: 0.45;
+  cursor: not-allowed;
+  pointer-events: auto; /* permite recibir el click para mostrar el flash */
 }
 
 /* =====================================================

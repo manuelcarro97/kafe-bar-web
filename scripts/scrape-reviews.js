@@ -32,6 +32,10 @@ function formatDate(dateText) {
 const PLACE_URL = 'https://www.google.com/maps/place/Kafe/@43.3621449,-8.4155189,16z/data=!3m1!4b1!4m6!3m5!1s0xd2e7c8b9cfee109:0xe6b7c74afd0c9a75!8m2!3d43.3621449!4d-8.4155189!16s%2Fg%2F11_dr77dp?hl=es';
 const HTML_FILE = path.join(__dirname, '..', 'index.html');
 
+const TIMEOUT_NAV = 60000;     // carga de página completa
+const TIMEOUT_ELEMENT = 15000; // esperar elementos de UI
+const TIMEOUT_SHORT = 5000;    // elementos rápidos / visibilidad
+
 (async () => {
     console.log('Iniciando extracción de reseñas de Google Maps...');
 
@@ -51,7 +55,7 @@ const HTML_FILE = path.join(__dirname, '..', 'index.html');
 
     try {
         console.log(`Navegando a ${PLACE_URL}...`);
-        await page.goto(PLACE_URL, { waitUntil: 'domcontentloaded', timeout: 60000 });
+        await page.goto(PLACE_URL, { waitUntil: 'domcontentloaded', timeout: TIMEOUT_NAV });
 
         // 1. ACEPTAR COOKIES
         try {
@@ -61,10 +65,10 @@ const HTML_FILE = path.join(__dirname, '..', 'index.html');
 
             // Buscar botón de aceptar cookies en cualquier página (redirección o overlay)
             const acceptBtn = page.locator('button').filter({ hasText: /aceptar todo|accept all/i }).first();
-            if (await acceptBtn.isVisible({ timeout: 5000 })) {
+            if (await acceptBtn.isVisible({ timeout: TIMEOUT_SHORT })) {
                 console.log('Botón de cookies encontrado, aceptando...');
                 await acceptBtn.click();
-                await page.waitForNavigation({ waitUntil: 'domcontentloaded', timeout: 15000 }).catch(() => { });
+                await page.waitForNavigation({ waitUntil: 'domcontentloaded', timeout: TIMEOUT_ELEMENT }).catch(() => { });
                 await page.waitForTimeout(3000);
                 console.log('URL tras aceptar cookies: ' + page.url());
             } else {
@@ -81,12 +85,12 @@ const HTML_FILE = path.join(__dirname, '..', 'index.html');
         try {
             // Intentar ambos selectores
             const reviewsTab = page.getByRole('tab', { name: /Reseñas/i }).or(page.locator('button:has-text("Reseñas")')).first();
-            await reviewsTab.waitFor({ state: 'attached', timeout: 15000 });
+            await reviewsTab.waitFor({ state: 'attached', timeout: TIMEOUT_ELEMENT });
         } catch (e) {
             console.error('ERROR: No se encontró la pestaña de reseñas.');
             console.log('URL en el momento del error: ' + page.url());
             const html = await page.content();
-            fs.writeFileSync('error_dump.html', html);
+            await fs.promises.writeFile('error_dump.html', html);
             await page.screenshot({ path: 'error_screenshot.png', fullPage: true });
             console.log('HTML y captura guardados.');
             throw e;
@@ -128,7 +132,7 @@ const HTML_FILE = path.join(__dirname, '..', 'index.html');
         console.log('Ordenando por Más Recientes...');
         try {
             const sortBtn = page.getByRole('button', { name: /Ordenar reseñas|Sort reviews/i });
-            await sortBtn.waitFor({ state: 'visible', timeout: 5000 });
+            await sortBtn.waitFor({ state: 'visible', timeout: TIMEOUT_SHORT });
             await sortBtn.click();
             await page.waitForTimeout(1000);
 
@@ -254,7 +258,7 @@ const HTML_FILE = path.join(__dirname, '..', 'index.html');
         }
         htmlContent = htmlContent.replace(reviewsRegex, `$1\n${cardsHtml}\n$3`);
 
-        fs.writeFileSync(HTML_FILE, htmlContent, 'utf-8');
+        await fs.promises.writeFile(HTML_FILE, htmlContent, 'utf-8');
         console.log('¡index.html actualizado correctamente con datos de Google Maps!');
 
     } catch (error) {

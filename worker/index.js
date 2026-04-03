@@ -1,3 +1,5 @@
+const RESEND_TIMEOUT_MS = 10000;
+
 export default {
   async fetch(request, env) {
     // CORS preflight
@@ -25,6 +27,7 @@ export default {
           "Authorization": `Bearer ${env.RESEND_API_KEY}`,
           "Content-Type": "application/json",
         },
+        signal: AbortSignal.timeout(RESEND_TIMEOUT_MS),
         body: JSON.stringify({
           from: "Reservas Kafe <onboarding@resend.dev>",
           to: "reservaskafebar@gmail.com",

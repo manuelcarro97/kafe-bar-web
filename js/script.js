@@ -204,12 +204,15 @@ const translations = {
    FUNCIÓN APLICAR IDIOMA
    ===================================================== */
 let currentLang = 'es';
+let i18nElements = null;
+let langOpts = null;
 
 function applyLanguage(lang) {
   currentLang = lang;
   const t = translations[lang];
 
-  document.querySelectorAll('[data-i18n]').forEach(el => {
+  if (!i18nElements) i18nElements = document.querySelectorAll('[data-i18n]');
+  i18nElements.forEach(el => {
     const key = el.getAttribute('data-i18n');
     if (t[key] !== undefined) {
       el.innerHTML = t[key];
@@ -217,8 +220,8 @@ function applyLanguage(lang) {
   });
 
   // Mover clase active entre las dos opciones
-  const opts = document.querySelectorAll('#lang-toggle .lang-opt');
-  opts.forEach((opt, i) => {
+  if (!langOpts) langOpts = document.querySelectorAll('#lang-toggle .lang-opt');
+  langOpts.forEach((opt, i) => {
     opt.classList.toggle('active', (i === 0 && lang === 'es') || (i === 1 && lang === 'gl'));
   });
 
@@ -356,19 +359,20 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   /* ---------- 4. Menú hamburguesa móvil ---------- */
+  const hamburgerSpans = hamburger.querySelectorAll('span');
+
   hamburger.addEventListener('click', () => {
     const isOpen = navList.classList.toggle('open');
     hamburger.setAttribute('aria-expanded', String(isOpen));
 
-    const spans = hamburger.querySelectorAll('span');
     if (isOpen) {
-      spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
-      spans[1].style.opacity = '0';
-      spans[2].style.transform = 'rotate(-45deg) translate(5px, -5px)';
+      hamburgerSpans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+      hamburgerSpans[1].style.opacity = '0';
+      hamburgerSpans[2].style.transform = 'rotate(-45deg) translate(5px, -5px)';
     } else {
-      spans[0].style.transform = '';
-      spans[1].style.opacity = '';
-      spans[2].style.transform = '';
+      hamburgerSpans[0].style.transform = '';
+      hamburgerSpans[1].style.opacity = '';
+      hamburgerSpans[2].style.transform = '';
     }
   });
 
@@ -378,7 +382,7 @@ document.addEventListener('DOMContentLoaded', () => {
       !hamburger.contains(e.target)) {
       navList.classList.remove('open');
       hamburger.setAttribute('aria-expanded', 'false');
-      hamburger.querySelectorAll('span').forEach(s => {
+      hamburgerSpans.forEach(s => {
         s.style.transform = '';
         s.style.opacity = '';
       });
@@ -485,21 +489,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* ---------- Analytics: clicks en enlaces clave ---------- */
   if (typeof gtag !== 'undefined') {
-    document.querySelectorAll('a[href^="tel:"]').forEach(el => {
-      el.addEventListener('click', () => gtag('event', 'click_phone'));
-    });
-    document.querySelectorAll('a[href^="mailto:"]').forEach(el => {
-      el.addEventListener('click', () => gtag('event', 'click_email'));
-    });
-    document.querySelectorAll('a[href*="instagram.com"]').forEach(el => {
-      el.addEventListener('click', () => gtag('event', 'click_instagram'));
-    });
-    document.querySelectorAll('a[href*="maps.google.com"]').forEach(el => {
-      el.addEventListener('click', () => gtag('event', 'click_maps'));
-    });
-    document.querySelectorAll('a[href*="menu-printable"]').forEach(el => {
-      el.addEventListener('click', () => gtag('event', 'view_full_menu'));
-    });
+    const trackLinks = (selector, eventName) => {
+      document.querySelectorAll(selector).forEach(el => {
+        el.addEventListener('click', () => gtag('event', eventName));
+      });
+    };
+    trackLinks('a[href^="tel:"]', 'click_phone');
+    trackLinks('a[href^="mailto:"]', 'click_email');
+    trackLinks('a[href*="instagram.com"]', 'click_instagram');
+    trackLinks('a[href*="maps.google.com"]', 'click_maps');
+    trackLinks('a[href*="menu-printable"]', 'view_full_menu');
   }
 
   /* ---------- 8. Carrusel de Reseñas (scroll JS + drag) ---------- */
@@ -696,17 +695,39 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Cerrar con botón X (solo si no estamos en confirmación)
     closeBtn.addEventListener('click', function () {
-      if (!enConfirmacion) closeModal();
+      if (enConfirmacion) {
+        if (!document.getElementById('check-entendido').checked) flashAviso();
+      } else {
+        closeModal();
+      }
     });
+
+    const avisoEl = document.querySelector('.confirmacion-aviso');
+    function flashAviso() {
+      avisoEl.classList.remove('flash');
+      void avisoEl.offsetWidth; // reinicia la animación si ya está activa
+      avisoEl.classList.add('flash');
+      avisoEl.addEventListener('animationend', () => avisoEl.classList.remove('flash'), { once: true });
+    }
 
     // Cerrar con click fuera (solo si no estamos en confirmación)
     modal.addEventListener('click', function (e) {
-      if (e.target === modal && !enConfirmacion) closeModal();
+      if (e.target !== modal) return;
+      if (enConfirmacion) {
+        if (!document.getElementById('check-entendido').checked) flashAviso();
+      } else {
+        closeModal();
+      }
     });
 
     // Cerrar con Escape (solo si no estamos en confirmación)
     document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && modal.classList.contains('active') && !enConfirmacion) closeModal();
+      if (e.key !== 'Escape' || !modal.classList.contains('active')) return;
+      if (enConfirmacion) {
+        if (!document.getElementById('check-entendido').checked) flashAviso();
+      } else {
+        closeModal();
+      }
     });
 
     // Regenerar horarios al cambiar fecha
@@ -725,9 +746,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (limpio.length > 7) formateado += ' ' + limpio.slice(7, 9);
       this.value = formateado;
       // Validar
-      if (limpio.length === 0) {
-        this.classList.remove('invalid');
-      } else if (limpio.length === 9 && /^[679]/.test(limpio)) {
+      if (limpio.length === 0 || (limpio.length === 9 && /^[679]/.test(limpio))) {
         this.classList.remove('invalid');
       } else {
         this.classList.add('invalid');
@@ -835,11 +854,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Checkbox habilita botón de cerrar
     document.getElementById('check-entendido').addEventListener('change', function () {
-      btnCerrarConfirmacion.disabled = !this.checked;
+      btnCerrarConfirmacion.classList.toggle('btn-inactive', !this.checked);
     });
 
     // Cerrar confirmación
     btnCerrarConfirmacion.addEventListener('click', function () {
+      if (!document.getElementById('check-entendido').checked) {
+        flashAviso();
+        return;
+      }
       enConfirmacion = false;
       closeBtn.style.display = '';
       closeModal();
@@ -848,7 +871,7 @@ document.addEventListener('DOMContentLoaded', () => {
         form.hidden = false;
         confirmacion.hidden = true;
         document.getElementById('check-entendido').checked = false;
-        btnCerrarConfirmacion.disabled = true;
+        btnCerrarConfirmacion.classList.add('btn-inactive');
       }, 300);
     });
   })();
