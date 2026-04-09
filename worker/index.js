@@ -1,6 +1,32 @@
 const RESEND_TIMEOUT_MS = 10000;
 const ALLOWED_ORIGIN = "https://kaferestaurant.com";
 
+function escapeHtml(str) {
+  return String(str ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#x27;');
+}
+
+function validateInput({ nombre, telefono, fecha, hora, personas, tipo }) {
+  if (!nombre || typeof nombre !== 'string' || nombre.trim().length === 0 || nombre.length > 100)
+    return 'nombre inválido';
+  if (!telefono || !/^\d{9}$/.test(String(telefono).replace(/\s+/g, '')))
+    return 'telefono inválido';
+  if (!fecha || !/^\d{2}-\d{2}-\d{4}$/.test(String(fecha)))
+    return 'fecha inválida';
+  if (!hora || !/^\d{2}:\d{2}$/.test(String(hora)))
+    return 'hora inválida';
+  const p = Number(personas);
+  if (!Number.isInteger(p) || p < 1 || p > 20)
+    return 'personas inválido';
+  if (tipo !== 'De Karta' && tipo !== 'Menú personalizado')
+    return 'tipo inválido';
+  return null;
+}
+
 export default {
   async fetch(request, env) {
     // CORS preflight
@@ -21,6 +47,14 @@ export default {
 
     const { nombre, telefono, fecha, hora, personas, tipo } = await request.json();
 
+    const validationError = validateInput({ nombre, telefono, fecha, hora, personas, tipo });
+    if (validationError) {
+      return Response.json({ error: validationError }, {
+        status: 400,
+        headers: { "Access-Control-Allow-Origin": ALLOWED_ORIGIN },
+      });
+    }
+
     try {
       const res = await fetch("https://api.resend.com/emails", {
         method: "POST",
@@ -32,7 +66,7 @@ export default {
         body: JSON.stringify({
           from: "Reservas Kafe <onboarding@resend.dev>",
           to: "reservaskafebar@gmail.com",
-          subject: `Nueva Reserva: ${nombre} — ${fecha}`,
+          subject: `Nueva Reserva: ${escapeHtml(nombre)} — ${escapeHtml(fecha)}`,
           html: `
 <!DOCTYPE html>
 <html>
@@ -56,27 +90,27 @@ export default {
               <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;">
                 <tr>
                   <td style="padding:12px 16px;background-color:#f4f6f9;border-bottom:1px solid #e8ecf2;color:#4a6080;font-size:13px;width:120px;">Nombre</td>
-                  <td style="padding:12px 16px;background-color:#f4f6f9;border-bottom:1px solid #e8ecf2;color:#0d2137;font-size:14px;font-weight:600;">${nombre}</td>
+                  <td style="padding:12px 16px;background-color:#f4f6f9;border-bottom:1px solid #e8ecf2;color:#0d2137;font-size:14px;font-weight:600;">${escapeHtml(nombre)}</td>
                 </tr>
                 <tr>
                   <td style="padding:12px 16px;border-bottom:1px solid #e8ecf2;color:#4a6080;font-size:13px;">Teléfono</td>
-                  <td style="padding:12px 16px;border-bottom:1px solid #e8ecf2;color:#0d2137;font-size:14px;font-weight:600;">${telefono}</td>
+                  <td style="padding:12px 16px;border-bottom:1px solid #e8ecf2;color:#0d2137;font-size:14px;font-weight:600;">${escapeHtml(telefono)}</td>
                 </tr>
                 <tr>
                   <td style="padding:12px 16px;background-color:#f4f6f9;border-bottom:1px solid #e8ecf2;color:#4a6080;font-size:13px;">Fecha</td>
-                  <td style="padding:12px 16px;background-color:#f4f6f9;border-bottom:1px solid #e8ecf2;color:#0d2137;font-size:14px;font-weight:600;">${fecha}</td>
+                  <td style="padding:12px 16px;background-color:#f4f6f9;border-bottom:1px solid #e8ecf2;color:#0d2137;font-size:14px;font-weight:600;">${escapeHtml(fecha)}</td>
                 </tr>
                 <tr>
                   <td style="padding:12px 16px;border-bottom:1px solid #e8ecf2;color:#4a6080;font-size:13px;">Hora</td>
-                  <td style="padding:12px 16px;border-bottom:1px solid #e8ecf2;color:#0d2137;font-size:14px;font-weight:600;">${hora}</td>
+                  <td style="padding:12px 16px;border-bottom:1px solid #e8ecf2;color:#0d2137;font-size:14px;font-weight:600;">${escapeHtml(hora)}</td>
                 </tr>
                 <tr>
                   <td style="padding:12px 16px;background-color:#f4f6f9;border-bottom:1px solid #e8ecf2;color:#4a6080;font-size:13px;">Personas</td>
-                  <td style="padding:12px 16px;background-color:#f4f6f9;border-bottom:1px solid #e8ecf2;color:#0d2137;font-size:14px;font-weight:600;">${personas}</td>
+                  <td style="padding:12px 16px;background-color:#f4f6f9;border-bottom:1px solid #e8ecf2;color:#0d2137;font-size:14px;font-weight:600;">${escapeHtml(String(personas))}</td>
                 </tr>
                 <tr>
                   <td style="padding:12px 16px;border-bottom:1px solid #e8ecf2;color:#4a6080;font-size:13px;">Tipo</td>
-                  <td style="padding:12px 16px;border-bottom:1px solid #e8ecf2;color:#0d2137;font-size:14px;font-weight:600;">${tipo}</td>
+                  <td style="padding:12px 16px;border-bottom:1px solid #e8ecf2;color:#0d2137;font-size:14px;font-weight:600;">${escapeHtml(tipo)}</td>
                 </tr>
               </table>
             </td>
