@@ -318,7 +318,7 @@ ul {
   font-size: 0.9rem;
   font-weight: 500;
   color: var(--texto-suave);
-  padding: 0.5rem 0.875rem;
+  padding: 0.5rem 0.55rem;
   border-radius: 50px;
   position: relative;
   transition: color var(--transition), background var(--transition);
