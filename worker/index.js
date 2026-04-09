@@ -37,6 +37,7 @@ export default {
           "Access-Control-Allow-Origin": ALLOWED_ORIGIN,
           "Access-Control-Allow-Methods": "POST",
           "Access-Control-Allow-Headers": "Content-Type",
+          "Vary": "Origin",
         },
       });
     }
@@ -140,7 +141,7 @@ export default {
       const data = await res.json();
 
       if (data.error) {
-        return Response.json({ error: data.error.message }, {
+        return Response.json({ error: "Error al enviar la reserva" }, {
           status: 400,
           headers: {
             "Access-Control-Allow-Origin": ALLOWED_ORIGIN,
