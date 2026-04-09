@@ -612,7 +612,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!modal || !form) return;
 
     // Función de reserva apuntando al Cloudflare Worker
-    const API_URL = 'https://kafe-reservas.reservaskafebar.workers.dev';
+    const API_URL = 'https://your-worker.your-account.workers.dev';
 
     const confirmacion = document.getElementById('reserva-confirmacion');
     const btnCerrarConfirmacion = document.getElementById('btn-cerrar-confirmacion');
