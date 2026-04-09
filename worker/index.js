@@ -1,5 +1,5 @@
 const RESEND_TIMEOUT_MS = 10000;
-const ALLOWED_ORIGIN = "https://kaferestaurant.com";
+const ALLOWED_ORIGIN = "https://kafe-143b5.web.app";
 
 function escapeHtml(str) {
   return String(str ?? '')
