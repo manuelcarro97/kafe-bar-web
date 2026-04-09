@@ -7,7 +7,7 @@ export default {
       return new Response(null, {
         status: 204,
         headers: {
-          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Origin": "https://kaferestaurant.com",
           "Access-Control-Allow-Methods": "POST",
           "Access-Control-Allow-Headers": "Content-Type",
         },
@@ -99,17 +99,17 @@ export default {
       if (data.error) {
         return Response.json({ error: data.error.message }, {
           status: 400,
-          headers: { "Access-Control-Allow-Origin": "*" },
+          headers: { "Access-Control-Allow-Origin": "https://kaferestaurant.com" },
         });
       }
 
       return Response.json({ success: true }, {
-        headers: { "Access-Control-Allow-Origin": "*" },
+        headers: { "Access-Control-Allow-Origin": "https://kaferestaurant.com" },
       });
     } catch (error) {
       return Response.json({ error: error.message }, {
         status: 500,
-        headers: { "Access-Control-Allow-Origin": "*" },
+        headers: { "Access-Control-Allow-Origin": "https://kaferestaurant.com" },
       });
     }
   },
