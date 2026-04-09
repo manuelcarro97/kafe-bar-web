@@ -1,4 +1,5 @@
 const RESEND_TIMEOUT_MS = 10000;
+const ALLOWED_ORIGIN = "https://kaferestaurant.com";
 
 export default {
   async fetch(request, env) {
@@ -7,7 +8,7 @@ export default {
       return new Response(null, {
         status: 204,
         headers: {
-          "Access-Control-Allow-Origin": "https://kaferestaurant.com",
+          "Access-Control-Allow-Origin": ALLOWED_ORIGIN,
           "Access-Control-Allow-Methods": "POST",
           "Access-Control-Allow-Headers": "Content-Type",
         },
@@ -99,17 +100,26 @@ export default {
       if (data.error) {
         return Response.json({ error: data.error.message }, {
           status: 400,
-          headers: { "Access-Control-Allow-Origin": "https://kaferestaurant.com" },
+          headers: {
+            "Access-Control-Allow-Origin": ALLOWED_ORIGIN,
+            "Vary": "Origin",
+          },
         });
       }
 
       return Response.json({ success: true }, {
-        headers: { "Access-Control-Allow-Origin": "https://kaferestaurant.com" },
+        headers: {
+          "Access-Control-Allow-Origin": ALLOWED_ORIGIN,
+          "Vary": "Origin",
+        },
       });
     } catch (error) {
       return Response.json({ error: error.message }, {
         status: 500,
-        headers: { "Access-Control-Allow-Origin": "https://kaferestaurant.com" },
+        headers: {
+          "Access-Control-Allow-Origin": ALLOWED_ORIGIN,
+          "Vary": "Origin",
+        },
       });
     }
   },
