@@ -645,9 +645,14 @@ document.addEventListener('DOMContentLoaded', () => {
       horaLabel.textContent = 'Selecciona hora';
       horaLabel.classList.add('placeholder');
 
+      const now = new Date();
+      const isToday = fechaInput.value === now.toISOString().slice(0, 10);
+      const nowMinutes = isToday ? now.getHours() * 60 + now.getMinutes() : -1;
+
       for (let h = startHour; h <= endHour; h++) {
         for (let m = (h === startHour ? startMin : 0); m < 60; m += 30) {
           if (h === endHour && m > endMin) break;
+          if (isToday && h * 60 + m <= nowMinutes) continue;
           const hh = String(h).padStart(2, '0');
           const mm = String(m).padStart(2, '0');
           const val = hh + ':' + mm;
