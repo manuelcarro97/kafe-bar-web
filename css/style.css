@@ -318,7 +318,7 @@ ul {
   font-size: 0.9rem;
   font-weight: 500;
   color: var(--texto-suave);
-  padding: 0.5rem 0.55rem;
+  padding: 0.25rem 0.875rem;
   border-radius: 50px;
   position: relative;
   transition: color var(--transition), background var(--transition);
@@ -327,7 +327,7 @@ ul {
 .nav-link::after {
   content: '';
   position: absolute;
-  bottom: 4px;
+  bottom: 0;
   left: 50%;
   transform: translateX(-50%) scaleX(0);
   width: 16px;
@@ -1566,6 +1566,12 @@ ul {
   max-width: 240px;
 }
 
+.footer-social {
+  margin-top: 1.5rem;
+  display: flex;
+  gap: 0.75rem;
+}
+
 .footer h4 {
   font-family: var(--font-sans);
   font-size: 0.8rem;
@@ -2023,8 +2029,16 @@ fieldset.form-group {
 }
 
 @keyframes flash-aviso {
-  0%, 100% { box-shadow: none; }
-  25%, 65%  { box-shadow: 0 0 0 2px rgba(192, 57, 43, 0.55); }
+
+  0%,
+  100% {
+    box-shadow: none;
+  }
+
+  25%,
+  65% {
+    box-shadow: 0 0 0 2px rgba(192, 57, 43, 0.55);
+  }
 }
 
 .confirmacion-aviso {
@@ -2063,7 +2077,8 @@ fieldset.form-group {
 .btn-primary.btn-inactive {
   opacity: 0.45;
   cursor: not-allowed;
-  pointer-events: auto; /* permite recibir el click para mostrar el flash */
+  pointer-events: auto;
+  /* permite recibir el click para mostrar el flash */
 }
 
 /* =====================================================
