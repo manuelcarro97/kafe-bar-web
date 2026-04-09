@@ -45,13 +45,21 @@ export default {
       return new Response("Method Not Allowed", { status: 405 });
     }
 
-    const { nombre, telefono, fecha, hora, personas, tipo } = await request.json();
+    let nombre, telefono, fecha, hora, personas, tipo;
+    try {
+      ({ nombre, telefono, fecha, hora, personas, tipo } = await request.json());
+    } catch {
+      return Response.json({ error: "Petición inválida" }, {
+        status: 400,
+        headers: { "Access-Control-Allow-Origin": ALLOWED_ORIGIN, "Vary": "Origin" },
+      });
+    }
 
     const validationError = validateInput({ nombre, telefono, fecha, hora, personas, tipo });
     if (validationError) {
       return Response.json({ error: validationError }, {
         status: 400,
-        headers: { "Access-Control-Allow-Origin": ALLOWED_ORIGIN },
+        headers: { "Access-Control-Allow-Origin": ALLOWED_ORIGIN, "Vary": "Origin" },
       });
     }
 
@@ -147,8 +155,8 @@ export default {
           "Vary": "Origin",
         },
       });
-    } catch (error) {
-      return Response.json({ error: error.message }, {
+    } catch {
+      return Response.json({ error: "Error al procesar la reserva" }, {
         status: 500,
         headers: {
           "Access-Control-Allow-Origin": ALLOWED_ORIGIN,
