@@ -212,6 +212,13 @@ function applyLanguage(lang) {
   const t = translations[lang];
 
   if (!i18nElements) i18nElements = document.querySelectorAll('[data-i18n]');
+  // Se usa innerHTML (no textContent) porque algunas claves contienen HTML intencional:
+  // - 'hero.subtitle': <br /> para salto de línea
+  // - 'nosotros.title': <br /> y <em> para énfasis
+  // La fuente es el objeto `translations` hardcodeado en este mismo archivo,
+  // nunca datos externos, por lo que el riesgo XSS real es cero.
+  // IMPORTANTE: si en el futuro las traducciones vienen de una API o localStorage,
+  // hay que escapar los valores antes de asignarlos con innerHTML.
   i18nElements.forEach(el => {
     const key = el.getAttribute('data-i18n');
     if (t[key] !== undefined) {
