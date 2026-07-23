@@ -567,6 +567,10 @@ body {
   display: grid;
   grid-template-columns: 2fr 1fr;
   gap: 8px 10px;
+  /* Alinea los inputs por abajo: en filas de horario el campo bilingüe (Días,
+     con tags ES/GL) es más alto que el simple (Horas); así los inputs quedan
+     a la misma altura. En carta ambos campos son iguales, sin efecto. */
+  align-items: end;
 }
 
 @media (max-width: 480px) {

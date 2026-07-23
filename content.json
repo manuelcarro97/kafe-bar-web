@@ -571,20 +571,6 @@
         "gl": "As kociñas pechan 30 min antes do peche."
       }
     },
-    "horario": {
-      "lv": {
-        "es": "Lun – Vie",
-        "gl": "Lun – Ven"
-      },
-      "sab": {
-        "es": "Sábado",
-        "gl": "Sábado"
-      },
-      "dom": {
-        "es": "Domingo",
-        "gl": "Domingo"
-      }
-    },
     "card2": {
       "title": {
         "es": "Kontacto",
@@ -631,20 +617,6 @@
       "title": {
         "es": "Navegación",
         "gl": "Navegación"
-      }
-    },
-    "hours": {
-      "lv": {
-        "es": "Lun – Vie: 7:15 – 23:00",
-        "gl": "Lun – Ven: 7:15 – 23:00"
-      },
-      "sab": {
-        "es": "Sáb: 10:00 – 23:00",
-        "gl": "Sáb: 10:00 – 23:00"
-      },
-      "dom": {
-        "es": "Dom: 10:00 – 16:15",
-        "gl": "Dom: 10:00 – 16:15"
       }
     }
   },
@@ -800,5 +772,28 @@
     "desayunos": "imagenes/comida1.png",
     "postres": "imagenes/postre.png",
     "nosotros": "imagenes/duo.png"
-  }
+  },
+  "horario": [
+    {
+      "dias": {
+        "es": "Lun – Vie",
+        "gl": "Lun – Ven"
+      },
+      "horas": "7:15 – 23:00"
+    },
+    {
+      "dias": {
+        "es": "Sábado",
+        "gl": "Sábado"
+      },
+      "horas": "10:00 – 23:00"
+    },
+    {
+      "dias": {
+        "es": "Domingo",
+        "gl": "Domingo"
+      },
+      "horas": "10:00 – 16:15"
+    }
+  ]
 }

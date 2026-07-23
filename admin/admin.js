@@ -59,6 +59,11 @@ let contentLoaded = false;
 // (evita reconstruir todo el editor y perder el estado de otras secciones).
 let cartaBodyEl = null;
 
+// Referencia al <div class="kf-section-body"> de la sección "horario", para
+// poder re-renderizarla sola cuando se añaden/quitan filas (mismo patrón
+// que cartaBodyEl / rerenderCarta).
+let horarioBodyEl = null;
+
 // path (string) -> { blob, filename, originalValue }
 const imageEdits = new Map();
 
@@ -206,6 +211,7 @@ const SECTION_TITLES = {
   resenas: "Reseñas",
   site: "Sitio (SEO / metadatos)",
   images: "Imágenes",
+  horario: "Horario",
 };
 
 // Claves puramente estructurales que nunca se muestran como campo editable,
@@ -252,6 +258,7 @@ const CARTA_FIELD_LABELS = {
 function renderAllSections() {
   sectionsContainer.innerHTML = "";
   cartaBodyEl = null;
+  horarioBodyEl = null;
   for (const topKey of Object.keys(workingContent)) {
     // Reseñas: no se renderiza en el editor, pero se conserva intacta en
     // workingContent/originalContent (se actualiza por otro script).
@@ -270,12 +277,74 @@ function renderAllSections() {
     if (topKey === "carta") {
       cartaBodyEl = body;
       renderCartaSection(body, [topKey]);
+    } else if (topKey === "horario") {
+      horarioBodyEl = body;
+      renderHorarioSection(body, [topKey]);
     } else {
       renderNode(body, workingContent[topKey], [topKey], topKey, false);
     }
 
     sectionsContainer.appendChild(details);
   }
+}
+
+/**
+ * Re-renderiza SOLO el contenido de la sección "horario" (tras un add/remove
+ * de filas), igual que rerenderCarta() para "carta".
+ */
+function rerenderHorario() {
+  if (!horarioBodyEl) return;
+  renderHorarioSection(horarioBodyEl, ["horario"]);
+  flashSaveStatus();
+}
+
+/**
+ * Renderiza el bloque "horario": una fila editable por franja (días ES/GL +
+ * horas) con botón "−" para eliminarla, y un botón "+ Añadir fila" al final.
+ * Alimenta a la vez la tarjeta de info y el footer (ver build.js), así que
+ * una sola edición aquí se refleja en ambos sitios tras el build.
+ */
+function renderHorarioSection(body, path) {
+  const horario = getAtPath(workingContent, path);
+  body.innerHTML = "";
+
+  horario.forEach((row, idx) => {
+    const rowPath = [...path, idx];
+
+    const rowWrap = document.createElement("div");
+    rowWrap.className = "kf-item-row";
+
+    const fields = document.createElement("div");
+    fields.className = "kf-item-row-fields";
+
+    renderBilingualField(fields, [...rowPath, "dias"], "Días");
+    renderPlainField(fields, [...rowPath, "horas"], "Horas");
+
+    rowWrap.appendChild(fields);
+
+    const removeBtn = document.createElement("button");
+    removeBtn.type = "button";
+    removeBtn.className = "kf-btn-remove-item";
+    removeBtn.title = "Eliminar fila";
+    removeBtn.textContent = "−";
+    removeBtn.addEventListener("click", () => {
+      horario.splice(idx, 1);
+      rerenderHorario();
+    });
+    rowWrap.appendChild(removeBtn);
+
+    body.appendChild(rowWrap);
+  });
+
+  const addBtn = document.createElement("button");
+  addBtn.type = "button";
+  addBtn.className = "kf-btn-add-item";
+  addBtn.textContent = "+ Añadir fila";
+  addBtn.addEventListener("click", () => {
+    horario.push({ dias: { es: "", gl: "" }, horas: "" });
+    rerenderHorario();
+  });
+  body.appendChild(addBtn);
 }
 
 /**
