@@ -37,9 +37,6 @@ window.translations = {
     "info.lead": "Estamos en el centro de A Coruña, esperándote con una mesa y un kafé.",
     "info.card1.title": "Horario",
     "info.card1.note": "Las kocinas cierran 30 min antes del cierre.",
-    "info.horario.lv": "Lun – Vie",
-    "info.horario.sab": "Sábado",
-    "info.horario.dom": "Domingo",
     "info.card2.title": "Kontacto",
     "info.card2.cta": "Escríbenos",
     "info.card3.title": "Cómo Llegar",
@@ -47,9 +44,6 @@ window.translations = {
     "info.card3.map": "Ver en Google Maps ↗",
     "footer.tagline": "Celebrando el alma kulinaria de Galicia a través de la honestidad, el producto y la maestría.",
     "footer.nav.title": "Navegación",
-    "footer.hours.lv": "Lun – Vie: 7:15 – 23:00",
-    "footer.hours.sab": "Sáb: 10:00 – 23:00",
-    "footer.hours.dom": "Dom: 10:00 – 16:15",
     "reserva.tag": "♥ Reserva",
     "reserva.title": "Reserva tu Mesa",
     "reserva.nombre": "Nombre",
@@ -78,7 +72,13 @@ window.translations = {
     "resenas.r3.date": "Noviembre 2025",
     "resenas.r4.date": "Octubre 2025",
     "resenas.r5.date": "Septiembre 2025",
-    "resenas.r6.date": "Diciembre 2025"
+    "resenas.r6.date": "Diciembre 2025",
+    "horario.0.dias": "Lun – Vie",
+    "horario.0.footer": "Lun – Vie: 7:15 – 23:00",
+    "horario.1.dias": "Sábado",
+    "horario.1.footer": "Sábado: 10:00 – 23:00",
+    "horario.2.dias": "Domingo",
+    "horario.2.footer": "Domingo: 10:00 – 16:15"
   },
   "gl": {
     "nav.inicio": "Inicio",
@@ -117,9 +117,6 @@ window.translations = {
     "info.lead": "Estamos no centro de A Coruña, agardándote cunha mesa e un kafé.",
     "info.card1.title": "Horario",
     "info.card1.note": "As kociñas pechan 30 min antes do peche.",
-    "info.horario.lv": "Lun – Ven",
-    "info.horario.sab": "Sábado",
-    "info.horario.dom": "Domingo",
     "info.card2.title": "Contacto",
     "info.card2.cta": "Escríbenos",
     "info.card3.title": "Como Chegar",
@@ -127,9 +124,6 @@ window.translations = {
     "info.card3.map": "Ver en Google Maps ↗",
     "footer.tagline": "Celebrando a alma kulinaria de Galicia a través da honestidade, o produto e a maestría.",
     "footer.nav.title": "Navegación",
-    "footer.hours.lv": "Lun – Ven: 7:15 – 23:00",
-    "footer.hours.sab": "Sáb: 10:00 – 23:00",
-    "footer.hours.dom": "Dom: 10:00 – 16:15",
     "reserva.tag": "♥ Reserva",
     "reserva.title": "Reserva a túa Mesa",
     "reserva.nombre": "Nome",
@@ -158,6 +152,12 @@ window.translations = {
     "resenas.r3.date": "Novembro 2025",
     "resenas.r4.date": "Outubro 2025",
     "resenas.r5.date": "Setembro 2025",
-    "resenas.r6.date": "Decembro 2025"
+    "resenas.r6.date": "Decembro 2025",
+    "horario.0.dias": "Lun – Ven",
+    "horario.0.footer": "Lun – Ven: 7:15 – 23:00",
+    "horario.1.dias": "Sábado",
+    "horario.1.footer": "Sábado: 10:00 – 23:00",
+    "horario.2.dias": "Domingo",
+    "horario.2.footer": "Domingo: 10:00 – 16:15"
   }
 };

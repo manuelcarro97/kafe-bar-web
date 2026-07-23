@@ -61,9 +61,6 @@ module.exports = function keyMap(c) {
     'info.lead': c.info.lead,
     'info.card1.title': c.info.card1.title,
     'info.card1.note': c.info.card1.note,
-    'info.horario.lv': c.info.horario.lv,
-    'info.horario.sab': c.info.horario.sab,
-    'info.horario.dom': c.info.horario.dom,
     'info.card2.title': c.info.card2.title,
     'info.card2.cta': c.info.card2.cta,
     'info.card3.title': c.info.card3.title,
@@ -73,9 +70,6 @@ module.exports = function keyMap(c) {
     // footer
     'footer.tagline': c.footer.tagline,
     'footer.nav.title': c.footer.nav.title,
-    'footer.hours.lv': c.footer.hours.lv,
-    'footer.hours.sab': c.footer.hours.sab,
-    'footer.hours.dom': c.footer.hours.dom,
 
     // reserva
     'reserva.tag': c.reserva.tag,

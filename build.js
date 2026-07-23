@@ -128,6 +128,49 @@ function renderHomeCategoria(cat) {
   return renderHomeItems(cat.items);
 }
 
+/** Renderiza una fila de horario de la tarjeta info (index.html). */
+function renderHorarioInfoRow(row, i) {
+  return (
+    '                            <div class="horario-row">\n' +
+    `                                <span class="horario-dia" data-i18n="horario.${i}.dias">${row.dias.es}</span>\n` +
+    `                                <span class="horario-hora">${row.horas}</span>\n` +
+    '                            </div>'
+  );
+}
+
+/** Renderiza el bloque completo de horario para la tarjeta info. */
+function renderHorarioInfoHtml(horario) {
+  return horario.map((row, i) => renderHorarioInfoRow(row, i)).join('\n');
+}
+
+/** Renderiza el bloque completo de horario para el footer. */
+function renderHorarioFooterHtml(horario) {
+  return horario
+    .map(
+      (row, i) =>
+        `                <p data-i18n="horario.${i}.footer">${row.dias.es}: ${row.horas}</p>`
+    )
+    .join('\n');
+}
+
+/**
+ * Genera las claves i18n dinámicas ('horario.N.dias' y 'horario.N.footer')
+ * a partir de content.horario, para fusionarlas en el keyMap ANTES de
+ * buildTranslationsGenerated()/syncDataI18n(). Así el toggle ES/GL y la
+ * sincronización ES funcionan igual que con las claves estáticas del keyMap.
+ */
+function buildHorarioKeyMap(horario) {
+  const map = {};
+  horario.forEach((row, i) => {
+    map[`horario.${i}.dias`] = { es: row.dias.es, gl: row.dias.gl };
+    map[`horario.${i}.footer`] = {
+      es: `${row.dias.es}: ${row.horas}`,
+      gl: `${row.dias.gl}: ${row.horas}`,
+    };
+  });
+  return map;
+}
+
 function buildTranslationsGenerated(keyMap) {
   const es = {};
   const gl = {};
@@ -166,6 +209,14 @@ function main() {
   content.carta.categorias.forEach((cat) => {
     cat.homeHtml = renderHomeCategoria(cat);
   });
+
+  // Pre-renderiza el bloque de horario (tarjeta info + footer) a partir de
+  // content.horario y fusiona sus claves i18n dinámicas en el keyMap ANTES
+  // de generar translations.generated.js y sincronizar el HTML, para que el
+  // toggle ES/GL y el texto ES inicial cuadren con el mismo array.
+  content.horarioInfoHtml = renderHorarioInfoHtml(content.horario);
+  content.horarioFooterHtml = renderHorarioFooterHtml(content.horario);
+  Object.assign(keyMap, buildHorarioKeyMap(content.horario));
 
   buildTranslationsGenerated(keyMap);
   buildHtmlFile('index.template.html', 'index.html', content, keyMap);
