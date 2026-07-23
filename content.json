@@ -379,6 +379,15 @@
               "precio": "2,50 €"
             }
           ]
+        },
+        {
+          "seccion": "TEST",
+          "items": [
+            {
+              "nombre": "plato de prueba ",
+              "precio": "1234 €"
+            }
+          ]
         }
       ],
       "columna2": [
