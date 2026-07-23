@@ -2,3 +2,9 @@ name = "kafe-reservas"
 main = "index.js"
 compatibility_date = "2024-01-01"
 workers_dev = true
+
+# Variables NO secretas para el endpoint /publish. Ver worker/PUBLISH.md.
+# El secreto GITHUB_TOKEN NO va aquí: se configura con `wrangler secret put GITHUB_TOKEN`.
+[vars]
+GITHUB_REPO = "your-user/your-repo"
+ALLOWED_PUBLISHER_EMAILS = "test@gmail.com"

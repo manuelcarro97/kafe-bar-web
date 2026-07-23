@@ -199,7 +199,6 @@ ul {
   border-bottom: 1px solid var(--gris-medio);
   transition: box-shadow var(--transition), background var(--transition);
   --scroll-progress: 0%;
-  overflow: hidden;
 }
 
 #cabecera::before {
@@ -833,6 +832,7 @@ ul {
   background-image: radial-gradient(rgba(13, 33, 55, 0.04) 1px, transparent 1px);
   background-size: 28px 28px;
   position: relative;
+  overflow: hidden;
 }
 
 .nosotros::before {
@@ -875,11 +875,12 @@ ul {
 .nosotros-img-wrap {
   position: relative;
   transform: translateX(1.5rem);
+  aspect-ratio: 4/5;
 }
 
 .nosotros-img {
   width: 100%;
-  aspect-ratio: 4/5;
+  height: 100%;
   object-fit: contain;
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-lg);
@@ -2157,14 +2158,11 @@ fieldset.form-group {
   .nosotros-img-wrap {
     transform: translateX(0);
     order: 2;
+    aspect-ratio: 4/3;
   }
 
   .nosotros-content {
     order: 1;
-  }
-
-  .nosotros-img {
-    aspect-ratio: 4/3;
   }
 
   .nosotros-badge {
@@ -2222,8 +2220,8 @@ fieldset.form-group {
   .nav-list.open {
     display: flex;
     flex-direction: column;
-    position: fixed;
-    top: 60px;
+    position: absolute;
+    top: 100%;
     left: 0;
     right: 0;
     background: var(--blanco);

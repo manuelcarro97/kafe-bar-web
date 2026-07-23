@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kafé – Nuestra Karta</title>
+    <meta name="description"
+        content="Karta completa de Kafé: tapas, raciones, desayunos, postres y bebidas. Kocina gallega auténtica en A Coruña." />
+    <link rel="icon" href="favicon.ico" type="image/png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,700;0,9..144,900;1,9..144,400&family=DM+Sans:wght@400;600&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --azul-oscuro: #0d2137;
+            --azul-acento: #1e6fbf;
+            --texto: #0d2137;
+            --texto-suave: #4a6080;
+            --gris-medio: #e8ecf2;
+            --blanco: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            color: var(--texto);
+            background: var(--blanco);
+            line-height: 1.4;
+            padding: 40px;
+        }
+
+        @page {
+            size: A4;
+            margin: 0;
+        }
+
+        .page {
+            width: 210mm;
+            min-height: 297mm;
+            padding: 20mm 20mm 45mm 20mm;
+            margin: 0 auto;
+            background: white;
+            position: relative;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid var(--azul-oscuro);
+            padding-bottom: 20px;
+        }
+
+        .logo {
+            height: 60px;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            font-family: 'Fraunces', serif;
+            font-size: 28px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--azul-oscuro);
+        }
+
+        .menu-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        section {
+            margin-bottom: 25px;
+        }
+
+        h2 {
+            font-family: 'Fraunces', serif;
+            font-size: 18px;
+            color: var(--azul-oscuro);
+            border-bottom: 1px solid var(--gris-medio);
+            margin-bottom: 15px;
+            padding-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .item {
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .item-info {
+            flex: 1;
+        }
+
+        .item-name {
+            font-weight: 600;
+            font-size: 14px;
+            display: block;
+        }
+
+        .item-desc {
+            font-size: 11px;
+            color: var(--texto-suave);
+            display: block;
+            margin-top: 2px;
+        }
+
+        .item-price {
+            font-family: 'Fraunces', serif;
+            font-weight: 700;
+            font-size: 14px;
+            color: var(--azul-acento);
+            white-space: nowrap;
+        }
+
+        footer {
+            position: absolute;
+            bottom: 20mm;
+            left: 20mm;
+            right: 20mm;
+            text-align: center;
+            font-size: 10px;
+            color: var(--texto-suave);
+            border-top: 1px solid var(--gris-medio);
+            padding-top: 15px;
+        }
+
+        .footer-copy {
+            margin-top: 5px;
+        }
+
+        .footer-info {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        @media print {
+            body {
+                padding: 0;
+            }
+
+            .page {
+                margin: 0;
+                box-shadow: none;
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .page {
+                width: 100%;
+                min-height: auto;
+                padding: 15px 15px 20px 15px;
+            }
+
+            .menu-container {
+                grid-template-columns: 1fr;
+            }
+
+            footer {
+                position: relative;
+                bottom: auto;
+                left: auto;
+                right: auto;
+                margin-top: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page">
+        <header>
+            <img src="{{images.logo}}" alt="Kafé Logo" class="logo">
+            <h1>Nuestra Karta</h1>
+        </header>
+
+        <div class="menu-container">
+            <div class="column">
+{{carta.menuCompleto.columna1Html}}
+            </div>
+
+            <div class="column">
+{{carta.menuCompleto.columna2Html}}
+            </div>
+        </div>
+
+        <footer>
+            <div class="footer-info">
+                <span>📍 {{info.direccion.calle}}, {{info.direccion.ciudad}}</span>
+                <span>📞 {{info.telefono}}</span>
+                <span>🌐 {{site.dominio}}</span>
+            </div>
+            <p class="footer-copy">&copy; 2026 Kafé Restaurant - Kocina Gallega Auténtica</p>
+        </footer>
+    </div>
+</body>
+
+</html>

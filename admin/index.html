@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Kafe — Panel de administración</title>
+  <link rel="stylesheet" href="/admin/admin.css" />
+</head>
+<body>
+
+  <!-- Pantalla de login -->
+  <section id="login-screen" class="kf-login-screen">
+    <form id="login-form" class="kf-login-box" autocomplete="on">
+      <h1>Kafe · Panel de administración</h1>
+      <p class="kf-login-sub">Inicia sesión para editar el contenido del sitio.</p>
+
+      <label class="kf-login-label" for="login-email">Correo electrónico</label>
+      <input id="login-email" name="email" type="email" required autocomplete="username" />
+
+      <label class="kf-login-label" for="login-password">Contraseña</label>
+      <input id="login-password" name="password" type="password" required autocomplete="current-password" />
+
+      <button type="submit" id="login-submit">Entrar</button>
+
+      <p id="login-error" class="kf-error" role="alert" hidden></p>
+    </form>
+  </section>
+
+  <!-- Editor (solo visible con sesión iniciada) -->
+  <section id="editor-screen" class="kf-editor-screen" hidden>
+    <header class="kf-editor-header">
+      <div class="kf-editor-header-title">
+        <h1>Kafe · Editor de contenido</h1>
+        <span id="editor-user" class="kf-editor-user"></span>
+      </div>
+      <div class="kf-editor-header-actions">
+        <span id="save-status" class="kf-save-status" hidden></span>
+        <button type="button" id="publish-btn" class="kf-btn-primary">Publicar cambios</button>
+        <button type="button" id="download-json-btn" class="kf-btn-secondary">Descargar content.json</button>
+        <button type="button" id="logout-btn" class="kf-btn-secondary">Cerrar sesión</button>
+      </div>
+    </header>
+
+    <p id="load-error" class="kf-error" role="alert" hidden></p>
+    <p id="loading-msg" class="kf-loading">Cargando content.json…</p>
+
+    <main id="sections-container" class="kf-sections"></main>
+  </section>
+
+  <script type="module" src="/admin/admin.js"></script>
+</body>
+</html>

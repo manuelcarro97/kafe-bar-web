@@ -1,0 +1,804 @@
+{
+  "nav": {
+    "inicio": {
+      "es": "Inicio",
+      "gl": "Inicio"
+    },
+    "nosotros": {
+      "es": "Nosotros",
+      "gl": "Nós"
+    },
+    "carta": {
+      "es": "Karta",
+      "gl": "Karta"
+    },
+    "resenas": {
+      "es": "Reseñas",
+      "gl": "Reseñas"
+    },
+    "contacto": {
+      "es": "Kontacto",
+      "gl": "Kontacto"
+    },
+    "verCarta": {
+      "es": "Ver Karta →",
+      "gl": "Ver Karta →"
+    },
+    "reservar": {
+      "es": "Reservar",
+      "gl": "Reservar"
+    }
+  },
+  "hero": {
+    "subtitle": {
+      "es": "Vive la esencia de la kocina gallega en un ambiente perfecto.<br />El mejor Kafé y las recetas de toda la vida.",
+      "gl": "Vive a esencia da kociña galega nun ambiente perfecto.<br />O mellor Kafé e as receitas de toda a vida."
+    },
+    "cta": {
+      "carta": {
+        "es": "Ver Karta →",
+        "gl": "Ver Karta →"
+      },
+      "historia": {
+        "es": "Nuestra Historia",
+        "gl": "A Nosa Historia"
+      }
+    }
+  },
+  "nosotros": {
+    "badge": {
+      "es": "experiencia kombinada",
+      "gl": "experiencia kombinada"
+    },
+    "tag": {
+      "es": "♥ Quiénes somos",
+      "gl": "♥ Quen somos"
+    },
+    "title": {
+      "es": "Sumérgete en una<br /><em>experiencia gallega.</em>",
+      "gl": "Mergúllate nunha<br /><em>experiencia galega.</em>"
+    },
+    "feat1": {
+      "title": {
+        "es": "Producto Gallego",
+        "gl": "Produto Galego"
+      },
+      "desc": {
+        "es": "Trabajamos con productores gallegos y del entorno para garantizar la máxima freskura y kalidad en cada plato.",
+        "gl": "Traballamos con produtores galegos e do entorno para garantir a máxima frescura e kalidade en cada prato."
+      }
+    },
+    "feat2": {
+      "title": {
+        "es": "La Visión del Chef",
+        "gl": "A Visión do Chef"
+      },
+      "desc": {
+        "es": "Kafé apuesta por la riqueza del kafé y la tierra gallega, con elaboraciones honestas y llenas de sabor.",
+        "gl": "Kafé aposta pola riqueza do kafé e da terra galega, con elaboracións honestas e cheas de sabor."
+      }
+    },
+    "cta": {
+      "carta": {
+        "es": "Ver la Karta",
+        "gl": "Ver a Karta"
+      }
+    }
+  },
+  "carta": {
+    "tag": {
+      "es": "♥ Nuestra Karta",
+      "gl": "♥ A Nosa Karta"
+    },
+    "title": {
+      "es": "Platos Estrella",
+      "gl": "Pratos Estrela"
+    },
+    "desc": {
+      "es": "Nuestra selección más querida de la karta tradicional.",
+      "gl": "A nosa selección máis querida da karta tradicional."
+    },
+    "cat1": {
+      "label": {
+        "es": "♥ TAPAS Y ENTRANTES",
+        "gl": "♥ TAPAS E ENTRANTES"
+      },
+      "title": {
+        "es": "Nuestras Tapas",
+        "gl": "As Nosas Tapas"
+      }
+    },
+    "more": {
+      "es": "... y muchos más",
+      "gl": "... e moitos máis"
+    },
+    "cat2": {
+      "label": {
+        "es": "♥ NUESTROS DESAYUNOS",
+        "gl": "♥ OS NOSOS ALMORZOS"
+      },
+      "title": {
+        "es": "Empezar Bien el Día",
+        "gl": "Comezar Ben o Día"
+      }
+    },
+    "cat3": {
+      "label": {
+        "es": "♥ NUESTROS POSTRES",
+        "gl": "♥ AS NOSAS SOBREMESAS"
+      },
+      "title": {
+        "es": "Dulces Finales",
+        "gl": "Doces Finais"
+      }
+    },
+    "footer": {
+      "text": {
+        "es": "¿Quieres ver la karta kompleta?",
+        "gl": "Queres ver a karta completa?"
+      },
+      "pdf": {
+        "es": "Ver Karta Kompleta",
+        "gl": "Ver Karta Kompleta"
+      },
+      "cta": {
+        "es": "Reserva una Mesa",
+        "gl": "Reserva unha Mesa"
+      }
+    },
+    "categorias": [
+      {
+        "id": "tapas",
+        "labelKey": "carta.cat1.label",
+        "titleKey": "carta.cat1.title",
+        "image": "images.tapas",
+        "items": [
+          {
+            "nombre": "Tortilla de patata",
+            "precio": "2,50 €"
+          },
+          {
+            "nombre": "Tortilla de patata especialidad",
+            "precio": "3,00 €"
+          },
+          {
+            "nombre": "Kroquetas de jamón (ud.)",
+            "precio": "1,50 €"
+          },
+          {
+            "nombre": "Raxo de pollo al roquefort",
+            "precio": "5,50 €"
+          }
+        ]
+      },
+      {
+        "id": "desayunos",
+        "labelKey": "carta.cat2.label",
+        "titleKey": "carta.cat2.title",
+        "image": "images.desayunos",
+        "subcategorias": [
+          {
+            "nombre": "Tostas",
+            "items": [
+              {
+                "nombre": "Aceite y tomate",
+                "precio": "3,50 €"
+              },
+              {
+                "nombre": "Aceite, tomate y jamón",
+                "precio": "4,50 €"
+              },
+              {
+                "nombre": "Queso krema, nueces y miel",
+                "precio": "4,50 €"
+              },
+              {
+                "nombre": "Mantequilla y mermelada",
+                "precio": "3,00 €"
+              }
+            ]
+          },
+          {
+            "nombre": "Baggels",
+            "items": [
+              {
+                "nombre": "Queso krema, salmón y rúcula",
+                "precio": "5,00 €"
+              },
+              {
+                "nombre": "Queso krema y jamón",
+                "precio": "5,00 €"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "postres",
+        "label": "♥ NUESTROS POSTRES",
+        "title": "Dulces Finales",
+        "image": "images.postres",
+        "items": [
+          {
+            "nombre": "Tarta de queso (especialidad)",
+            "precio": "5,50 €"
+          },
+          {
+            "nombre": "Tarta de queso del mes",
+            "precio": "6,00 €"
+          },
+          {
+            "nombre": "Brownie con helado",
+            "precio": "6,00 €"
+          },
+          {
+            "nombre": "Torrisú",
+            "precio": "7,00 €"
+          }
+        ]
+      }
+    ],
+    "menuCompleto": {
+      "columna1": [
+        {
+          "seccion": "Tapas y Raciones",
+          "items": [
+            {
+              "nombre": "Tortilla De Patata",
+              "precio": "2,50 €"
+            },
+            {
+              "nombre": "Tortilla De Patata Especialidad",
+              "precio": "3,00 €"
+            },
+            {
+              "nombre": "Kroquetas De Jamón (Ud)",
+              "precio": "1,50 €"
+            },
+            {
+              "nombre": "Kroquetas De Especialidad (Ud)",
+              "precio": "1,50 €"
+            },
+            {
+              "nombre": "Ensaladilla",
+              "precio": "3,50 €"
+            },
+            {
+              "nombre": "Patatas Braviolis",
+              "precio": "3,50 €"
+            },
+            {
+              "nombre": "Kalamares",
+              "precio": "5,50 €"
+            },
+            {
+              "nombre": "Pollo Krujiente",
+              "precio": "4,00 €"
+            },
+            {
+              "nombre": "Huevos Rotos Con Chorizo",
+              "precio": "12,00 €"
+            },
+            {
+              "nombre": "Huevos Rotos Con Jamón",
+              "precio": "12,50 €"
+            },
+            {
+              "nombre": "Huevos Rotos Con Gulas",
+              "precio": "12,50 €"
+            },
+            {
+              "nombre": "Huevos Rotos Trufados",
+              "precio": "13,00 €"
+            },
+            {
+              "nombre": "Raxo De Cerdo",
+              "precio": "4,50 €"
+            },
+            {
+              "nombre": "Raxo De Pollo Al Roquefort",
+              "precio": "5,50 €"
+            },
+            {
+              "nombre": "Kriollo Con Patatas (Ud)",
+              "precio": "3,50 €"
+            },
+            {
+              "nombre": "Kroka De Ternera",
+              "precio": "17,00 €"
+            },
+            {
+              "nombre": "Ensalada Mixta",
+              "precio": "9,00 €"
+            }
+          ]
+        },
+        {
+          "seccion": "Hamburguesas",
+          "items": [
+            {
+              "nombre": "Hamburguesa Simple",
+              "precio": "4,50 €"
+            },
+            {
+              "nombre": "Hamburguesa Kompleta",
+              "precio": "5,50 €"
+            },
+            {
+              "nombre": "Hamburguesa Vegetariana",
+              "precio": "6,00 €"
+            }
+          ]
+        },
+        {
+          "seccion": "Ensaladas Templadas",
+          "items": [
+            {
+              "nombre": "Queso De Kabra, Nueces Y Fruta Temporada",
+              "precio": "12,00 €"
+            },
+            {
+              "nombre": "Burrata, Tomate Del País Y Pesto",
+              "precio": "12,50 €"
+            }
+          ]
+        },
+        {
+          "seccion": "Bebidas",
+          "items": [
+            {
+              "nombre": "Agua Plástico",
+              "precio": "1,30 €"
+            },
+            {
+              "nombre": "Agua 1l",
+              "precio": "2,00 €"
+            },
+            {
+              "nombre": "Refreskos",
+              "precio": "2,50 €"
+            },
+            {
+              "nombre": "Cerveza Estrella Galicia",
+              "precio": "2,50 €"
+            },
+            {
+              "nombre": "Cerveza 1906",
+              "precio": "2,70 €"
+            },
+            {
+              "nombre": "Cerveza Especial",
+              "precio": "2,80 €"
+            },
+            {
+              "nombre": "Cerveza Alhambra",
+              "precio": "2,50 €"
+            },
+            {
+              "nombre": "Sidra Maelok",
+              "precio": "2,50 €"
+            }
+          ]
+        }
+      ],
+      "columna2": [
+        {
+          "seccion": "Bokatas",
+          "items": [
+            {
+              "nombre": "Tortilla",
+              "precio": "5,00 €"
+            },
+            {
+              "nombre": "Tortilla Especialidad",
+              "precio": "6,00 €"
+            },
+            {
+              "nombre": "Milanesa",
+              "precio": "6,50 €"
+            },
+            {
+              "nombre": "Kalamares Con Ali-Oli",
+              "precio": "5,00 €"
+            },
+            {
+              "nombre": "Lomo Con Queso",
+              "precio": "5,00 €"
+            },
+            {
+              "nombre": "Bakon Con Queso",
+              "precio": "5,00 €"
+            },
+            {
+              "nombre": "Jamón",
+              "precio": "5,00 €"
+            },
+            {
+              "nombre": "Chorizo",
+              "precio": "5,00 €"
+            },
+            {
+              "nombre": "Atún, Huevo Y Mahonesa",
+              "precio": "6,50 €"
+            },
+            {
+              "nombre": "Vegetal",
+              "descripcion": "Lechuga, tomate, cebolla, queso",
+              "precio": "5,00 €"
+            }
+          ]
+        },
+        {
+          "seccion": "Tostas",
+          "items": [
+            {
+              "nombre": "Aceite Y Tomate",
+              "precio": "3,50 €"
+            },
+            {
+              "nombre": "Aceite, Tomate Y Jamón",
+              "precio": "4,50 €"
+            },
+            {
+              "nombre": "Queso Krema, Nueces Y Miel",
+              "precio": "4,50 €"
+            },
+            {
+              "nombre": "Mantequilla Y Mermelada",
+              "precio": "3,00 €"
+            },
+            {
+              "nombre": "Nutella",
+              "precio": "3,00 €"
+            }
+          ]
+        },
+        {
+          "seccion": "Baggels",
+          "items": [
+            {
+              "nombre": "Queso Krema, Salmón Y Rúcula",
+              "precio": "5,00 €"
+            },
+            {
+              "nombre": "Queso Krema Y Jamón",
+              "precio": "5,00 €"
+            },
+            {
+              "nombre": "Queso Krema, Aceituna Negra, Tomate Seco Y Albahaka",
+              "precio": "5,50 €"
+            },
+            {
+              "nombre": "Queso, Bakon Y Huevo Frito",
+              "precio": "5,50 €"
+            }
+          ]
+        },
+        {
+          "seccion": "Postres",
+          "items": [
+            {
+              "nombre": "Tarta De Queso (Especialidad)",
+              "precio": "5,50 €"
+            },
+            {
+              "nombre": "Tarta De Queso Del Mes",
+              "precio": "6,00 €"
+            },
+            {
+              "nombre": "Tarta De La Abuela",
+              "precio": "5,50 €"
+            },
+            {
+              "nombre": "Brownie Con Helado",
+              "precio": "6,00 €"
+            },
+            {
+              "nombre": "Torrisú",
+              "precio": "7,00 €"
+            },
+            {
+              "nombre": "Queso Y Membrillo",
+              "precio": "5,00 €"
+            }
+          ]
+        },
+        {
+          "seccion": "Dulces",
+          "items": [
+            {
+              "nombre": "Porras (Ud)",
+              "precio": "2,00 €"
+            },
+            {
+              "nombre": "Churros (Ud)",
+              "precio": "0,30 €"
+            },
+            {
+              "nombre": "Bizkochos (Del Día)",
+              "precio": "2,50 €"
+            },
+            {
+              "nombre": "Muffins (Del Día)",
+              "precio": "2,50 €"
+            },
+            {
+              "nombre": "Galletas (Del Día)",
+              "precio": "2,50 €"
+            },
+            {
+              "nombre": "Kroissant",
+              "precio": "2,50 €"
+            },
+            {
+              "nombre": "Napolitanas",
+              "precio": "2,50 €"
+            }
+          ]
+        },
+        {
+          "seccion": "Otros",
+          "items": [
+            {
+              "nombre": "Servicio De Pan",
+              "precio": "0,90"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "info": {
+    "tag": {
+      "es": "♥ Encuéntranos",
+      "gl": "♥ Atópanos"
+    },
+    "title": {
+      "es": "Ven a Visitarnos",
+      "gl": "Visítanos"
+    },
+    "lead": {
+      "es": "Estamos en el centro de A Coruña, esperándote con una mesa y un kafé.",
+      "gl": "Estamos no centro de A Coruña, agardándote cunha mesa e un kafé."
+    },
+    "card1": {
+      "title": {
+        "es": "Horario",
+        "gl": "Horario"
+      },
+      "note": {
+        "es": "Las kocinas cierran 30 min antes del cierre.",
+        "gl": "As kociñas pechan 30 min antes do peche."
+      }
+    },
+    "horario": {
+      "lv": {
+        "es": "Lun – Vie",
+        "gl": "Lun – Ven"
+      },
+      "sab": {
+        "es": "Sábado",
+        "gl": "Sábado"
+      },
+      "dom": {
+        "es": "Domingo",
+        "gl": "Domingo"
+      }
+    },
+    "card2": {
+      "title": {
+        "es": "Kontacto",
+        "gl": "Contacto"
+      },
+      "cta": {
+        "es": "Escríbenos",
+        "gl": "Escríbenos"
+      }
+    },
+    "card3": {
+      "title": {
+        "es": "Cómo Llegar",
+        "gl": "Como Chegar"
+      },
+      "text": {
+        "es": "Estamos en el centro de A Coruña. Varias líneas de bus paran cerca y hay parking disponible en los alrededores.",
+        "gl": "Estamos no centro de A Coruña. Varias liñas de bus paran preto e hai parking dispoñible nos arredores."
+      },
+      "map": {
+        "es": "Ver en Google Maps ↗",
+        "gl": "Ver en Google Maps ↗"
+      }
+    },
+    "telefono": "981 31 82 60",
+    "telefonoHref": "+34981318260",
+    "email": "reservaskafebar@gmail.com",
+    "direccion": {
+      "calle": "Rúa Nebrija, 1",
+      "cp": "15005",
+      "ciudad": "A Coruña"
+    },
+    "googleMapsUrl": "https://maps.google.com/?q=Rúa+Nebrija+1+A+Coruña",
+    "instagramUrl": "https://www.instagram.com/cafeteriaelkafe/",
+    "instagramHandle": "@cafeteriaelkafe",
+    "googleMapsReviewsUrl": "https://www.google.com/maps/place/Kafe/@43.3621488,-8.4180992,16z/data=!4m8!3m7!1s0xd2e7c8b9cfee109:0xe6b7c74afd0c9a75!8m2!3d43.3621449!4d-8.4155189!9m1!1b1!16s%2Fg%2F11_dr77dp?entry=ttu&g_ep=EgoyMDI2MDMwMS4xIKXMDSoASAFQAw%3D%3D"
+  },
+  "footer": {
+    "tagline": {
+      "es": "Celebrando el alma kulinaria de Galicia a través de la honestidad, el producto y la maestría.",
+      "gl": "Celebrando a alma kulinaria de Galicia a través da honestidade, o produto e a maestría."
+    },
+    "nav": {
+      "title": {
+        "es": "Navegación",
+        "gl": "Navegación"
+      }
+    },
+    "hours": {
+      "lv": {
+        "es": "Lun – Vie: 7:15 – 23:00",
+        "gl": "Lun – Ven: 7:15 – 23:00"
+      },
+      "sab": {
+        "es": "Sáb: 10:00 – 23:00",
+        "gl": "Sáb: 10:00 – 23:00"
+      },
+      "dom": {
+        "es": "Dom: 10:00 – 16:15",
+        "gl": "Dom: 10:00 – 16:15"
+      }
+    }
+  },
+  "reserva": {
+    "tag": {
+      "es": "♥ Reserva",
+      "gl": "♥ Reserva"
+    },
+    "title": {
+      "es": "Reserva tu Mesa",
+      "gl": "Reserva a túa Mesa"
+    },
+    "nombre": {
+      "es": "Nombre",
+      "gl": "Nome"
+    },
+    "telefono": {
+      "es": "Teléfono",
+      "gl": "Teléfono"
+    },
+    "fecha": {
+      "es": "Fecha",
+      "gl": "Data"
+    },
+    "hora": {
+      "es": "Hora",
+      "gl": "Hora"
+    },
+    "horaPlaceholder": {
+      "es": "Selecciona hora",
+      "gl": "Selecciona hora"
+    },
+    "personas": {
+      "es": "Personas",
+      "gl": "Persoas"
+    },
+    "tipo": {
+      "es": "Tipo de komida",
+      "gl": "Tipo de komida"
+    },
+    "tipoCarta": {
+      "es": "De Karta",
+      "gl": "De Karta"
+    },
+    "tipoPersonalizado": {
+      "es": "Menú personalizado",
+      "gl": "Menú personalizado"
+    },
+    "notaPersonalizado": {
+      "es": "Para konkretar los detalles del menú personalizado, kontacta kon nosotros por teléfono al <a href=\"tel:+34981318260\">981 31 82 60</a>.",
+      "gl": "Para konkretar os detalles do menú personalizado, kontacta con nós por teléfono ao <a href=\"tel:+34981318260\">981 31 82 60</a>."
+    },
+    "enviar": {
+      "es": "Enviar Reserva →",
+      "gl": "Enviar Reserva →"
+    },
+    "alt": {
+      "es": "Si lo prefieres, también puedes reservar llamando al <a href=\"tel:+34981318260\">981 31 82 60</a>",
+      "gl": "Se o prefires, tamén podes reservar chamando ao <a href=\"tel:+34981318260\">981 31 82 60</a>"
+    },
+    "confirmacion": {
+      "titulo": {
+        "es": "Solicitud recibida",
+        "gl": "Solicitude recibida"
+      },
+      "texto": {
+        "es": "Te llamaremos lo antes posible para konfirmar tu reserva.",
+        "gl": "Chamarémoste o antes posible para konfirmar a túa reserva."
+      },
+      "aviso": {
+        "es": "Entiendo que esto es una solicitud de reserva, no una konfirmación. Mi reserva será konfirmada cuando el restaurante me kontacte.",
+        "gl": "Entendo que isto é unha solicitude de reserva, non unha konfirmación. A miña reserva será konfirmada cando o restaurante me kontacte."
+      },
+      "cerrar": {
+        "es": "Entendido",
+        "gl": "Entendido"
+      }
+    }
+  },
+  "resenas": {
+    "tag": {
+      "es": "♥ Lo Que Dicen de Nosotros",
+      "gl": "♥ O Que Din de Nós"
+    },
+    "title": {
+      "es": "Nuestros Klientes Hablan",
+      "gl": "Os Nosos Klientes Falan"
+    },
+    "titulo": {
+      "es": "Opiniones Reales",
+      "gl": "Opinións Reais"
+    },
+    "desc": {
+      "es": "Reseñas reales de Google Maps. ¡Gracias a todos!",
+      "gl": "Recensións reais de Google Maps. Grazas a todos!"
+    },
+    "cta": {
+      "es": "Ver Más en Google Maps ↗",
+      "gl": "Ver Máis en Google Maps ↗"
+    },
+    "r1": {
+      "date": {
+        "es": "Febrero 2026",
+        "gl": "Febreiro 2026"
+      }
+    },
+    "r2": {
+      "date": {
+        "es": "Enero 2026",
+        "gl": "Xaneiro 2026"
+      }
+    },
+    "r3": {
+      "date": {
+        "es": "Noviembre 2025",
+        "gl": "Novembro 2025"
+      }
+    },
+    "r4": {
+      "date": {
+        "es": "Octubre 2025",
+        "gl": "Outubro 2025"
+      }
+    },
+    "r5": {
+      "date": {
+        "es": "Septiembre 2025",
+        "gl": "Setembro 2025"
+      }
+    },
+    "r6": {
+      "date": {
+        "es": "Diciembre 2025",
+        "gl": "Decembro 2025"
+      }
+    }
+  },
+  "site": {
+    "url": "https://kafe-143b5.web.app",
+    "nombre": "Kafé",
+    "descripcionSchema": "Bar-restaurante gallego en A Coruña. Kocina tradicional gallega con producto local.",
+    "geo": {
+      "lat": 43.3621449,
+      "lng": -8.4155189
+    },
+    "googleMapsPlaceUrl": "https://www.google.com/maps/place/Kafe/@43.3621488,-8.4180992,16z",
+    "dominio": "kafe-143b5.web.app"
+  },
+  "images": {
+    "logo": "imagenes/logo-transparente.png",
+    "heroDish": "imagenes/tortilla-hero.jpg",
+    "tapas": "https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=600&q=80",
+    "desayunos": "imagenes/comida1.png",
+    "postres": "imagenes/postre.png",
+    "nosotros": "imagenes/duo.png"
+  }
+}
