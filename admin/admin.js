@@ -216,7 +216,11 @@ const SKIP_KEYS = new Set(["id", "labelKey", "titleKey"]);
 // Secciones de primer nivel que NO se renderizan en el editor, pero que se
 // conservan intactas en workingContent/originalContent (se actualizan por
 // otra vía, no desde este panel).
-const HIDDEN_SECTIONS = new Set(["resenas"]);
+// Secciones que NO se editan desde el panel:
+// - resenas: se actualiza por script, no a mano.
+// - reserva: la UI de reservas está oculta en la web (editarla no se refleja).
+// - site: metadatos técnicos SEO/schema (dominio, geo, descripción) que no debe tocar el cliente.
+const HIDDEN_SECTIONS = new Set(["resenas", "reserva", "site"]);
 
 // Etiquetas legibles para claves frecuentes dentro de "carta" (mejora la
 // lectura de los formularios generados genéricamente por renderNode).

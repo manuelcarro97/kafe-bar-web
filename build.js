@@ -96,6 +96,38 @@ function renderMenuColumn(sections) {
   return sections.map(renderMenuSection).join('\n\n');
 }
 
+/** Renderiza un plato de las tarjetas destacadas de la home (index.html). */
+function renderHomeItem(item) {
+  return (
+    '                        <div class="menu-item">\n' +
+    '                            <div class="menu-item-info">\n' +
+    `                                <span class="menu-item-name">${item.nombre}</span>\n` +
+    '                            </div>\n' +
+    `                            <span class="menu-item-price">${item.precio}</span>\n` +
+    '                        </div>'
+  );
+}
+
+const HOME_MENU_DIVIDER = '                        <div class="menu-divider"></div>';
+
+function renderHomeItems(items) {
+  return (items || []).map(renderHomeItem).join('\n' + HOME_MENU_DIVIDER + '\n');
+}
+
+/**
+ * Renderiza los platos de una categoría destacada de la home. Soporta tanto
+ * `items` (lista plana) como `subcategorias` (con encabezado `menu-subcat`,
+ * p. ej. Tostas/Baggels en desayunos).
+ */
+function renderHomeCategoria(cat) {
+  if (Array.isArray(cat.subcategorias)) {
+    return cat.subcategorias
+      .map((sub) => `                        <p class="menu-subcat">${sub.nombre}</p>\n` + renderHomeItems(sub.items))
+      .join('\n');
+  }
+  return renderHomeItems(cat.items);
+}
+
 function buildTranslationsGenerated(keyMap) {
   const es = {};
   const gl = {};
@@ -128,6 +160,12 @@ function main() {
   // marcador más ({{carta.menuCompleto.columnaNHtml}}).
   content.carta.menuCompleto.columna1Html = renderMenuColumn(content.carta.menuCompleto.columna1);
   content.carta.menuCompleto.columna2Html = renderMenuColumn(content.carta.menuCompleto.columna2);
+
+  // Pre-renderiza los platos de cada tarjeta destacada de la home y los cuelga
+  // como marcador {{carta.categorias.N.homeHtml}} en la plantilla.
+  content.carta.categorias.forEach((cat) => {
+    cat.homeHtml = renderHomeCategoria(cat);
+  });
 
   buildTranslationsGenerated(keyMap);
   buildHtmlFile('index.template.html', 'index.html', content, keyMap);

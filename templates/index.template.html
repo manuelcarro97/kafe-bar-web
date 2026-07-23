@@ -206,33 +206,7 @@
                     <div class="carta-menu-list">
                         <p class="carta-cat-label" data-i18n="carta.cat1.label">&#9829; TAPAS Y ENTRANTES</p>
                         <h3 class="carta-cat-title" data-i18n="carta.cat1.title">Tapas de Siempre</h3>
-                        <div class="menu-item">
-                            <div class="menu-item-info">
-                                <span class="menu-item-name">Tortilla de patata</span>
-                            </div>
-                            <span class="menu-item-price">2,50 €</span>
-                        </div>
-                        <div class="menu-divider"></div>
-                        <div class="menu-item">
-                            <div class="menu-item-info">
-                                <span class="menu-item-name">Tortilla de patata especialidad</span>
-                            </div>
-                            <span class="menu-item-price">3,00 €</span>
-                        </div>
-                        <div class="menu-divider"></div>
-                        <div class="menu-item">
-                            <div class="menu-item-info">
-                                <span class="menu-item-name">Kroquetas de jamón (ud.)</span>
-                            </div>
-                            <span class="menu-item-price">1,50 €</span>
-                        </div>
-                        <div class="menu-divider"></div>
-                        <div class="menu-item">
-                            <div class="menu-item-info">
-                                <span class="menu-item-name">Raxo de pollo al roquefort</span>
-                            </div>
-                            <span class="menu-item-price">5,50 €</span>
-                        </div>
+                        {{carta.categorias.0.homeHtml}}
                         <p class="more-dishes" data-i18n="carta.more">... y muchos más</p>
                     </div>
                     <div class="carta-img-wrap">
@@ -250,48 +224,7 @@
                     <div class="carta-menu-list">
                         <p class="carta-cat-label" data-i18n="carta.cat2.label">&#9829; NUESTROS DESAYUNOS</p>
                         <h3 class="carta-cat-title" data-i18n="carta.cat2.title">Empezar Bien el Día</h3>
-                        <p class="menu-subcat">Tostas</p>
-                        <div class="menu-item">
-                            <div class="menu-item-info">
-                                <span class="menu-item-name">Aceite y tomate</span>
-                            </div>
-                            <span class="menu-item-price">3,50 €</span>
-                        </div>
-                        <div class="menu-divider"></div>
-                        <div class="menu-item">
-                            <div class="menu-item-info">
-                                <span class="menu-item-name">Aceite, tomate y jamón</span>
-                            </div>
-                            <span class="menu-item-price">4,50 €</span>
-                        </div>
-                        <div class="menu-divider"></div>
-                        <div class="menu-item">
-                            <div class="menu-item-info">
-                                <span class="menu-item-name">Queso krema, nueces y miel</span>
-                            </div>
-                            <span class="menu-item-price">4,50 €</span>
-                        </div>
-                        <div class="menu-divider"></div>
-                        <div class="menu-item">
-                            <div class="menu-item-info">
-                                <span class="menu-item-name">Mantequilla y mermelada</span>
-                            </div>
-                            <span class="menu-item-price">3,00 €</span>
-                        </div>
-                        <p class="menu-subcat">Baggels</p>
-                        <div class="menu-item">
-                            <div class="menu-item-info">
-                                <span class="menu-item-name">Queso krema, salmón y rúcula</span>
-                            </div>
-                            <span class="menu-item-price">5,00 €</span>
-                        </div>
-                        <div class="menu-divider"></div>
-                        <div class="menu-item">
-                            <div class="menu-item-info">
-                                <span class="menu-item-name">Queso krema y jamón</span>
-                            </div>
-                            <span class="menu-item-price">5,00 €</span>
-                        </div>
+                        {{carta.categorias.1.homeHtml}}
                         <p class="more-dishes" data-i18n="carta.more">... y muchos más</p>
                     </div>
                 </div>
@@ -301,34 +234,8 @@
                     <div class="carta-menu-list">
                         <p class="carta-cat-label" data-i18n="carta.cat3.label">&#9829; NUESTROS POSTRES</p>
                         <h3 class="carta-cat-title" data-i18n="carta.cat3.title">Dulces Finales</h3>
-                        <div class="menu-item">
-                            <div class="menu-item-info">
-                                <span class="menu-item-name">Tarta de queso (especialidad)</span>
-                            </div>
-                            <span class="menu-item-price">5,50 €</span>
-                        </div>
-                        <div class="menu-divider"></div>
-                        <div class="menu-item">
-                            <div class="menu-item-info">
-                                <span class="menu-item-name">Tarta de queso del mes</span>
-                            </div>
-                            <span class="menu-item-price">6,00 €</span>
-                        </div>
-                        <div class="menu-divider"></div>
-                        <div class="menu-item">
-                            <div class="menu-item-info">
-                                <span class="menu-item-name">Brownie con helado</span>
-                            </div>
-                            <span class="menu-item-price">6,00 €</span>
-                        </div>
-                        <div class="menu-divider"></div>
-                        <div class="menu-item">
-                            <div class="menu-item-info">
-                                <span class="menu-item-name">Torrisú</span>
-                            </div>
-                            <span class="menu-item-price">7,00 €</span>
-                        </div>
-                        <p class="more-dishes">... y muchos más</p>
+                        {{carta.categorias.2.homeHtml}}
+                        <p class="more-dishes" data-i18n="carta.more">... y muchos más</p>
                     </div>
                     <div class="carta-img-wrap">
                         <img src="{{images.postres}}" alt="Postres en Kafé" loading="lazy" width="638" height="510" />
