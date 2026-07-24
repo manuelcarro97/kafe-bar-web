@@ -202,6 +202,7 @@ function pathKeyToPath(pathKey) {
 const SECTION_TITLES = {
   nav: "Navegación",
   hero: "Portada (Hero)",
+  desayunos: "Desayunos (bloque SEO)",
   nosotros: "Nosotros",
   carta: "Karta",
   menu: "Menú destacado",
@@ -213,6 +214,15 @@ const SECTION_TITLES = {
   images: "Imágenes",
   horario: "Horario",
 };
+
+// Orden en que se muestran las secciones en el editor, siguiendo el orden de
+// lectura real de los bloques en la web: nav → hero → desayunos (bloque SEO) →
+// karta → info/kontacto → nosotros → pie. "horario" alimenta la tarjeta de
+// info y el footer, se coloca junto a info por cercanía visual. "images"
+// (agrupador de fotos) va al final. Las claves no listadas se añaden al final
+// como cola de seguridad para que nada desaparezca si se añade una sección
+// nueva al JSON.
+const SECTION_ORDER = ["nav", "hero", "desayunos", "carta", "info", "horario", "nosotros", "footer", "images"];
 
 // Claves puramente estructurales que nunca se muestran como campo editable,
 // pero que se conservan intactas en workingContent (no se tocan, así que
@@ -251,6 +261,37 @@ const CARTA_FIELD_LABELS = {
   precio: "Precio",
 };
 
+// Claves de carta que son la cabecera (etiqueta + título) de una tarjeta
+// destacada de la home. Se enlazan por posición con categorias[] (cat1 ↔
+// categorias[0], cat2 ↔ [1], cat3 ↔ [2]) y es lo que la web traduce vía
+// data-i18n. NO se muestran en el bloque de "textos" de carta: van dentro de
+// su propia tarjeta agrupada (ver renderHomeCardBlock).
+const CARD_HEADER_KEYS = new Set(["cat1", "cat2", "cat3"]);
+
+// Etiquetas legibles para las claves de la sección "images". Las tarjetas de
+// la home (tapas/desayunos/postres) se muestran como "Tarjeta 1/2/3" porque su
+// contenido puede cambiar; la clave del JSON no se toca (la usan la plantilla y
+// categorias[].image).
+const IMAGES_FIELD_LABELS = {
+  logo: "Logo",
+  heroDish: "Foto principal (portada)",
+  tapas: "Tarjeta 1 (foto)",
+  desayunos: "Tarjeta 2 (foto)",
+  postres: "Tarjeta 3 (foto)",
+  nosotros: "Nosotros (foto)",
+  desayunosSeo1: "Bloque desayunos — foto 1",
+  desayunosSeo2: "Bloque desayunos — foto 2",
+  desayunosSeo3: "Bloque desayunos — foto 3",
+};
+
+// Textos de carta que NO se muestran como campo editable en el admin (reducen
+// ruido). Se conservan intactos en content.json y siguen apareciendo en la
+// web: solo dejan de ser editables desde el panel.
+//  - more:   "... y muchos más" (adorno bajo las tarjetas).
+//  - footer: pie de carta (text/pdf/cta), incluye el CTA de reserva que está
+//            oculto en la web.
+const CARTA_HIDDEN_TEXT_KEYS = new Set(["more", "footer"]);
+
 // ---------------------------------------------------------------------------
 // Render
 // ---------------------------------------------------------------------------
@@ -259,7 +300,16 @@ function renderAllSections() {
   sectionsContainer.innerHTML = "";
   cartaBodyEl = null;
   horarioBodyEl = null;
-  for (const topKey of Object.keys(workingContent)) {
+
+  // Orden web (SECTION_ORDER) primero; cualquier clave no listada se añade al
+  // final para no perderla nunca.
+  const keys = Object.keys(workingContent);
+  const orderedKeys = [
+    ...SECTION_ORDER.filter((k) => keys.includes(k)),
+    ...keys.filter((k) => !SECTION_ORDER.includes(k)),
+  ];
+
+  for (const topKey of orderedKeys) {
     // Reseñas: no se renderiza en el editor, pero se conserva intacta en
     // workingContent/originalContent (se actualiza por otro script).
     if (HIDDEN_SECTIONS.has(topKey)) continue;
@@ -281,7 +331,10 @@ function renderAllSections() {
       horarioBodyEl = body;
       renderHorarioSection(body, [topKey]);
     } else {
-      renderNode(body, workingContent[topKey], [topKey], topKey, false);
+      // En "images" pasamos keyLabel null para que cada campo muestre solo su
+      // etiqueta legible (p. ej. "Tarjeta 1 (foto)") sin el prefijo "images ›".
+      const topLabel = topKey === "images" ? null : topKey;
+      renderNode(body, workingContent[topKey], [topKey], topLabel, false);
     }
 
     sectionsContainer.appendChild(details);
@@ -370,6 +423,13 @@ function renderCartaSection(body, path) {
 
   const prevOpenA = body.querySelector(":scope > .kf-carta-sub-destacado")?.open;
   const prevOpenB = body.querySelector(":scope > .kf-carta-sub-completa")?.open;
+  const prevOpenC = body.querySelector(":scope > .kf-carta-sub-desayunos")?.open;
+  // Estado abierto/cerrado de cada tarjeta (por id) para no cerrarlas al
+  // re-renderizar tras añadir/quitar un plato (rerenderCarta reconstruye todo).
+  const prevCardOpen = {};
+  body.querySelectorAll(".kf-card-block").forEach((d) => {
+    prevCardOpen[d.dataset.card] = d.open;
+  });
   body.innerHTML = "";
 
   // --- Sub-bloque A: Menú destacado (web) ---
@@ -390,17 +450,24 @@ function renderCartaSection(body, path) {
   bodyA.appendChild(textsHeading);
 
   for (const k of Object.keys(carta)) {
-    if (k === "categorias" || k === "menuCompleto") continue;
+    if (k === "categorias" || k === "menuCompleto" || k === "menuDesayunos") continue;
+    // cat1/cat2/cat3 (etiqueta + título de cada tarjeta) NO van aquí: se
+    // muestran dentro de su propia tarjeta agrupada, junto a sus platos.
+    if (CARD_HEADER_KEYS.has(k)) continue;
+    // more / footer: ocultos del editor (se conservan en el JSON).
+    if (CARTA_HIDDEN_TEXT_KEYS.has(k)) continue;
     if (SKIP_KEYS.has(k)) continue;
     renderNode(bodyA, carta[k], [...path, k], CARTA_FIELD_LABELS[k] || k);
   }
 
   const cardsHeading = document.createElement("div");
   cardsHeading.className = "kf-subsection-heading kf-subsection-heading-spaced";
-  cardsHeading.textContent = "Tarjetas de la home (categorías destacadas y sus platos)";
+  cardsHeading.textContent = "Tarjetas de la home (etiqueta + título + platos)";
   bodyA.appendChild(cardsHeading);
 
-  renderNode(bodyA, carta.categorias, [...path, "categorias"], CARTA_FIELD_LABELS.categorias);
+  carta.categorias.forEach((cat, i) => {
+    renderHomeCardBlock(bodyA, path, cat, i, prevCardOpen);
+  });
 
   body.appendChild(subA);
 
@@ -419,6 +486,87 @@ function renderCartaSection(body, path) {
   renderMenuCompleto(bodyB, [...path, "menuCompleto"], carta.menuCompleto);
 
   body.appendChild(subB);
+
+  // --- Sub-bloque C: Carta de desayunos (imprimible) ---
+  // Misma estructura y controles que "Carta completa": columnas + secciones +
+  // platos con +/-. Alimenta la página imprimible menu-printable-desayunos.html.
+  const subC = document.createElement("details");
+  subC.className = "kf-subsection kf-carta-sub-desayunos";
+  subC.open = prevOpenC === undefined ? false : prevOpenC;
+  const summaryC = document.createElement("summary");
+  summaryC.textContent = "Carta desayunos (imprimible)";
+  subC.appendChild(summaryC);
+
+  const bodyC = document.createElement("div");
+  bodyC.className = "kf-subsection-body";
+  subC.appendChild(bodyC);
+
+  renderMenuCompleto(bodyC, [...path, "menuDesayunos"], carta.menuDesayunos);
+
+  body.appendChild(subC);
+}
+
+/**
+ * Renderiza UNA tarjeta destacada de la home como bloque agrupado y colapsable:
+ * etiqueta + título (cabecera, vive en carta.catN) + platos (viven en
+ * categorias[idx]). Así el cliente ve y edita cada tarjeta como una unidad,
+ * en vez de tener los títulos por un lado y los platos por otro.
+ *
+ * La cabecera se lee de carta["cat"+(idx+1)] porque es lo que la web traduce
+ * (data-i18n); el label/title inline de la categoría no se usa en la web. Los
+ * platos y subcategorías sí viven en categorias[idx]. setAtPath escribe cada
+ * campo en su ruta real del JSON: la agrupación es solo visual.
+ *
+ * @param {Object} prevCardOpen  Mapa id→open para conservar el estado
+ *   abierto/cerrado de cada tarjeta al re-renderizar (rerenderCarta).
+ */
+function renderHomeCardBlock(container, cartaPath, cat, idx, prevCardOpen) {
+  const cardId = cat.id || String(idx);
+  const catPath = [...cartaPath, "categorias", idx];
+  const headerPath = [...cartaPath, `cat${idx + 1}`];
+  const header = getAtPath(workingContent, headerPath);
+
+  const block = document.createElement("details");
+  block.className = "kf-card-block";
+  block.dataset.card = cardId;
+  block.open = prevCardOpen[cardId] === undefined ? false : prevCardOpen[cardId];
+
+  const summary = document.createElement("summary");
+  summary.textContent = `Tarjeta ${idx + 1}`;
+  block.appendChild(summary);
+
+  const cardBody = document.createElement("div");
+  cardBody.className = "kf-card-block-body";
+  block.appendChild(cardBody);
+
+  // Cabecera de la tarjeta (etiqueta + título).
+  if (header && typeof header === "object") {
+    renderBilingualField(cardBody, [...headerPath, "label"], "Etiqueta (subtítulo)");
+    renderBilingualField(cardBody, [...headerPath, "title"], "Título");
+  } else {
+    // Fallback defensivo: tarjeta sin cabecera carta.catN (no ocurre con las
+    // 3 tarjetas actuales). Usa el label/title inline de la categoría.
+    if (cat.label != null) renderPlainField(cardBody, [...catPath, "label"], "Etiqueta (subtítulo)");
+    if (cat.title != null) renderPlainField(cardBody, [...catPath, "title"], "Título");
+  }
+
+  // Foto de la tarjeta: referencia de solo lectura (se cambia en "Imágenes").
+  if (typeof cat.image === "string") {
+    renderReadonlyField(cardBody, "Foto (se cambia en la sección Imágenes)", cat.image);
+  }
+
+  // Platos: lista plana (items) o subcategorías (p. ej. Tostas/Baggels).
+  if (Array.isArray(cat.subcategorias)) {
+    cat.subcategorias.forEach((sub, j) => {
+      const subPath = [...catPath, "subcategorias", j];
+      renderPlainField(cardBody, [...subPath, "nombre"], "Subcategoría");
+      renderItemsArray(cardBody, [...subPath, "items"], sub.items, "Platos");
+    });
+  } else if (Array.isArray(cat.items)) {
+    renderItemsArray(cardBody, [...catPath, "items"], cat.items, "Platos");
+  }
+
+  container.appendChild(block);
 }
 
 /**
@@ -532,15 +680,45 @@ function renderItemsArray(container, path, items, keyLabel) {
   wrap.appendChild(title);
 
   items.forEach((item, idx) => {
+    const itemPath = [...path, idx];
     const row = document.createElement("div");
     row.className = "kf-item-row";
 
-    const fields = document.createElement("div");
-    fields.className = "kf-item-row-fields";
-    for (const k of Object.keys(item)) {
-      renderNode(fields, item[k], [...path, idx, k], CARTA_FIELD_LABELS[k] || k);
+    const content = document.createElement("div");
+    content.className = "kf-item-content";
+
+    // Fila superior: nombre + precio (rejilla 2fr / 1fr).
+    const topFields = document.createElement("div");
+    topFields.className = "kf-item-row-fields";
+    renderPlainField(topFields, [...itemPath, "nombre"], "Nombre");
+    renderPlainField(topFields, [...itemPath, "precio"], "Precio");
+    content.appendChild(topFields);
+
+    // Descripción (si existe): campo a ancho completo, DEBAJO de nombre/precio,
+    // con un botón "−" para quitarla.
+    const hasDesc = Object.prototype.hasOwnProperty.call(item, "descripcion");
+    if (hasDesc) {
+      const descWrap = document.createElement("div");
+      descWrap.className = "kf-item-desc-wrap";
+      renderPlainField(descWrap, [...itemPath, "descripcion"], "Descripción");
+      const rmDescBtn = document.createElement("button");
+      rmDescBtn.type = "button";
+      rmDescBtn.className = "kf-btn-desc-remove";
+      rmDescBtn.title = "Quitar descripción";
+      rmDescBtn.textContent = "−";
+      rmDescBtn.addEventListener("click", () => {
+        delete item.descripcion;
+        rerenderCarta();
+      });
+      descWrap.appendChild(rmDescBtn);
+      content.appendChild(descWrap);
     }
-    row.appendChild(fields);
+
+    row.appendChild(content);
+
+    // Acciones a la derecha: eliminar plato + (si no tiene) añadir descripción.
+    const actions = document.createElement("div");
+    actions.className = "kf-item-actions";
 
     const removeBtn = document.createElement("button");
     removeBtn.type = "button";
@@ -551,8 +729,22 @@ function renderItemsArray(container, path, items, keyLabel) {
       items.splice(idx, 1);
       rerenderCarta();
     });
-    row.appendChild(removeBtn);
+    actions.appendChild(removeBtn);
 
+    if (!hasDesc) {
+      const addDescBtn = document.createElement("button");
+      addDescBtn.type = "button";
+      addDescBtn.className = "kf-btn-add-desc";
+      addDescBtn.title = "Añadir descripción";
+      addDescBtn.textContent = "✎";
+      addDescBtn.addEventListener("click", () => {
+        item.descripcion = "";
+        rerenderCarta();
+      });
+      actions.appendChild(addDescBtn);
+    }
+
+    row.appendChild(actions);
     wrap.appendChild(row);
   });
 
@@ -620,7 +812,12 @@ function renderNode(container, node, path, keyLabel, wrapGroup = true) {
         continue;
       }
 
-      const friendlyK = path[0] === "carta" ? CARTA_FIELD_LABELS[k] || k : k;
+      const friendlyK =
+        path[0] === "carta"
+          ? CARTA_FIELD_LABELS[k] || k
+          : path[0] === "images"
+            ? IMAGES_FIELD_LABELS[k] || k
+            : k;
       const childLabel = keyLabel ? `${keyLabel} › ${friendlyK}` : friendlyK;
       renderNode(target, val, [...path, k], childLabel);
     }

@@ -18,6 +18,7 @@ module.exports = function keyMap(c) {
   return {
     // nav
     'nav.inicio': c.nav.inicio,
+    'nav.desayunos': c.nav.desayunos,
     'nav.nosotros': c.nav.nosotros,
     'nav.carta': c.nav.carta,
     'nav.resenas': c.nav.resenas,
@@ -29,6 +30,15 @@ module.exports = function keyMap(c) {
     'hero.subtitle': c.hero.subtitle,
     'hero.cta.carta': c.hero.cta.carta,
     'hero.cta.historia': c.hero.cta.historia,
+
+    // nosotros
+    // desayunos (bloque SEO entre hero y karta)
+    'desayunos.tag': c.desayunos.tag,
+    'desayunos.title': c.desayunos.title,
+    'desayunos.parrafo1': c.desayunos.parrafo1,
+    'desayunos.parrafo2': c.desayunos.parrafo2,
+    'desayunos.nota': c.desayunos.nota,
+    'desayunos.cta': c.desayunos.cta,
 
     // nosotros
     'nosotros.badge': c.nosotros.badge,

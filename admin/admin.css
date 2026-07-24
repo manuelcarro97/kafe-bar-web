@@ -456,6 +456,47 @@ body {
   margin-top: 26px;
 }
 
+/* ---------- Tarjetas de la home (Karta): bloque agrupado por tarjeta ---------- */
+
+.kf-card-block {
+  border: 1px solid #d8d2ca;
+  border-radius: 6px;
+  margin-bottom: 12px;
+  background: #fff;
+}
+
+.kf-card-block > summary {
+  cursor: pointer;
+  padding: 10px 14px;
+  font-weight: 700;
+  font-size: 0.88rem;
+  color: #45392e;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.kf-card-block > summary::-webkit-details-marker {
+  display: none;
+}
+
+.kf-card-block > summary::before {
+  content: "▶";
+  font-size: 0.6rem;
+  color: #8a3b1f;
+  transition: transform 0.15s ease;
+}
+
+.kf-card-block[open] > summary::before {
+  transform: rotate(90deg);
+}
+
+.kf-card-block-body {
+  padding: 6px 14px 14px;
+  border-top: 1px solid #e2ddd4;
+}
+
 /* ---------- Carta completa: columnas y secciones ---------- */
 
 .kf-menu-columns {
@@ -616,4 +657,67 @@ body {
 
 .kf-btn-add-item:hover {
   background: #f6e9e3;
+}
+
+/* Contenido del plato: nombre/precio arriba, descripción a ancho completo debajo. */
+.kf-item-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.kf-item-desc-wrap {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.kf-item-desc-wrap .kf-field {
+  flex: 1;
+  margin: 0;
+}
+
+/* Columna de acciones (eliminar plato + añadir descripción). */
+.kf-item-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.kf-btn-add-desc {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1px dashed #8a3b1f;
+  background: #fff;
+  color: #8a3b1f;
+  font-size: 0.95rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.kf-btn-add-desc:hover {
+  background: #f6e9e3;
+}
+
+.kf-btn-desc-remove {
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 1px solid #e0b2a8;
+  background: #fbe9e6;
+  color: #a11f1f;
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+  margin-bottom: 2px;
+}
+
+.kf-btn-desc-remove:hover {
+  background: #f7d6d0;
 }

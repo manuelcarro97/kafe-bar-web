@@ -8,6 +8,10 @@
       "es": "Nosotros",
       "gl": "Nós"
     },
+    "desayunos": {
+      "es": "Desayunos",
+      "gl": "Almorzos"
+    },
     "carta": {
       "es": "Karta",
       "gl": "Karta"
@@ -43,6 +47,32 @@
         "es": "Nuestra Historia",
         "gl": "A Nosa Historia"
       }
+    }
+  },
+  "desayunos": {
+    "tag": {
+      "es": "♥ Desayunos",
+      "gl": "♥ Almorzos"
+    },
+    "title": {
+      "es": "Desayuno y Brunch",
+      "gl": "Almorzo e Brunch"
+    },
+    "parrafo1": {
+      "es": "Empieza el día con nuestros desayunos y brunch en pleno centro de A Coruña: tostas recién hechas, baggels, bollería del día y kafé de especialidad. Un desayuno tranquilo, casero y con producto de verdad.",
+      "gl": "Comeza o día cos nosos almorzos e brunch no centro da Coruña: tostas recén feitas, baggels, boullería do día e kafé de especialidade. Un almorzo tranquilo, caseiro e con produto de verdade."
+    },
+    "parrafo2": {
+      "es": "Tanto si buscas un desayuno rápido antes del trabajo como un brunch sin prisa el fin de semana, en Kafé tienes opciones dulces y saladas para todos los gustos. Ven a desayunar y descubre por qué somos un rincón favorito en A Coruña.",
+      "gl": "Tanto se buscas un almorzo rápido antes do traballo como un brunch sen présa a fin de semana, en Kafé tes opcións doces e salgadas para todos os gustos. Ven almorzar e descobre por que somos un recuncho favorito na Coruña."
+    },
+    "nota": {
+      "es": "Horario de brunch y desayunos hasta las 12:30h",
+      "gl": "Horario de brunch e almorzos ata as 12:30h"
+    },
+    "cta": {
+      "es": "Ver Karta de Desayunos",
+      "gl": "Ver Karta de Almorzos"
     }
   },
   "nosotros": {
@@ -114,12 +144,12 @@
     },
     "cat2": {
       "label": {
-        "es": "♥ NUESTROS DESAYUNOS",
-        "gl": "♥ OS NOSOS ALMORZOS"
+        "es": "♥ NUESTRAS BURGUERS Y BOKADILLOS",
+        "gl": "♥ AS NOSAS BURGUERS E BOKADILLOS"
       },
       "title": {
-        "es": "Empezar Bien el Día",
-        "gl": "Comezar Ben o Día"
+        "es": "Pan, Sabor y Kalidad",
+        "gl": "Pan, Sabor e Kalidade"
       }
     },
     "cat3": {
@@ -178,36 +208,37 @@
         "image": "images.desayunos",
         "subcategorias": [
           {
-            "nombre": "Tostas",
+            "nombre": "Bokadillos",
             "items": [
               {
-                "nombre": "Aceite y tomate",
-                "precio": "3,50 €"
+                "nombre": "Bokadillo Pollo Kompleto",
+                "descripcion": "Pollo, tomate, lechuga y mayonesa",
+                "precio": "5,00 €"
               },
               {
-                "nombre": "Aceite, tomate y jamón",
+                "nombre": "Bokadillo de Lomo",
+                "descripcion": "Lomo, queso y pimientos",
+                "precio": "5,00 €"
+              },
+              {
+                "nombre": "Bokadillo Vegetal",
+                "descripcion": "Lechuga, tomate, cebolla, queso y huevo",
                 "precio": "4,50 €"
-              },
-              {
-                "nombre": "Queso krema, nueces y miel",
-                "precio": "4,50 €"
-              },
-              {
-                "nombre": "Mantequilla y mermelada",
-                "precio": "3,00 €"
               }
             ]
           },
           {
-            "nombre": "Baggels",
+            "nombre": "Burguers",
             "items": [
               {
-                "nombre": "Queso krema, salmón y rúcula",
-                "precio": "5,00 €"
+                "nombre": "Burguer de la Kasa",
+                "descripcion": "Pan brioche, bacon, queso golden, tomate, cebolla y lechuga",
+                "precio": "8,50 €"
               },
               {
-                "nombre": "Queso krema y jamón",
-                "precio": "5,00 €"
+                "nombre": "Burguer Doble",
+                "descripcion": "Doble karne, doble queso, bacon y salsa de la kasa",
+                "precio": "9,50 €"
               }
             ]
           }
@@ -215,8 +246,6 @@
       },
       {
         "id": "postres",
-        "label": "♥ NUESTROS POSTRES",
-        "title": "Dulces Finales",
         "image": "images.postres",
         "items": [
           {
@@ -546,6 +575,145 @@
           ]
         }
       ]
+    },
+    "menuDesayunos": {
+      "columna1": [
+        {
+          "seccion": "Tostas",
+          "items": [
+            {
+              "nombre": "Aceite Y Tomate",
+              "precio": "2,00 €"
+            },
+            {
+              "nombre": "Aceite, Tomate Y Jamón",
+              "precio": "3,00 €"
+            },
+            {
+              "nombre": "Queso Krema, Nueces Y Miel",
+              "precio": "3,00 €"
+            },
+            {
+              "nombre": "Mantequilla Y Mermelada",
+              "precio": "2,00 €"
+            },
+            {
+              "nombre": "Nutella",
+              "precio": "2,00 €"
+            }
+          ]
+        },
+        {
+          "seccion": "Desayunos",
+          "items": [
+            {
+              "nombre": "Desayuno Kompleto",
+              "descripcion": "Kafé, zumo natural y tosta",
+              "precio": "4,50 €"
+            },
+            {
+              "nombre": "Desayuno Dulce",
+              "descripcion": "Kafé y bollería del día",
+              "precio": "3,50 €"
+            },
+            {
+              "nombre": "Desayuno Salado",
+              "descripcion": "Kafé y baggel a elegir",
+              "precio": "5,00 €"
+            },
+            {
+              "nombre": "Tostada Y Kafé",
+              "precio": "2,80 €"
+            },
+            {
+              "nombre": "Brunch Kafé",
+              "descripcion": "Huevos, baggel, kafé y zumo",
+              "precio": "9,50 €"
+            }
+          ]
+        }
+      ],
+      "columna2": [
+        {
+          "seccion": "Bollería",
+          "items": [
+            {
+              "nombre": "Kroissant",
+              "precio": "1,80 €"
+            },
+            {
+              "nombre": "Napolitana",
+              "precio": "1,80 €"
+            },
+            {
+              "nombre": "Muffin Del Día",
+              "precio": "2,50 €"
+            },
+            {
+              "nombre": "Bizkocho Del Día",
+              "precio": "2,50 €"
+            },
+            {
+              "nombre": "Porra (Ud)",
+              "precio": "1,20 €"
+            },
+            {
+              "nombre": "Churros (Ración)",
+              "precio": "2,50 €"
+            }
+          ]
+        },
+        {
+          "seccion": "Bebidas",
+          "items": [
+            {
+              "nombre": "Kafé Solo",
+              "precio": "1,30 €"
+            },
+            {
+              "nombre": "Kortado",
+              "precio": "1,40 €"
+            },
+            {
+              "nombre": "Kafé Con Leche",
+              "precio": "1,50 €"
+            },
+            {
+              "nombre": "Kapuchino",
+              "precio": "2,00 €"
+            },
+            {
+              "nombre": "Té / Infusión",
+              "precio": "1,60 €"
+            },
+            {
+              "nombre": "Kolakao",
+              "precio": "1,80 €"
+            }
+          ]
+        },
+        {
+          "seccion": "Batidos",
+          "items": [
+            {
+              "nombre": "Batido De Fresa",
+              "precio": "3,50 €"
+            },
+            {
+              "nombre": "Batido De Plátano",
+              "precio": "3,50 €"
+            },
+            {
+              "nombre": "Batido De Chocolate",
+              "precio": "3,50 €"
+            },
+            {
+              "nombre": "Smoothie De Frutas",
+              "precio": "4,00 €"
+            }
+          ]
+        }
+      ]
     }
   },
   "info": {
@@ -771,7 +939,10 @@
     "tapas": "https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=600&q=80",
     "desayunos": "imagenes/comida1.png",
     "postres": "imagenes/postre.png",
-    "nosotros": "imagenes/duo.png"
+    "nosotros": "imagenes/duo.png",
+    "desayunosSeo1": "imagenes/comida1.png",
+    "desayunosSeo2": "imagenes/tortilla-hero.jpg",
+    "desayunosSeo3": "imagenes/postre.png"
   },
   "horario": [
     {

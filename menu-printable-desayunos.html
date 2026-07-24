@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kafé – Karta de Desayunos y Brunch</title>
+    <meta name="description"
+        content="Karta de desayunos y brunch de Kafé: tostas, baggels, bollería y kafé de especialidad. Desayunar en el centro de A Coruña." />
+    <link rel="icon" href="favicon.ico" type="image/png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,700;0,9..144,900;1,9..144,400&family=DM+Sans:wght@400;600&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --azul-oscuro: #0d2137;
+            --azul-acento: #1e6fbf;
+            --texto: #0d2137;
+            --texto-suave: #4a6080;
+            --gris-medio: #e8ecf2;
+            --blanco: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            color: var(--texto);
+            background: var(--blanco);
+            line-height: 1.4;
+            padding: 40px;
+        }
+
+        @page {
+            size: A4;
+            margin: 0;
+        }
+
+        .page {
+            width: 210mm;
+            min-height: 297mm;
+            padding: 20mm 20mm 45mm 20mm;
+            margin: 0 auto;
+            background: white;
+            position: relative;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid var(--azul-oscuro);
+            padding-bottom: 20px;
+        }
+
+        .logo {
+            height: 60px;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            font-family: 'Fraunces', serif;
+            font-size: 28px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--azul-oscuro);
+        }
+
+        .menu-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        section {
+            margin-bottom: 25px;
+        }
+
+        h2 {
+            font-family: 'Fraunces', serif;
+            font-size: 18px;
+            color: var(--azul-oscuro);
+            border-bottom: 1px solid var(--gris-medio);
+            margin-bottom: 15px;
+            padding-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .item {
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .item-info {
+            flex: 1;
+        }
+
+        .item-name {
+            font-weight: 600;
+            font-size: 14px;
+            display: block;
+        }
+
+        .item-desc {
+            font-size: 11px;
+            color: var(--texto-suave);
+            display: block;
+            margin-top: 2px;
+        }
+
+        .item-price {
+            font-family: 'Fraunces', serif;
+            font-weight: 700;
+            font-size: 14px;
+            color: var(--azul-acento);
+            white-space: nowrap;
+        }
+
+        footer {
+            position: absolute;
+            bottom: 20mm;
+            left: 20mm;
+            right: 20mm;
+            text-align: center;
+            font-size: 10px;
+            color: var(--texto-suave);
+            border-top: 1px solid var(--gris-medio);
+            padding-top: 15px;
+        }
+
+        .footer-copy {
+            margin-top: 5px;
+        }
+
+        .footer-info {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        @media print {
+            body {
+                padding: 0;
+            }
+
+            .page {
+                margin: 0;
+                box-shadow: none;
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .page {
+                width: 100%;
+                min-height: auto;
+                padding: 15px 15px 20px 15px;
+            }
+
+            .menu-container {
+                grid-template-columns: 1fr;
+            }
+
+            footer {
+                position: relative;
+                bottom: auto;
+                left: auto;
+                right: auto;
+                margin-top: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page">
+        <header>
+            <img src="imagenes/logo-transparente.png" alt="Kafé Logo" class="logo">
+            <h1>Desayuno y Brunch</h1>
+        </header>
+
+        <div class="menu-container">
+            <div class="column">
+                <section>
+                    <h2>Tostas</h2>
+                    <div class="item">
+                        <div class="item-info"><span class="item-name">Aceite Y Tomate</span></div><span class="item-price">2,00 €</span>
+                    </div>
+                    <div class="item">
+                        <div class="item-info"><span class="item-name">Aceite, Tomate Y Jamón</span></div><span class="item-price">3,00 €</span>
+                    </div>
+                    <div class="item">
+                        <div class="item-info"><span class="item-name">Queso Krema, Nueces Y Miel</span></div><span class="item-price">3,00 €</span>
+                    </div>
+                    <div class="item">
+                        <div class="item-info"><span class="item-name">Mantequilla Y Mermelada</span></div><span class="item-price">2,00 €</span>
+                    </div>
+                    <div class="item">
+                        <div class="item-info"><span class="item-name">Nutella</span></div><span class="item-price">2,00 €</span>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>Desayunos</h2>
+                    <div class="item">
+                        <div class="item-info"><span class="item-name">Desayuno Kompleto</span><span class="item-desc">Kafé, zumo natural y tosta</span></div><span class="item-price">4,50 €</span>
+                    </div>
+                    <div class="item">
+                        <div class="item-info"><span class="item-name">Desayuno Dulce</span><span class="item-desc">Kafé y bollería del día</span></div><span class="item-price">3,50 €</span>
+                    </div>
+                    <div class="item">
+                        <div class="item-info"><span class="item-name">Desayuno Salado</span><span class="item-desc">Kafé y baggel a elegir</span></div><span class="item-price">5,00 €</span>
+                    </div>
+                    <div class="item">
+                        <div class="item-info"><span class="item-name">Tostada Y Kafé</span></div><span class="item-price">2,80 €</span>
+                    </div>
+                    <div class="item">
+                        <div class="item-info"><span class="item-name">Brunch Kafé</span><span class="item-desc">Huevos, baggel, kafé y zumo</span></div><span class="item-price">9,50 €</span>
+                    </div>
+                </section>
+            </div>
+
+            <div class="column">
+                <section>
+                    <h2>Bollería</h2>
+                    <div class="item">
+                        <div class="item-info"><span class="item-name">Kroissant</span></div><span class="item-price">1,80 €</span>
+                    </div>
+                    <div class="item">
+                        <div class="item-info"><span class="item-name">Napolitana</span></div><span class="item-price">1,80 €</span>
+                    </div>
+                    <div class="item">
+                        <div class="item-info"><span class="item-name">Muffin Del Día</span></div><span class="item-price">2,50 €</span>
+                    </div>
+                    <div class="item">
+                        <div class="item-info"><span class="item-name">Bizkocho Del Día</span></div><span class="item-price">2,50 €</span>
+                    </div>
+                    <div class="item">
+                        <div class="item-info"><span class="item-name">Porra (Ud)</span></div><span class="item-price">1,20 €</span>
+                    </div>
+                    <div class="item">
+                        <div class="item-info"><span class="item-name">Churros (Ración)</span></div><span class="item-price">2,50 €</span>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>Bebidas</h2>
+                    <div class="item">
+                        <div class="item-info"><span class="item-name">Kafé Solo</span></div><span class="item-price">1,30 €</span>
+                    </div>
+                    <div class="item">
+                        <div class="item-info"><span class="item-name">Kortado</span></div><span class="item-price">1,40 €</span>
+                    </div>
+                    <div class="item">
+                        <div class="item-info"><span class="item-name">Kafé Con Leche</span></div><span class="item-price">1,50 €</span>
+                    </div>
+                    <div class="item">
+                        <div class="item-info"><span class="item-name">Kapuchino</span></div><span class="item-price">2,00 €</span>
+                    </div>
+                    <div class="item">
+                        <div class="item-info"><span class="item-name">Té / Infusión</span></div><span class="item-price">1,60 €</span>
+                    </div>
+                    <div class="item">
+                        <div class="item-info"><span class="item-name">Kolakao</span></div><span class="item-price">1,80 €</span>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>Batidos</h2>
+                    <div class="item">
+                        <div class="item-info"><span class="item-name">Batido De Fresa</span></div><span class="item-price">3,50 €</span>
+                    </div>
+                    <div class="item">
+                        <div class="item-info"><span class="item-name">Batido De Plátano</span></div><span class="item-price">3,50 €</span>
+                    </div>
+                    <div class="item">
+                        <div class="item-info"><span class="item-name">Batido De Chocolate</span></div><span class="item-price">3,50 €</span>
+                    </div>
+                    <div class="item">
+                        <div class="item-info"><span class="item-name">Smoothie De Frutas</span></div><span class="item-price">4,00 €</span>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <footer>
+            <div class="footer-info">
+                <span>📍 Rúa Nebrija, 1, A Coruña</span>
+                <span>📞 981 31 82 60</span>
+                <span>🌐 kafe-143b5.web.app</span>
+            </div>
+            <p class="footer-copy">&copy; 2026 Kafé Restaurant - Kocina Gallega Auténtica</p>
+        </footer>
+    </div>
+</body>
+
+</html>

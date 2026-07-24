@@ -98,10 +98,13 @@ function renderMenuColumn(sections) {
 
 /** Renderiza un plato de las tarjetas destacadas de la home (index.html). */
 function renderHomeItem(item) {
+  const desc = item.descripcion
+    ? `\n                                <span class="menu-item-desc">${item.descripcion}</span>`
+    : '';
   return (
     '                        <div class="menu-item">\n' +
     '                            <div class="menu-item-info">\n' +
-    `                                <span class="menu-item-name">${item.nombre}</span>\n` +
+    `                                <span class="menu-item-name">${item.nombre}</span>${desc}\n` +
     '                            </div>\n' +
     `                            <span class="menu-item-price">${item.precio}</span>\n` +
     '                        </div>'
@@ -204,6 +207,11 @@ function main() {
   content.carta.menuCompleto.columna1Html = renderMenuColumn(content.carta.menuCompleto.columna1);
   content.carta.menuCompleto.columna2Html = renderMenuColumn(content.carta.menuCompleto.columna2);
 
+  // Ídem para la carta imprimible de desayunos/brunch (menuDesayunos), misma
+  // estructura que menuCompleto → se reutiliza renderMenuColumn.
+  content.carta.menuDesayunos.columna1Html = renderMenuColumn(content.carta.menuDesayunos.columna1);
+  content.carta.menuDesayunos.columna2Html = renderMenuColumn(content.carta.menuDesayunos.columna2);
+
   // Pre-renderiza los platos de cada tarjeta destacada de la home y los cuelga
   // como marcador {{carta.categorias.N.homeHtml}} en la plantilla.
   content.carta.categorias.forEach((cat) => {
@@ -221,11 +229,13 @@ function main() {
   buildTranslationsGenerated(keyMap);
   buildHtmlFile('index.template.html', 'index.html', content, keyMap);
   buildHtmlFile('menu-printable.template.html', 'menu-printable.html', content, keyMap);
+  buildHtmlFile('desayunos-printable.template.html', 'menu-printable-desayunos.html', content, keyMap);
 
   console.log('Build OK:');
   console.log('  - js/translations.generated.js');
   console.log('  - index.html');
   console.log('  - menu-printable.html');
+  console.log('  - menu-printable-desayunos.html');
 }
 
 main();
