@@ -46,6 +46,20 @@
       "historia": {
         "es": "Nuestra Historia",
         "gl": "A Nosa Historia"
+      },
+      "desayunos": {
+        "es": "Ver Desayunos →",
+        "gl": "Ver Almorzos →"
+      }
+    },
+    "card": {
+      "signature": {
+        "es": "Signature",
+        "gl": "Signature"
+      },
+      "plato": {
+        "es": "TORTILLA DE PATATAS",
+        "gl": "TORTILLA DE PATACAS"
       }
     }
   },
@@ -940,9 +954,9 @@
     "desayunos": "imagenes/comida1.png",
     "postres": "imagenes/postre.png",
     "nosotros": "imagenes/duo.png",
-    "desayunosSeo1": "imagenes/comida1.png",
-    "desayunosSeo2": "imagenes/tortilla-hero.jpg",
-    "desayunosSeo3": "imagenes/postre.png"
+    "desayunosSeo1": "imagenes/desayunos-seo-1.png",
+    "desayunosSeo2": "imagenes/desayunos-seo-2.jpg",
+    "desayunosSeo3": "imagenes/desayunos-seo-3.png"
   },
   "horario": [
     {
@@ -966,5 +980,12 @@
       },
       "horas": "10:00 – 16:15"
     }
-  ]
+  ],
+  "alerta": {
+    "activa": false,
+    "texto": {
+      "es": "Cerramos el sábado 25",
+      "gl": "Pechamos o sábado 25"
+    }
+  }
 }

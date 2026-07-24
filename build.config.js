@@ -16,6 +16,9 @@
  */
 module.exports = function keyMap(c) {
   return {
+    // alerta (barra de aviso marquee)
+    'alerta.texto': c.alerta.texto,
+
     // nav
     'nav.inicio': c.nav.inicio,
     'nav.desayunos': c.nav.desayunos,
@@ -30,6 +33,9 @@ module.exports = function keyMap(c) {
     'hero.subtitle': c.hero.subtitle,
     'hero.cta.carta': c.hero.cta.carta,
     'hero.cta.historia': c.hero.cta.historia,
+    'hero.cta.desayunos': c.hero.cta.desayunos,
+    'hero.card.signature': c.hero.card.signature,
+    'hero.card.plato': c.hero.card.plato,
 
     // nosotros
     // desayunos (bloque SEO entre hero y karta)

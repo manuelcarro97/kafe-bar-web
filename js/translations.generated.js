@@ -1,6 +1,7 @@
 /* Generado automáticamente por build.js a partir de content.json. NO editar a mano. */
 window.translations = {
   "es": {
+    "alerta.texto": "Cerramos el sábado 25",
     "nav.inicio": "Inicio",
     "nav.desayunos": "Desayunos",
     "nav.nosotros": "Nosotros",
@@ -12,6 +13,9 @@ window.translations = {
     "hero.subtitle": "Vive la esencia de la kocina gallega en un ambiente perfecto.<br />El mejor Kafé y las recetas de toda la vida.",
     "hero.cta.carta": "Ver Karta →",
     "hero.cta.historia": "Nuestra Historia",
+    "hero.cta.desayunos": "Ver Desayunos →",
+    "hero.card.signature": "Signature",
+    "hero.card.plato": "TORTILLA DE PATATAS",
     "desayunos.tag": "♥ Desayunos",
     "desayunos.title": "Desayuno y Brunch",
     "desayunos.parrafo1": "Empieza el día con nuestros desayunos y brunch en pleno centro de A Coruña: tostas recién hechas, baggels, bollería del día y kafé de especialidad. Un desayuno tranquilo, casero y con producto de verdad.",
@@ -88,6 +92,7 @@ window.translations = {
     "horario.2.footer": "Domingo: 10:00 – 16:15"
   },
   "gl": {
+    "alerta.texto": "Pechamos o sábado 25",
     "nav.inicio": "Inicio",
     "nav.desayunos": "Almorzos",
     "nav.nosotros": "Nós",
@@ -99,6 +104,9 @@ window.translations = {
     "hero.subtitle": "Vive a esencia da kociña galega nun ambiente perfecto.<br />O mellor Kafé e as receitas de toda a vida.",
     "hero.cta.carta": "Ver Karta →",
     "hero.cta.historia": "A Nosa Historia",
+    "hero.cta.desayunos": "Ver Almorzos →",
+    "hero.card.signature": "Signature",
+    "hero.card.plato": "TORTILLA DE PATACAS",
     "desayunos.tag": "♥ Almorzos",
     "desayunos.title": "Almorzo e Brunch",
     "desayunos.parrafo1": "Comeza o día cos nosos almorzos e brunch no centro da Coruña: tostas recén feitas, baggels, boullería do día e kafé de especialidade. Un almorzo tranquilo, caseiro e con produto de verdade.",

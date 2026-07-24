@@ -215,6 +215,48 @@ body {
   padding: 4px 18px 18px;
 }
 
+/* Panel plano (no desplegable), p. ej. la sección Alerta. */
+.kf-section-flat > .kf-flat-title {
+  padding: 14px 18px 0;
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.kf-alerta-toggle {
+  margin: 12px 0 6px;
+}
+
+.kf-alerta-status {
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 8px 12px;
+  border-radius: 6px;
+  margin-bottom: 6px;
+}
+
+.kf-alerta-status.is-on {
+  color: #1c6b2b;
+  background: #e5f4e8;
+  border: 1px solid #b8e0c0;
+}
+
+.kf-alerta-status.is-off {
+  color: #6b6058;
+  background: #f2efe9;
+  border: 1px solid #ded6cb;
+}
+
+.kf-alerta-pending {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #8a5a1f;
+  background: #fdf2e0;
+  border: 1px solid #f0d8ad;
+  border-radius: 6px;
+  padding: 8px 12px;
+  margin-bottom: 6px;
+}
+
 /* ---------- Grupos / arrays ---------- */
 
 .kf-group {
@@ -316,6 +358,23 @@ body {
   color: #8a3b1f;
   margin-bottom: 2px;
   letter-spacing: 0.03em;
+}
+
+.kf-check {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: #45392e;
+  cursor: pointer;
+}
+
+.kf-check input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: #8a3b1f;
 }
 
 .kf-readonly-field {

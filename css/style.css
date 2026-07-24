@@ -25,6 +25,66 @@
   --transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* ---------- Barra de aviso (marquee bajo el nav) ---------- */
+.alerta-bar {
+  background: #f5b301;
+  color: var(--azul-oscuro);
+  overflow: hidden;
+  white-space: nowrap;
+  font-weight: 600;
+  font-size: 0.9rem;
+  letter-spacing: 0.01em;
+  border-bottom: 1px solid rgba(13, 33, 55, 0.18);
+}
+
+.alerta-track {
+  display: inline-flex;
+  align-items: center;
+  will-change: transform;
+  animation: alerta-scroll 60s linear infinite;
+}
+
+.alerta-group {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.55rem 0;
+}
+
+.alerta-item {
+  padding: 0 3.75rem;
+}
+
+.alerta-sep {
+  opacity: 0.55;
+}
+
+/* Pausa al pasar el ratón para poder leer el aviso. */
+.alerta-bar:hover .alerta-track {
+  animation-play-state: paused;
+}
+
+@keyframes alerta-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .alerta-track {
+    animation: none;
+  }
+}
+
+/* La barra vive dentro del header fijo; con alerta activa el hero necesita más
+   espacio arriba para no quedar tapado (mayor especificidad que las reglas
+   .hero, así aplica en todos los anchos). */
+.has-alerta .hero {
+  padding-top: 120px;
+}
+
 /* ---------- Reset & Base ---------- */
 *,
 *::before,

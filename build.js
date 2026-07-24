@@ -174,6 +174,29 @@ function buildHorarioKeyMap(horario) {
   return map;
 }
 
+/**
+ * Renderiza la barra de aviso (marquee bajo el nav). Devuelve '' si no está
+ * activa, de modo que la barra no aparece en la web. El texto se repite dentro
+ * de un "grupo" y el grupo se duplica: animando el track a translateX(-50%) se
+ * consigue un bucle infinito sin cortes. Los <span> llevan data-i18n para que
+ * el toggle ES/GL y la sincronización ES funcionen como el resto.
+ */
+function renderAlertaHtml(alerta) {
+  if (!alerta || !alerta.activa) return '';
+  const item =
+    '<span class="alerta-item" data-i18n="alerta.texto">' + alerta.texto.es + '</span>' +
+    '<span class="alerta-sep" aria-hidden="true">✦</span>';
+  // Cada "grupo" se repite muchas veces para que su ancho supere el de la
+  // pantalla; con dos grupos idénticos y animación a -50% el bucle es continuo
+  // (tipo rueda) sin hueco al reiniciar, sea cual sea el ancho del monitor.
+  const group = '<div class="alerta-group">' + item.repeat(12) + '</div>';
+  return (
+    '<div class="alerta-bar" role="status" aria-live="polite">\n' +
+    '        <div class="alerta-track">' + group + group + '</div>\n' +
+    '    </div>'
+  );
+}
+
 function buildTranslationsGenerated(keyMap) {
   const es = {};
   const gl = {};
@@ -225,6 +248,13 @@ function main() {
   content.horarioInfoHtml = renderHorarioInfoHtml(content.horario);
   content.horarioFooterHtml = renderHorarioFooterHtml(content.horario);
   Object.assign(keyMap, buildHorarioKeyMap(content.horario));
+
+  // Barra de aviso (marquee bajo el nav). '' si no está activa.
+  content.alertaHtml = renderAlertaHtml(content.alerta);
+  // Clase en <body> cuando la alerta está activa: la barra vive dentro del
+  // header fijo, así que el hero necesita algo más de padding-top para no
+  // quedar tapado.
+  content.alertaBodyClass = content.alerta && content.alerta.activa ? 'has-alerta' : '';
 
   buildTranslationsGenerated(keyMap);
   buildHtmlFile('index.template.html', 'index.html', content, keyMap);

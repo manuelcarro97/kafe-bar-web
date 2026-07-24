@@ -213,6 +213,7 @@ const SECTION_TITLES = {
   site: "Sitio (SEO / metadatos)",
   images: "Imágenes",
   horario: "Horario",
+  alerta: "Alerta / Aviso (barra superior)",
 };
 
 // Orden en que se muestran las secciones en el editor, siguiendo el orden de
@@ -222,7 +223,7 @@ const SECTION_TITLES = {
 // (agrupador de fotos) va al final. Las claves no listadas se añaden al final
 // como cola de seguridad para que nada desaparezca si se añade una sección
 // nueva al JSON.
-const SECTION_ORDER = ["nav", "hero", "desayunos", "carta", "info", "horario", "nosotros", "footer", "images"];
+const SECTION_ORDER = ["nav", "hero", "desayunos", "carta", "info", "horario", "nosotros", "footer", "images", "alerta"];
 
 // Claves puramente estructurales que nunca se muestran como campo editable,
 // pero que se conservan intactas en workingContent (no se tocan, así que
@@ -284,6 +285,12 @@ const IMAGES_FIELD_LABELS = {
   desayunosSeo3: "Bloque desayunos — foto 3",
 };
 
+// Etiquetas legibles para la sección "alerta" (barra de aviso).
+const ALERTA_FIELD_LABELS = {
+  activa: "Mostrar aviso en la web",
+  texto: "Texto del aviso",
+};
+
 // Textos de carta que NO se muestran como campo editable en el admin (reducen
 // ruido). Se conservan intactos en content.json y siguen apareciendo en la
 // web: solo dejan de ser editables desde el panel.
@@ -314,6 +321,22 @@ function renderAllSections() {
     // workingContent/originalContent (se actualiza por otro script).
     if (HIDDEN_SECTIONS.has(topKey)) continue;
 
+    // Alerta: panel plano (NO desplegable) con toggle + estado + texto.
+    if (topKey === "alerta") {
+      const panel = document.createElement("section");
+      panel.className = "kf-section kf-section-flat";
+      const title = document.createElement("div");
+      title.className = "kf-flat-title";
+      title.textContent = SECTION_TITLES.alerta;
+      panel.appendChild(title);
+      const body = document.createElement("div");
+      body.className = "kf-section-body";
+      panel.appendChild(body);
+      renderAlertaSection(body, [topKey]);
+      sectionsContainer.appendChild(panel);
+      continue;
+    }
+
     const details = document.createElement("details");
     details.className = "kf-section";
     const summary = document.createElement("summary");
@@ -331,14 +354,74 @@ function renderAllSections() {
       horarioBodyEl = body;
       renderHorarioSection(body, [topKey]);
     } else {
-      // En "images" pasamos keyLabel null para que cada campo muestre solo su
-      // etiqueta legible (p. ej. "Tarjeta 1 (foto)") sin el prefijo "images ›".
-      const topLabel = topKey === "images" ? null : topKey;
+      // En "images"/"alerta" pasamos keyLabel null para que cada campo muestre
+      // solo su etiqueta legible sin el prefijo "images ›" / "alerta ›".
+      const topLabel = topKey === "images" || topKey === "alerta" ? null : topKey;
       renderNode(body, workingContent[topKey], [topKey], topLabel, false);
     }
 
     sectionsContainer.appendChild(details);
   }
+}
+
+/**
+ * Renderiza la sección "alerta" como panel plano (sin desplegable):
+ *  - toggle activar/desactivar,
+ *  - línea de estado que indica en claro si está activo AHORA mismo,
+ *  - texto del aviso (bilingüe).
+ */
+function renderAlertaSection(container, path) {
+  const alerta = getAtPath(workingContent, path);
+
+  const toggleRow = document.createElement("label");
+  toggleRow.className = "kf-check kf-alerta-toggle";
+  const input = document.createElement("input");
+  input.type = "checkbox";
+  input.checked = !!alerta.activa;
+  const span = document.createElement("span");
+  span.textContent = "Mostrar aviso en la web";
+  toggleRow.appendChild(input);
+  toggleRow.appendChild(span);
+
+  const status = document.createElement("div");
+  status.className = "kf-alerta-status";
+  const pendingNote = document.createElement("div");
+  pendingNote.className = "kf-alerta-pending";
+
+  // El estado refleja lo PUBLICADO en la web (originalContent), no el toggle:
+  // cambiar el toggle no activa nada hasta pulsar "Publicar". Si el toggle
+  // difiere de lo publicado, se avisa de que hay un cambio pendiente.
+  const paintStatus = () => {
+    const live = !!getAtPath(originalContent, [...path, "activa"]);
+    const pending = !!getAtPath(workingContent, [...path, "activa"]);
+    status.classList.toggle("is-on", live);
+    status.classList.toggle("is-off", !live);
+    status.textContent = live
+      ? "En la web ahora mismo: ACTIVO — el aviso se está mostrando."
+      : "En la web ahora mismo: INACTIVO — el aviso no se muestra.";
+    if (pending !== live) {
+      pendingNote.hidden = false;
+      pendingNote.textContent = pending
+        ? "Cambio sin publicar: has activado el aviso. Pulsa «Publicar» para que salga en la web."
+        : "Cambio sin publicar: has desactivado el aviso. Pulsa «Publicar» para retirarlo de la web.";
+    } else {
+      pendingNote.hidden = true;
+      pendingNote.textContent = "";
+    }
+  };
+
+  input.addEventListener("change", () => {
+    setAtPath(workingContent, [...path, "activa"], input.checked);
+    paintStatus();
+    flashSaveStatus();
+  });
+
+  container.appendChild(toggleRow);
+  container.appendChild(status);
+  container.appendChild(pendingNote);
+  paintStatus();
+
+  renderBilingualField(container, [...path, "texto"], "Texto del aviso");
 }
 
 /**
@@ -817,14 +900,22 @@ function renderNode(container, node, path, keyLabel, wrapGroup = true) {
           ? CARTA_FIELD_LABELS[k] || k
           : path[0] === "images"
             ? IMAGES_FIELD_LABELS[k] || k
-            : k;
+            : path[0] === "alerta"
+              ? ALERTA_FIELD_LABELS[k] || k
+              : k;
       const childLabel = keyLabel ? `${keyLabel} › ${friendlyK}` : friendlyK;
       renderNode(target, val, [...path, k], childLabel);
     }
     return;
   }
 
-  // Nodo primitivo: string / number / boolean.
+  // Booleano: checkbox (p. ej. alerta.activa).
+  if (typeof node === "boolean") {
+    renderBooleanField(container, path, keyLabel);
+    return;
+  }
+
+  // Nodo primitivo: string / number.
   const underImages = path[0] === "images";
   if (typeof node === "string" && (node.startsWith("imagenes/") || underImages)) {
     renderImageField(container, path, keyLabel);
@@ -896,6 +987,32 @@ function renderBilingualField(container, path, keyLabel) {
   }
 
   row.appendChild(langs);
+  container.appendChild(row);
+}
+
+function renderBooleanField(container, path, keyLabel) {
+  const value = !!getAtPath(workingContent, path);
+
+  const row = document.createElement("div");
+  row.className = "kf-field kf-field-boolean";
+
+  const label = document.createElement("label");
+  label.className = "kf-check";
+
+  const input = document.createElement("input");
+  input.type = "checkbox";
+  input.checked = value;
+  input.addEventListener("change", () => {
+    setAtPath(workingContent, path, input.checked);
+    flashSaveStatus();
+  });
+
+  const span = document.createElement("span");
+  span.textContent = keyLabel || path.join(" › ");
+
+  label.appendChild(input);
+  label.appendChild(span);
+  row.appendChild(label);
   container.appendChild(row);
 }
 

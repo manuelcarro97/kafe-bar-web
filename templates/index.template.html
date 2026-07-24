@@ -83,7 +83,7 @@
     </script>
 </head>
 
-<body>
+<body class="{{alertaBodyClass}}">
 
     <!-- ======================================================
        CABECERA FIJA
@@ -117,6 +117,9 @@
                 </button>
             </div>
         </div>
+        <!-- Barra de aviso (marquee), dentro del header fijo, justo bajo el
+             nav. Vacía si la alerta no está activa. -->
+        {{alertaHtml}}
     </header>
 
     <!-- ======================================================
@@ -169,6 +172,8 @@
                     <!-- RESERVAS OCULTAS (descomentar para reactivar)
                     <a href="#" class="btn-ghost btn-abrir-reserva" data-i18n="nav.reservar">Reservar</a>
                     -->
+                    <a href="menu-printable-desayunos.html" target="_blank" rel="noopener noreferrer" class="btn-ghost" data-i18n="hero.cta.desayunos">Ver Desayunos
+                        &rarr;</a>
                     <a href="menu-printable.html" target="_blank" rel="noopener noreferrer" class="btn-ghost" data-i18n="hero.cta.carta">Ver Karta
                         &rarr;</a>
                 </div>
@@ -178,8 +183,8 @@
                     <img src="{{images.heroDish}}"
                         alt="Tortilla de patatas signature de Kafé" class="hero-dish" loading="eager" />
                     <div class="hero-label">
-                        <span class="label-script">Signature</span>
-                        <span class="label-sub">TORTILLA DE PATATAS</span>
+                        <span class="label-script" data-i18n="hero.card.signature">Signature</span>
+                        <span class="label-sub" data-i18n="hero.card.plato">TORTILLA DE PATATAS</span>
                     </div>
                 </div>
             </div>
