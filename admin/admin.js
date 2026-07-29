@@ -512,6 +512,13 @@ function rerenderMedios() {
  */
 function renderMediosSection(body, path) {
   const medios = getAtPath(workingContent, path);
+
+  // Estado abierto/cerrado de cada tarjeta, para no cerrarlas todas al
+  // re-renderizar tras añadir o borrar una (mismo patrón que renderCartaSection).
+  const prevOpen = {};
+  body.querySelectorAll(".kf-medio-card").forEach((d) => {
+    prevOpen[d.dataset.medio] = d.open;
+  });
   body.innerHTML = "";
 
   const toggleRow = document.createElement("label");
@@ -545,7 +552,7 @@ function renderMediosSection(body, path) {
 
   const items = medios.items;
   items.forEach((item, idx) => {
-    body.appendChild(renderMedioRow([...path, "items", idx], item, items, idx));
+    body.appendChild(renderMedioRow([...path, "items", idx], item, items, idx, prevOpen));
   });
 
   const addBtn = document.createElement("button");
@@ -566,10 +573,32 @@ function renderMediosSection(body, path) {
   body.appendChild(note);
 }
 
-/** Una tarjeta editable del bloque de medios. */
-function renderMedioRow(itemPath, item, items, idx) {
+/**
+ * Una tarjeta editable del bloque de medios, plegable para que la lista no se
+ * haga interminable. Se abre sola si es nueva (sin enlace ni título todavía).
+ */
+function renderMedioRow(itemPath, item, items, idx, prevOpen) {
+  const card = document.createElement("details");
+  card.className = "kf-card-block kf-medio-card";
+  card.dataset.medio = String(idx);
+  const esNueva = !item.url && !item.titulo;
+  card.open = prevOpen[String(idx)] === undefined ? esNueva : prevOpen[String(idx)];
+
+  const summary = document.createElement("summary");
+  const summaryTitle = document.createElement("span");
+  summaryTitle.className = "kf-medio-summary-title";
+  summaryTitle.textContent = item.titulo || "(sin título)";
+  const summaryTag = document.createElement("span");
+  summaryTag.className = "kf-medio-summary-tag";
+  summaryTag.textContent =
+    item.tipo === "video" || item.tipo === "youtube" ? "▶ Vídeo" : "Reportaje";
+  summary.appendChild(summaryTitle);
+  summary.appendChild(summaryTag);
+  card.appendChild(summary);
+
   const rowWrap = document.createElement("div");
-  rowWrap.className = "kf-item-row kf-medio-row";
+  rowWrap.className = "kf-card-block-body kf-item-row kf-medio-row";
+  card.appendChild(rowWrap);
 
   const fields = document.createElement("div");
   fields.className = "kf-item-row-fields";
@@ -601,7 +630,9 @@ function renderMedioRow(itemPath, item, items, idx) {
   fields.appendChild(tipoRow);
 
   renderPlainField(fields, [...itemPath, "url"], "Enlace (URL)");
+  const tituloIndex = fields.children.length;
   renderPlainField(fields, [...itemPath, "titulo"], "Título de la tarjeta");
+  const tituloRow = fields.children[tituloIndex];
   renderPlainField(fields, [...itemPath, "fuente"], "Medio / fuente");
   renderPlainField(fields, [...itemPath, "fecha"], "Fecha (texto libre)");
 
@@ -628,7 +659,19 @@ function renderMedioRow(itemPath, item, items, idx) {
   actions.appendChild(removeBtn);
   rowWrap.appendChild(actions);
 
-  return rowWrap;
+  // El resumen plegado muestra el título: se mantiene al día mientras se
+  // escribe, sin re-renderizar la tarjeta entera (perdería el foco del input).
+  const tituloInput = tituloRow.querySelector("input, textarea");
+  if (tituloInput) {
+    tituloInput.addEventListener("input", () => {
+      summaryTitle.textContent = tituloInput.value || "(sin título)";
+    });
+  }
+  tipoSelect.addEventListener("change", () => {
+    summaryTag.textContent = tipoSelect.value === "video" ? "▶ Vídeo" : "Reportaje";
+  });
+
+  return card;
 }
 
 /**
