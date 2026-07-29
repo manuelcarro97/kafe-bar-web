@@ -227,7 +227,8 @@ document.addEventListener('DOMContentLoaded', () => {
     '.nosotros-img-wrap, .nosotros-content, ' +
     '.carta-block, .info-card, ' +
     '.carta-header, .info-header, ' +
-    '.resenas-header, .resenas-cta'
+    '.resenas-header, .resenas-cta, ' +
+    '.medios-header'
   );
 
   fadeElements.forEach(el => el.classList.add('fade-up'));
@@ -327,20 +328,52 @@ document.addEventListener('DOMContentLoaded', () => {
     trackLinks('a[href*="menu-printable"]', 'view_full_menu');
   }
 
-  /* ---------- 8. Carrusel de Reseñas (scroll JS + drag) ---------- */
-  (function initReviewsMarquee() {
-    const track = document.getElementById('resenas-track');
+  /* ---------- 8. Carrusel infinito (reseñas + medios) ---------- */
+  /**
+   * Convierte un track de tarjetas en un carrusel infinito con auto-scroll y
+   * arrastre. Las tarjetas son HTML estático generado por build.js (medios) o
+   * por scripts/scrape-reviews.js (reseñas): aquí solo se clonan para el bucle.
+   *
+   * Opciones:
+   *   sets              nº de copias del set de tarjetas (ancho del bucle)
+   *   speed             px por frame del auto-scroll (~60fps)
+   *   pauseOnHover      pausa al pasar el ratón o al enfocar con teclado
+   *   clickable         suprime el click si el puntero se ha movido (arrastre)
+   *   respectReducedMotion  sin animación si el usuario la ha desactivado
+   */
+  function initMarquee(track, options) {
     if (!track) return;
+    const opts = Object.assign(
+      { sets: 4, speed: 0.5, pauseOnHover: false, clickable: false, respectReducedMotion: false },
+      options
+    );
 
-    // Las tarjetas son HTML estático generado por scripts/scrape-reviews.js
-    // Este bloque solo clona las tarjetas existentes para el scroll infinito
     const originalCards = Array.from(track.children);
     if (originalCards.length === 0) return;
 
-    const SETS = 4;
+    const container = track.parentElement;
+
+    // Sin animación: se deja el set original y se permite scroll manual.
+    if (opts.respectReducedMotion &&
+        window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      container.classList.add('static');
+      return;
+    }
+
+    const SETS = opts.sets;
     const fragment = document.createDocumentFragment();
     for (let i = 0; i < SETS; i++) {
-      originalCards.forEach(card => fragment.appendChild(card.cloneNode(true)));
+      originalCards.forEach(card => {
+        const clone = card.cloneNode(true);
+        // Solo el primer set es navegable: los demás son duplicados visuales,
+        // así los enlaces no aparecen N veces en el orden de tabulación.
+        if (i > 0) {
+          clone.setAttribute('aria-hidden', 'true');
+          const links = clone.matches('a') ? [clone] : Array.from(clone.querySelectorAll('a'));
+          links.forEach(link => link.setAttribute('tabindex', '-1'));
+        }
+        fragment.appendChild(clone);
+      });
     }
     track.innerHTML = '';
     track.appendChild(fragment);
@@ -349,13 +382,15 @@ document.addEventListener('DOMContentLoaded', () => {
     track.style.animation = 'none';
     track.style.willChange = 'transform';
 
-    const AUTO_SPEED = 0.5; // px por frame (~30px/s a 60fps)
+    const AUTO_SPEED = opts.speed; // px por frame (~30px/s a 60fps con 0.5)
     let pos = 0;
     let velocity = 0;
     let isDragging = false;
+    let isPaused = false;
     let dragStartX = 0;
     let posOnDragStart = 0;
     let lastDragX = 0;
+    let dragDistance = 0;
 
     function getLoopWidth() {
       return track.scrollWidth / SETS;
@@ -367,7 +402,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function tick() {
-      if (!isDragging) {
+      if (!isDragging && !isPaused) {
         velocity *= 0.92;
         if (Math.abs(velocity) < 0.01) velocity = 0;
         pos += AUTO_SPEED + velocity;
@@ -378,7 +413,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     requestAnimationFrame(tick);
 
-    const container = track.parentElement;
     container.style.cursor = 'grab';
 
     function onDragStart(clientX) {
@@ -386,6 +420,7 @@ document.addEventListener('DOMContentLoaded', () => {
       dragStartX = clientX;
       posOnDragStart = pos;
       lastDragX = clientX;
+      dragDistance = 0;
       velocity = 0;
       container.style.cursor = 'grabbing';
     }
@@ -393,6 +428,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function onDragMove(clientX) {
       velocity = lastDragX - clientX;
       lastDragX = clientX;
+      dragDistance = Math.abs(clientX - dragStartX);
       pos = wrap(posOnDragStart + (dragStartX - clientX));
     }
 
@@ -412,7 +448,41 @@ document.addEventListener('DOMContentLoaded', () => {
       if (isDragging) { onDragMove(e.touches[0].clientX); e.preventDefault(); }
     }, { passive: false });
     container.addEventListener('touchend', onDragEnd);
-  })();
+
+    if (opts.pauseOnHover) {
+      const pause = () => { isPaused = true; };
+      const resume = () => { isPaused = false; };
+      container.addEventListener('mouseenter', pause);
+      container.addEventListener('mouseleave', resume);
+      container.addEventListener('focusin', pause);
+      container.addEventListener('focusout', resume);
+    }
+
+    if (opts.clickable) {
+      // Con tarjetas-enlace, arrastrar el carrusel terminaría abriendo el
+      // enlace al soltar. Si el puntero se ha movido más que el umbral, se
+      // trata como arrastre y se cancela el click.
+      const DRAG_THRESHOLD = 5; // px
+      container.addEventListener('click', e => {
+        if (dragDistance > DRAG_THRESHOLD) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+      }, true);
+    }
+  }
+
+  // Reseñas: comportamiento original (tarjetas no clicables, sin pausa).
+  initMarquee(document.getElementById('resenas-track'));
+
+  // Medios: tarjetas-enlace → umbral de arrastre, pausa al hover/foco y
+  // respeto por prefers-reduced-motion.
+  initMarquee(document.getElementById('medios-track'), {
+    speed: 0.4,
+    pauseOnHover: true,
+    clickable: true,
+    respectReducedMotion: true,
+  });
 
   /* ---------- 8. Modal de Reserva ---------- */
   (function reservaModal() {

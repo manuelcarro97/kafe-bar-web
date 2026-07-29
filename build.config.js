@@ -56,6 +56,13 @@ module.exports = function keyMap(c) {
     'nosotros.feat2.desc': c.nosotros.feat2.desc,
     'nosotros.cta.carta': c.nosotros.cta.carta,
 
+    // medios (bloque "Han hablado de nosotros"). Solo la cabecera es
+    // traducible: el título de cada tarjeta es la cita del medio y se
+    // renderiza como HTML plano, sin data-i18n (ver renderMediosHtml).
+    'medios.tag': c.medios.tag,
+    'medios.titulo': c.medios.titulo,
+    'medios.desc': c.medios.desc,
+
     // carta
     'carta.tag': c.carta.tag,
     'carta.title': c.carta.title,

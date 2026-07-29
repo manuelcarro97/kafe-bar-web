@@ -64,7 +64,13 @@ let cartaBodyEl = null;
 // que cartaBodyEl / rerenderCarta).
 let horarioBodyEl = null;
 
-// path (string) -> { blob, filename, originalValue }
+// Referencia al <div class="kf-section-body"> de la sección "medios" (mismo
+// patrón que cartaBodyEl / horarioBodyEl).
+let mediosBodyEl = null;
+
+// path (string) -> { blob, filename, originalValue, targetDir }
+// targetDir: carpeta destino cuando la referencia original no es una ruta
+// local (p. ej. imágenes nuevas de medios → "imagenes/media/").
 const imageEdits = new Map();
 
 // ---------------------------------------------------------------------------
@@ -214,6 +220,7 @@ const SECTION_TITLES = {
   images: "Imágenes",
   horario: "Horario",
   alerta: "Alerta / Aviso (barra superior)",
+  medios: "Kafé en los medios (vídeos y reportajes)",
 };
 
 // Orden en que se muestran las secciones en el editor, siguiendo el orden de
@@ -223,7 +230,7 @@ const SECTION_TITLES = {
 // (agrupador de fotos) va al final. Las claves no listadas se añaden al final
 // como cola de seguridad para que nada desaparezca si se añade una sección
 // nueva al JSON.
-const SECTION_ORDER = ["nav", "hero", "desayunos", "carta", "info", "horario", "nosotros", "footer", "images", "alerta"];
+const SECTION_ORDER = ["nav", "hero", "desayunos", "carta", "info", "horario", "nosotros", "medios", "footer", "images", "alerta"];
 
 // Claves puramente estructurales que nunca se muestran como campo editable,
 // pero que se conservan intactas en workingContent (no se tocan, así que
@@ -350,6 +357,9 @@ function renderAllSections() {
     if (topKey === "carta") {
       cartaBodyEl = body;
       renderCartaSection(body, [topKey]);
+    } else if (topKey === "medios") {
+      mediosBodyEl = body;
+      renderMediosSection(body, [topKey]);
     } else if (topKey === "horario") {
       horarioBodyEl = body;
       renderHorarioSection(body, [topKey]);
@@ -481,6 +491,187 @@ function renderHorarioSection(body, path) {
     rerenderHorario();
   });
   body.appendChild(addBtn);
+}
+
+/**
+ * Re-renderiza SOLO el contenido de la sección "medios" (tras añadir, borrar
+ * o reordenar tarjetas), igual que rerenderHorario() para "horario".
+ */
+function rerenderMedios() {
+  if (!mediosBodyEl) return;
+  renderMediosSection(mediosBodyEl, ["medios"]);
+  flashSaveStatus();
+}
+
+/**
+ * Renderiza el bloque "medios": toggle de visibilidad, textos de cabecera y
+ * una tarjeta por vídeo/reportaje (enlace + datos + miniatura).
+ *
+ * El título de cada tarjeta NO es bilingüe a propósito: es la cita del medio
+ * (un titular en gallego no debe traducirse automáticamente al castellano).
+ */
+function renderMediosSection(body, path) {
+  const medios = getAtPath(workingContent, path);
+
+  // Estado abierto/cerrado de cada tarjeta, para no cerrarlas todas al
+  // re-renderizar tras añadir o borrar una (mismo patrón que renderCartaSection).
+  const prevOpen = {};
+  body.querySelectorAll(".kf-medio-card").forEach((d) => {
+    prevOpen[d.dataset.medio] = d.open;
+  });
+  body.innerHTML = "";
+
+  const toggleRow = document.createElement("label");
+  toggleRow.className = "kf-check";
+  const toggle = document.createElement("input");
+  toggle.type = "checkbox";
+  toggle.checked = !!medios.activo;
+  toggle.addEventListener("change", () => {
+    setAtPath(workingContent, [...path, "activo"], toggle.checked);
+    flashSaveStatus();
+  });
+  const toggleTxt = document.createElement("span");
+  toggleTxt.textContent = "Mostrar el bloque en la web";
+  toggleRow.appendChild(toggle);
+  toggleRow.appendChild(toggleTxt);
+  body.appendChild(toggleRow);
+
+  const textsHeading = document.createElement("div");
+  textsHeading.className = "kf-subsection-heading";
+  textsHeading.textContent = "Textos de la sección";
+  body.appendChild(textsHeading);
+
+  renderBilingualField(body, [...path, "tag"], "Etiqueta superior");
+  renderBilingualField(body, [...path, "titulo"], "Título");
+  renderBilingualField(body, [...path, "desc"], "Descripción");
+
+  const itemsHeading = document.createElement("div");
+  itemsHeading.className = "kf-subsection-heading";
+  itemsHeading.textContent = "Vídeos y reportajes";
+  body.appendChild(itemsHeading);
+
+  const items = medios.items;
+  items.forEach((item, idx) => {
+    body.appendChild(renderMedioRow([...path, "items", idx], item, items, idx, prevOpen));
+  });
+
+  const addBtn = document.createElement("button");
+  addBtn.type = "button";
+  addBtn.className = "kf-btn-add-item";
+  addBtn.textContent = "+ Añadir vídeo o reportaje";
+  addBtn.addEventListener("click", () => {
+    items.push({ tipo: "enlace", url: "", titulo: "", fuente: "", fecha: "", imagen: "" });
+    rerenderMedios();
+  });
+  body.appendChild(addBtn);
+
+  const note = document.createElement("p");
+  note.className = "kf-medio-nota";
+  note.textContent =
+    "La miniatura se sube a mano: es la foto que se ve en la tarjeta. " +
+    "Sin miniatura la tarjeta sale con un hueco de marca.";
+  body.appendChild(note);
+}
+
+/**
+ * Una tarjeta editable del bloque de medios, plegable para que la lista no se
+ * haga interminable. Se abre sola si es nueva (sin enlace ni título todavía).
+ */
+function renderMedioRow(itemPath, item, items, idx, prevOpen) {
+  const card = document.createElement("details");
+  card.className = "kf-card-block kf-medio-card";
+  card.dataset.medio = String(idx);
+  const esNueva = !item.url && !item.titulo;
+  card.open = prevOpen[String(idx)] === undefined ? esNueva : prevOpen[String(idx)];
+
+  const summary = document.createElement("summary");
+  const summaryTitle = document.createElement("span");
+  summaryTitle.className = "kf-medio-summary-title";
+  summaryTitle.textContent = item.titulo || "(sin título)";
+  const summaryTag = document.createElement("span");
+  summaryTag.className = "kf-medio-summary-tag";
+  summaryTag.textContent =
+    item.tipo === "video" || item.tipo === "youtube" ? "▶ Vídeo" : "Reportaje";
+  summary.appendChild(summaryTitle);
+  summary.appendChild(summaryTag);
+  card.appendChild(summary);
+
+  const rowWrap = document.createElement("div");
+  rowWrap.className = "kf-card-block-body kf-item-row kf-medio-row";
+  card.appendChild(rowWrap);
+
+  const fields = document.createElement("div");
+  fields.className = "kf-item-row-fields";
+
+  // Tipo: solo cambia el aspecto de la tarjeta (icono ▶ en los vídeos).
+  const tipoRow = document.createElement("div");
+  tipoRow.className = "kf-field";
+  const tipoLabel = document.createElement("label");
+  tipoLabel.className = "kf-label";
+  tipoLabel.textContent = "Tipo";
+  const tipoSelect = document.createElement("select");
+  [
+    ["enlace", "Reportaje / enlace externo"],
+    ["video", "Vídeo"],
+  ].forEach(([value, text]) => {
+    const opt = document.createElement("option");
+    opt.value = value;
+    opt.textContent = text;
+    tipoSelect.appendChild(opt);
+  });
+  // "youtube" es el valor antiguo de items ya publicados: se muestra como Vídeo.
+  tipoSelect.value = item.tipo === "video" || item.tipo === "youtube" ? "video" : "enlace";
+  tipoSelect.addEventListener("change", () => {
+    setAtPath(workingContent, [...itemPath, "tipo"], tipoSelect.value);
+    flashSaveStatus();
+  });
+  tipoRow.appendChild(tipoLabel);
+  tipoRow.appendChild(tipoSelect);
+  fields.appendChild(tipoRow);
+
+  renderPlainField(fields, [...itemPath, "url"], "Enlace (URL)");
+  const tituloIndex = fields.children.length;
+  renderPlainField(fields, [...itemPath, "titulo"], "Título de la tarjeta");
+  const tituloRow = fields.children[tituloIndex];
+  renderPlainField(fields, [...itemPath, "fuente"], "Medio / fuente");
+  renderPlainField(fields, [...itemPath, "fecha"], "Fecha (texto libre)");
+
+  renderImageField(fields, [...itemPath, "imagen"], "Miniatura", {
+    targetDir: "imagenes/media/",
+    uniqueName: true,
+  });
+
+  rowWrap.appendChild(fields);
+
+  const actions = document.createElement("div");
+  actions.className = "kf-medio-actions";
+
+  const removeBtn = document.createElement("button");
+  removeBtn.type = "button";
+  removeBtn.className = "kf-btn-remove-item";
+  removeBtn.title = "Eliminar tarjeta";
+  removeBtn.textContent = "−";
+  removeBtn.addEventListener("click", () => {
+    items.splice(idx, 1);
+    rerenderMedios();
+  });
+
+  actions.appendChild(removeBtn);
+  rowWrap.appendChild(actions);
+
+  // El resumen plegado muestra el título: se mantiene al día mientras se
+  // escribe, sin re-renderizar la tarjeta entera (perdería el foco del input).
+  const tituloInput = tituloRow.querySelector("input, textarea");
+  if (tituloInput) {
+    tituloInput.addEventListener("input", () => {
+      summaryTitle.textContent = tituloInput.value || "(sin título)";
+    });
+  }
+  tipoSelect.addEventListener("change", () => {
+    summaryTag.textContent = tipoSelect.value === "video" ? "▶ Vídeo" : "Reportaje";
+  });
+
+  return card;
 }
 
 /**
@@ -1077,9 +1268,23 @@ function makeTextInput(value, path) {
 // Campos de imagen: preview + compresión en canvas + descarga
 // ---------------------------------------------------------------------------
 
-function renderImageField(container, path, keyLabel) {
+/**
+ * Campo de imagen (preview + subida comprimida).
+ *
+ * opts.targetDir  carpeta destino si el valor actual no es una ruta local
+ *                 (por defecto "imagenes/"); p. ej. "imagenes/media/".
+ * opts.uniqueName cada subida crea un fichero NUEVO en vez de sobrescribir el
+ *                 actual. Se usa en medios para que dos tarjetas no puedan
+ *                 acabar apuntando al mismo fichero: si compartieran ruta,
+ *                 cambiar la miniatura de una cambiaría la de la otra (y lo
+ *                 mismo si la ruta fuese una foto en uso en otra parte).
+ */
+function renderImageField(container, path, keyLabel, opts = {}) {
   const originalValue = getAtPath(workingContent, path);
   const pathKey = path.join(".");
+  // Si ya hay una imagen pendiente para esta ruta (subida antes de un
+  // re-render, o traída por /preview), se muestra esa en vez del valor guardado.
+  const pendingEdit = imageEdits.get(pathKey);
 
   const wrap = document.createElement("div");
   wrap.className = "kf-image-field";
@@ -1087,7 +1292,7 @@ function renderImageField(container, path, keyLabel) {
   const img = document.createElement("img");
   img.className = "kf-image-preview";
   img.alt = keyLabel || pathKey;
-  img.src = resolveImageSrc(originalValue);
+  img.src = pendingEdit ? URL.createObjectURL(pendingEdit.blob) : resolveImageSrc(originalValue);
   wrap.appendChild(img);
 
   const info = document.createElement("div");
@@ -1119,11 +1324,11 @@ function renderImageField(container, path, keyLabel) {
   const downloadBtn = document.createElement("button");
   downloadBtn.type = "button";
   downloadBtn.textContent = "Descargar imagen comprimida";
-  downloadBtn.disabled = true;
+  downloadBtn.disabled = !pendingEdit;
 
   const changedTag = document.createElement("span");
   changedTag.className = "kf-image-changed-tag";
-  changedTag.hidden = true;
+  changedTag.hidden = !pendingEdit;
   changedTag.textContent = "✓ imagen nueva lista";
 
   fileInput.addEventListener("change", async () => {
@@ -1131,8 +1336,15 @@ function renderImageField(container, path, keyLabel) {
     if (!file) return;
     try {
       const blob = await compressImage(file, 1600, 0.8);
-      const filename = suggestFilename(originalValue, file.name);
-      imageEdits.set(pathKey, { blob, filename, originalValue });
+      const baseName = suggestFilename(originalValue, file.name);
+      const filename = opts.uniqueName ? `${Date.now()}-${sanitizeFilename(file.name)}` : baseName;
+      imageEdits.set(pathKey, {
+        blob,
+        filename,
+        originalValue,
+        targetDir: opts.targetDir,
+        forceNewPath: !!opts.uniqueName,
+      });
       img.src = URL.createObjectURL(blob);
       downloadBtn.disabled = false;
       changedTag.hidden = false;
@@ -1255,15 +1467,15 @@ function sanitizeFilename(name) {
 async function buildImagesPayload() {
   const images = [];
   for (const [pathKey, entry] of imageEdits.entries()) {
-    const { blob, filename, originalValue } = entry;
+    const { blob, filename, originalValue, targetDir, forceNewPath } = entry;
     let path;
-    if (typeof originalValue === "string" && originalValue.startsWith("imagenes/")) {
+    if (!forceNewPath && typeof originalValue === "string" && originalValue.startsWith("imagenes/")) {
       path = originalValue;
     } else {
-      path = `imagenes/${sanitizeFilename(filename)}`;
+      path = `${targetDir || "imagenes/"}${sanitizeFilename(filename)}`;
       // La referencia original no apuntaba a un fichero local (p.ej. URL
-      // externa): actualizamos workingContent para que apunte a la nueva
-      // ruta local publicada.
+      // externa), o el campo exige fichero nuevo (forceNewPath): actualizamos
+      // workingContent para que apunte a la nueva ruta local publicada.
       setAtPath(workingContent, pathKeyToPath(pathKey), path);
     }
     const base64 = await blobToBase64(blob);

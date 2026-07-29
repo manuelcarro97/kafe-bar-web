@@ -780,3 +780,69 @@ body {
 .kf-btn-desc-remove:hover {
   background: #f7d6d0;
 }
+
+/* ---------- Bloque "Kafé en los medios" ---------- */
+.kf-medio-row .kf-item-row-fields {
+  grid-template-columns: 1fr 1fr;
+}
+
+/* Cada vídeo/reportaje es una tarjeta plegable propia, en marrón, para
+   distinguirla del resto del formulario y poder cerrarla cuando estorba. */
+.kf-medio-card {
+  border-color: #d9c3ae;
+  background: #f7efe6;
+}
+
+.kf-medio-card > summary {
+  background: #efdfcd;
+  border-radius: 5px 5px 0 0;
+  justify-content: space-between;
+}
+
+.kf-medio-card:not([open]) > summary {
+  border-radius: 5px;
+}
+
+.kf-medio-summary-title {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.kf-medio-summary-tag {
+  flex-shrink: 0;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: #8a3b1f;
+  background: #fbf5ee;
+  border: 1px solid #e0cdb8;
+  border-radius: 20px;
+  padding: 2px 10px;
+}
+
+.kf-medio-card > .kf-card-block-body {
+  border-top-color: #e0cdb8;
+  border-radius: 0 0 5px 5px;
+}
+
+/* Dentro de la tarjeta el marco discontinuo de kf-item-row sobra; se conserva
+   el espaciado propio del cuerpo de tarjeta (kf-card-block-body). */
+.kf-medio-row {
+  border: none;
+  padding: 10px 14px 14px;
+  margin-bottom: 0;
+}
+
+/* Enlace y miniatura ocupan la fila entera. */
+.kf-medio-row .kf-item-row-fields > .kf-field:nth-child(2),
+.kf-medio-row .kf-image-field {
+  grid-column: 1 / -1;
+}
+
+.kf-medio-nota {
+  font-size: 0.82rem;
+  color: #8a8074;
+  margin: 10px 0 0;
+}
