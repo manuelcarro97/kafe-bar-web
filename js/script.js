@@ -442,11 +442,38 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('mousemove', e => { if (isDragging) onDragMove(e.clientX); });
     document.addEventListener('mouseup', onDragEnd);
 
-    // Touch (móvil)
-    container.addEventListener('touchstart', e => { onDragStart(e.touches[0].clientX); }, { passive: true });
+    // Touch (móvil). El gesto se clasifica antes de actuar: si es vertical, se
+    // suelta el carrusel y el dedo scrollea la página como siempre. Sin esto,
+    // el handler intentaba cancelar scrolls verticales ya iniciados y Chrome
+    // los descartaba avisando ("Ignored attempt to cancel a touchmove event").
+    const TOUCH_AXIS_THRESHOLD = 8; // px antes de decidir la dirección
+    let touchAxis = null;           // 'x' | 'y' | null (sin decidir)
+    let touchStartY = 0;
+
+    container.addEventListener('touchstart', e => {
+      touchAxis = null;
+      touchStartY = e.touches[0].clientY;
+      onDragStart(e.touches[0].clientX);
+    }, { passive: true });
+
     container.addEventListener('touchmove', e => {
-      if (isDragging) { onDragMove(e.touches[0].clientX); e.preventDefault(); }
+      if (!isDragging) return;
+      const touch = e.touches[0];
+      if (touchAxis === null) {
+        const dx = Math.abs(touch.clientX - dragStartX);
+        const dy = Math.abs(touch.clientY - touchStartY);
+        if (dx < TOUCH_AXIS_THRESHOLD && dy < TOUCH_AXIS_THRESHOLD) return;
+        touchAxis = dx > dy ? 'x' : 'y';
+        if (touchAxis === 'y') {
+          onDragEnd(); // scroll vertical: el carrusel se aparta
+          return;
+        }
+      }
+      onDragMove(touch.clientX);
+      // cancelable=false cuando el scroll ya está en marcha: no se toca.
+      if (e.cancelable) e.preventDefault();
     }, { passive: false });
+
     container.addEventListener('touchend', onDragEnd);
 
     if (opts.pauseOnHover) {
