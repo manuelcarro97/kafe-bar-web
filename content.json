@@ -158,12 +158,12 @@
         "titulo": "EJEMPLO — sustituir por el reportaje real",
         "fuente": "La Voz de Galicia",
         "fecha": "marz 2025",
-        "imagen": "imagenes/media/1785340032013-5fco33.png"
+        "imagen": "imagenes/media/1785340157757-unnamed.png"
       },
       {
         "tipo": "youtube",
         "url": "https://www.elmundo.es/espana/2026/07/29/6a698b6f3e9f6f8c52d3ad22-directo.html",
-        "titulo": "noticia en el mundo",
+        "titulo": "TEST - noticia en el mundo",
         "fuente": "youtube",
         "fecha": "feb 2026",
         "imagen": "imagenes/media/1785338455531-5fco33.png"
