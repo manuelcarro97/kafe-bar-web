@@ -129,6 +129,55 @@
       }
     }
   },
+  "medios": {
+    "activo": true,
+    "tag": {
+      "es": "♥ Kafé en los medios",
+      "gl": "♥ Kafé nos medios"
+    },
+    "titulo": {
+      "es": "Han hablado de nosotros",
+      "gl": "Falaron de nós"
+    },
+    "desc": {
+      "es": "Reportajes, vídeos y apariciones donde puedes ver el Kafé por dentro.",
+      "gl": "Reportaxes, vídeos e aparicións onde podes ver o Kafé por dentro."
+    },
+    "items": [
+      {
+        "tipo": "youtube",
+        "url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+        "titulo": "EJEMPLO — sustituir por el vídeo real",
+        "fuente": "YouTube",
+        "fecha": "2025",
+        "imagen": "imagenes/comida1.png"
+      },
+      {
+        "tipo": "enlace",
+        "url": "https://www.lavozdegalicia.es/",
+        "titulo": "EJEMPLO — sustituir por el reportaje real",
+        "fuente": "La Voz de Galicia",
+        "fecha": "2025",
+        "imagen": "imagenes/duo.png"
+      },
+      {
+        "tipo": "enlace",
+        "url": "https://www.crtvg.es/",
+        "titulo": "EJEMPLO — sustituir por la aparición real en TV",
+        "fuente": "CRTVG",
+        "fecha": "2025",
+        "imagen": "imagenes/postre.png"
+      },
+      {
+        "tipo": "youtube",
+        "url": "https://www.elmundo.es/espana/2026/07/29/6a698b6f3e9f6f8c52d3ad22-directo.html",
+        "titulo": "noticia en el mundo",
+        "fuente": "youtube",
+        "fecha": "feb 2026",
+        "imagen": "imagenes/media/1785338455531-5fco33.png"
+      }
+    ]
+  },
   "carta": {
     "tag": {
       "es": "♥ Nuestra Karta",
