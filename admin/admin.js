@@ -1230,7 +1230,11 @@ function makeTextInput(value, path) {
  *
  * opts.targetDir  carpeta destino si el valor actual no es una ruta local
  *                 (por defecto "imagenes/"); p. ej. "imagenes/media/".
- * opts.uniqueName añade marca de tiempo al nombre para no pisar otro fichero.
+ * opts.uniqueName cada subida crea un fichero NUEVO en vez de sobrescribir el
+ *                 actual. Se usa en medios para que dos tarjetas no puedan
+ *                 acabar apuntando al mismo fichero: si compartieran ruta,
+ *                 cambiar la miniatura de una cambiaría la de la otra (y lo
+ *                 mismo si la ruta fuese una foto en uso en otra parte).
  */
 function renderImageField(container, path, keyLabel, opts = {}) {
   const originalValue = getAtPath(workingContent, path);
@@ -1290,8 +1294,14 @@ function renderImageField(container, path, keyLabel, opts = {}) {
     try {
       const blob = await compressImage(file, 1600, 0.8);
       const baseName = suggestFilename(originalValue, file.name);
-      const filename = opts.uniqueName && !originalValue ? `${Date.now()}-${baseName}` : baseName;
-      imageEdits.set(pathKey, { blob, filename, originalValue, targetDir: opts.targetDir });
+      const filename = opts.uniqueName ? `${Date.now()}-${sanitizeFilename(file.name)}` : baseName;
+      imageEdits.set(pathKey, {
+        blob,
+        filename,
+        originalValue,
+        targetDir: opts.targetDir,
+        forceNewPath: !!opts.uniqueName,
+      });
       img.src = URL.createObjectURL(blob);
       downloadBtn.disabled = false;
       changedTag.hidden = false;
@@ -1414,15 +1424,15 @@ function sanitizeFilename(name) {
 async function buildImagesPayload() {
   const images = [];
   for (const [pathKey, entry] of imageEdits.entries()) {
-    const { blob, filename, originalValue, targetDir } = entry;
+    const { blob, filename, originalValue, targetDir, forceNewPath } = entry;
     let path;
-    if (typeof originalValue === "string" && originalValue.startsWith("imagenes/")) {
+    if (!forceNewPath && typeof originalValue === "string" && originalValue.startsWith("imagenes/")) {
       path = originalValue;
     } else {
       path = `${targetDir || "imagenes/"}${sanitizeFilename(filename)}`;
       // La referencia original no apuntaba a un fichero local (p.ej. URL
-      // externa): actualizamos workingContent para que apunte a la nueva
-      // ruta local publicada.
+      // externa), o el campo exige fichero nuevo (forceNewPath): actualizamos
+      // workingContent para que apunte a la nueva ruta local publicada.
       setAtPath(workingContent, pathKeyToPath(pathKey), path);
     }
     const base64 = await blobToBase64(blob);
