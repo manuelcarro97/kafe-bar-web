@@ -206,38 +206,27 @@ function escapeHtml(str) {
     .replace(/"/g, '&quot;');
 }
 
-/** Extrae el ID de un vídeo de YouTube de sus formatos de URL habituales. */
-function youtubeId(url) {
-  const match = String(url).match(
-    /(?:youtube\.com\/(?:watch\?(?:.*&)?v=|embed\/|shorts\/)|youtu\.be\/)([\w-]{11})/
-  );
-  return match ? match[1] : null;
-}
-
 /**
- * Miniatura de una tarjeta de medios. Si el item no trae imagen propia y es
- * de YouTube, se deriva del ID: 'hqdefault' existe siempre (a diferencia de
- * 'maxresdefault', que da 404 en muchos vídeos).
+ * Renderiza una tarjeta del carrusel de medios (enlace externo).
+ *
+ * La miniatura la sube siempre el cliente desde el panel: no se deduce ni se
+ * descarga de la web enlazada. Sin imagen se pinta un hueco de marca, para
+ * que una tarjeta a medias no rompa la fila.
  */
-function medioThumb(item) {
-  if (item.imagen) return item.imagen;
-  const id = youtubeId(item.url);
-  return id ? `https://img.youtube.com/vi/${id}/hqdefault.jpg` : '';
-}
-
-/** Renderiza una tarjeta del carrusel de medios (enlace externo). */
 function renderMedioCard(item) {
-  const thumb = medioThumb(item);
   const alt = escapeHtml(item.titulo);
   const play =
-    item.tipo === 'youtube'
+    item.tipo === 'video' || item.tipo === 'youtube'
       ? '\n                        <span class="medio-play" aria-hidden="true">&#9654;</span>'
       : '';
   const fecha = item.fecha ? ` &middot; ${escapeHtml(item.fecha)}` : '';
+  const thumb = item.imagen
+    ? `<img src="${escapeHtml(item.imagen)}" alt="${alt}" loading="lazy" />`
+    : '<span class="medio-thumb-vacia" aria-hidden="true">K</span>';
   return (
     `                    <a class="medio-card" href="${escapeHtml(item.url)}" target="_blank" rel="noopener noreferrer">\n` +
     '                        <div class="medio-thumb">\n' +
-    `                            <img src="${escapeHtml(thumb)}" alt="${alt}" loading="lazy" />${play}\n` +
+    `                            ${thumb}${play}\n` +
     '                        </div>\n' +
     '                        <div class="medio-meta">\n' +
     `                            <span class="medio-fuente">${escapeHtml(item.fuente)}${fecha}</span>\n` +

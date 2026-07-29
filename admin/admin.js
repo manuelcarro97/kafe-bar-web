@@ -24,9 +24,6 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
 const PUBLISH_URL = "https://your-worker.your-account.workers.dev/publish";
-// Lee los metadatos (título, medio, imagen) de un enlace externo. El navegador
-// no puede hacerlo por CORS, así que lo hace el worker.
-const PREVIEW_URL = "https://your-worker.your-account.workers.dev/preview";
 
 // ---------------------------------------------------------------------------
 // Referencias DOM
@@ -560,6 +557,13 @@ function renderMediosSection(body, path) {
     rerenderMedios();
   });
   body.appendChild(addBtn);
+
+  const note = document.createElement("p");
+  note.className = "kf-medio-nota";
+  note.textContent =
+    "La miniatura se sube a mano: es la foto que se ve en la tarjeta. " +
+    "Sin miniatura la tarjeta sale con un hueco de marca.";
+  body.appendChild(note);
 }
 
 /** Una tarjeta editable del bloque de medios. */
@@ -570,8 +574,7 @@ function renderMedioRow(itemPath, item, items, idx) {
   const fields = document.createElement("div");
   fields.className = "kf-item-row-fields";
 
-  // Tipo: solo cambia el aspecto de la tarjeta (icono ▶ en YouTube) y permite
-  // deducir la miniatura del vídeo cuando no se sube una imagen propia.
+  // Tipo: solo cambia el aspecto de la tarjeta (icono ▶ en los vídeos).
   const tipoRow = document.createElement("div");
   tipoRow.className = "kf-field";
   const tipoLabel = document.createElement("label");
@@ -580,14 +583,15 @@ function renderMedioRow(itemPath, item, items, idx) {
   const tipoSelect = document.createElement("select");
   [
     ["enlace", "Reportaje / enlace externo"],
-    ["youtube", "Vídeo de YouTube"],
+    ["video", "Vídeo"],
   ].forEach(([value, text]) => {
     const opt = document.createElement("option");
     opt.value = value;
     opt.textContent = text;
     tipoSelect.appendChild(opt);
   });
-  tipoSelect.value = item.tipo === "youtube" ? "youtube" : "enlace";
+  // "youtube" es el valor antiguo de items ya publicados: se muestra como Vídeo.
+  tipoSelect.value = item.tipo === "video" || item.tipo === "youtube" ? "video" : "enlace";
   tipoSelect.addEventListener("change", () => {
     setAtPath(workingContent, [...itemPath, "tipo"], tipoSelect.value);
     flashSaveStatus();
@@ -597,21 +601,6 @@ function renderMedioRow(itemPath, item, items, idx) {
   fields.appendChild(tipoRow);
 
   renderPlainField(fields, [...itemPath, "url"], "Enlace (URL)");
-
-  // Auto-relleno desde el enlace (worker /preview). Es una ayuda: si el medio
-  // bloquea la lectura, se rellenan los campos a mano igualmente.
-  const fetchRow = document.createElement("div");
-  fetchRow.className = "kf-medio-fetch";
-  const fetchBtn = document.createElement("button");
-  fetchBtn.type = "button";
-  fetchBtn.className = "kf-btn-add-item";
-  fetchBtn.textContent = "Traer datos del enlace";
-  const fetchStatus = document.createElement("span");
-  fetchStatus.className = "kf-medio-fetch-status";
-  fetchRow.appendChild(fetchBtn);
-  fetchRow.appendChild(fetchStatus);
-  fields.appendChild(fetchRow);
-
   renderPlainField(fields, [...itemPath, "titulo"], "Título de la tarjeta");
   renderPlainField(fields, [...itemPath, "fuente"], "Medio / fuente");
   renderPlainField(fields, [...itemPath, "fecha"], "Fecha (texto libre)");
@@ -621,57 +610,10 @@ function renderMedioRow(itemPath, item, items, idx) {
     uniqueName: true,
   });
 
-  fetchBtn.addEventListener("click", async () => {
-    const url = getAtPath(workingContent, [...itemPath, "url"]);
-    if (!url) {
-      fetchStatus.textContent = "Pega antes el enlace.";
-      return;
-    }
-    fetchBtn.disabled = true;
-    fetchStatus.textContent = "Leyendo el enlace…";
-    try {
-      const data = await fetchLinkPreview(url);
-      if (data.titulo) setAtPath(workingContent, [...itemPath, "titulo"], data.titulo);
-      if (data.fuente) setAtPath(workingContent, [...itemPath, "fuente"], data.fuente);
-      if (data.tipo) setAtPath(workingContent, [...itemPath, "tipo"], data.tipo);
-      if (data.imagenBase64) {
-        await applyPreviewImage([...itemPath, "imagen"], data);
-      }
-      fetchStatus.textContent = "✓ Datos traídos, revísalos.";
-      rerenderMedios();
-    } catch (err) {
-      fetchStatus.textContent = `No se pudo leer: ${err.message}. Rellena a mano.`;
-    } finally {
-      fetchBtn.disabled = false;
-    }
-  });
-
   rowWrap.appendChild(fields);
 
   const actions = document.createElement("div");
   actions.className = "kf-medio-actions";
-
-  const upBtn = document.createElement("button");
-  upBtn.type = "button";
-  upBtn.className = "kf-btn-remove-item";
-  upBtn.title = "Subir";
-  upBtn.textContent = "↑";
-  upBtn.disabled = idx === 0;
-  upBtn.addEventListener("click", () => {
-    items.splice(idx - 1, 0, items.splice(idx, 1)[0]);
-    rerenderMedios();
-  });
-
-  const downBtn = document.createElement("button");
-  downBtn.type = "button";
-  downBtn.className = "kf-btn-remove-item";
-  downBtn.title = "Bajar";
-  downBtn.textContent = "↓";
-  downBtn.disabled = idx === items.length - 1;
-  downBtn.addEventListener("click", () => {
-    items.splice(idx + 1, 0, items.splice(idx, 1)[0]);
-    rerenderMedios();
-  });
 
   const removeBtn = document.createElement("button");
   removeBtn.type = "button";
@@ -683,50 +625,10 @@ function renderMedioRow(itemPath, item, items, idx) {
     rerenderMedios();
   });
 
-  actions.appendChild(upBtn);
-  actions.appendChild(downBtn);
   actions.appendChild(removeBtn);
   rowWrap.appendChild(actions);
 
   return rowWrap;
-}
-
-/**
- * Pide al worker los metadatos de un enlace. El worker es quien sale a
- * internet: desde el navegador no se puede leer el HTML de otro dominio (CORS)
- * ni descargar su imagen.
- */
-async function fetchLinkPreview(url) {
-  if (!auth.currentUser) throw new Error("sesión expirada");
-  const token = await auth.currentUser.getIdToken();
-  const res = await fetch(PREVIEW_URL, {
-    method: "POST",
-    headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
-    body: JSON.stringify({ url }),
-  });
-  const data = await res.json().catch(() => ({}));
-  if (!res.ok) throw new Error(data.error || `error ${res.status}`);
-  return data;
-}
-
-/**
- * Convierte la imagen que devuelve /preview (base64) en una edición de imagen
- * normal, de modo que se publique por el mismo camino que una foto subida a
- * mano (worker → commit en imagenes/media/).
- */
-async function applyPreviewImage(imagenPath, data) {
-  const binary = atob(data.imagenBase64);
-  const bytes = new Uint8Array(binary.length);
-  for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
-  const rawBlob = new Blob([bytes], { type: data.imagenMime || "image/jpeg" });
-  const file = new File([rawBlob], "preview.jpg", { type: rawBlob.type });
-  const blob = await compressImage(file, 1600, 0.8);
-  imageEdits.set(imagenPath.join("."), {
-    blob,
-    filename: `medio-${Date.now()}.jpg`,
-    originalValue: getAtPath(workingContent, imagenPath),
-    targetDir: "imagenes/media/",
-  });
 }
 
 /**

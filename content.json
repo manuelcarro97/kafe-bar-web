@@ -145,12 +145,12 @@
     },
     "items": [
       {
-        "tipo": "youtube",
+        "tipo": "video",
         "url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
         "titulo": "EJEMPLO — sustituir por el vídeo real",
         "fuente": "YouTube",
         "fecha": "2025",
-        "imagen": "imagenes/comida1.png"
+        "imagen": ""
       },
       {
         "tipo": "enlace",
@@ -158,7 +158,7 @@
         "titulo": "EJEMPLO — sustituir por el reportaje real",
         "fuente": "La Voz de Galicia",
         "fecha": "2025",
-        "imagen": "imagenes/duo.png"
+        "imagen": ""
       },
       {
         "tipo": "enlace",
@@ -166,7 +166,7 @@
         "titulo": "EJEMPLO — sustituir por la aparición real en TV",
         "fuente": "CRTVG",
         "fecha": "2025",
-        "imagen": "imagenes/postre.png"
+        "imagen": ""
       }
     ]
   },
