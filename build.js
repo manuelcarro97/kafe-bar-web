@@ -197,6 +197,84 @@ function renderAlertaHtml(alerta) {
   );
 }
 
+/** Escapa texto que acaba dentro de HTML (títulos/fuentes vienen de medios externos). */
+function escapeHtml(str) {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+/** Extrae el ID de un vídeo de YouTube de sus formatos de URL habituales. */
+function youtubeId(url) {
+  const match = String(url).match(
+    /(?:youtube\.com\/(?:watch\?(?:.*&)?v=|embed\/|shorts\/)|youtu\.be\/)([\w-]{11})/
+  );
+  return match ? match[1] : null;
+}
+
+/**
+ * Miniatura de una tarjeta de medios. Si el item no trae imagen propia y es
+ * de YouTube, se deriva del ID: 'hqdefault' existe siempre (a diferencia de
+ * 'maxresdefault', que da 404 en muchos vídeos).
+ */
+function medioThumb(item) {
+  if (item.imagen) return item.imagen;
+  const id = youtubeId(item.url);
+  return id ? `https://img.youtube.com/vi/${id}/hqdefault.jpg` : '';
+}
+
+/** Renderiza una tarjeta del carrusel de medios (enlace externo). */
+function renderMedioCard(item) {
+  const thumb = medioThumb(item);
+  const alt = escapeHtml(item.titulo);
+  const play =
+    item.tipo === 'youtube'
+      ? '\n                        <span class="medio-play" aria-hidden="true">&#9654;</span>'
+      : '';
+  const fecha = item.fecha ? ` &middot; ${escapeHtml(item.fecha)}` : '';
+  return (
+    `                    <a class="medio-card" href="${escapeHtml(item.url)}" target="_blank" rel="noopener noreferrer">\n` +
+    '                        <div class="medio-thumb">\n' +
+    `                            <img src="${escapeHtml(thumb)}" alt="${alt}" loading="lazy" />${play}\n` +
+    '                        </div>\n' +
+    '                        <div class="medio-meta">\n' +
+    `                            <span class="medio-fuente">${escapeHtml(item.fuente)}${fecha}</span>\n` +
+    `                            <strong class="medio-titulo">${alt}</strong>\n` +
+    '                        </div>\n' +
+    '                    </a>'
+  );
+}
+
+/**
+ * Renderiza el bloque completo "Kafé en los medios". Devuelve '' si está
+ * desactivado o sin items, igual que renderAlertaHtml, de modo que la sección
+ * simplemente no existe en el HTML publicado.
+ */
+function renderMediosHtml(medios) {
+  if (!medios || !medios.activo || !Array.isArray(medios.items) || medios.items.length === 0) {
+    return '';
+  }
+  const cards = medios.items.map(renderMedioCard).join('\n');
+  return (
+    '<section id="medios" class="medios-section">\n' +
+    '        <div class="container">\n' +
+    '            <div class="medios-header">\n' +
+    `                <p class="section-tag" data-i18n="medios.tag">${medios.tag.es}</p>\n` +
+    `                <h2 class="section-title" data-i18n="medios.titulo">${medios.titulo.es}</h2>\n` +
+    `                <p class="section-desc" data-i18n="medios.desc">${medios.desc.es}</p>\n` +
+    '            </div>\n' +
+    '            <div class="marquee-container">\n' +
+    '                <div id="medios-track" class="marquee-track">\n' +
+    cards + '\n' +
+    '                </div>\n' +
+    '            </div>\n' +
+    '        </div>\n' +
+    '    </section>'
+  );
+}
+
 function buildTranslationsGenerated(keyMap) {
   const es = {};
   const gl = {};
@@ -255,6 +333,10 @@ function main() {
   // header fijo, así que el hero necesita algo más de padding-top para no
   // quedar tapado.
   content.alertaBodyClass = content.alerta && content.alerta.activa ? 'has-alerta' : '';
+
+  // Bloque "Kafé en los medios" (carrusel de vídeos/reportajes). '' si está
+  // desactivado o no hay items.
+  content.mediosHtml = renderMediosHtml(content.medios);
 
   buildTranslationsGenerated(keyMap);
   buildHtmlFile('index.template.html', 'index.html', content, keyMap);

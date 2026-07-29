@@ -780,3 +780,38 @@ body {
 .kf-btn-desc-remove:hover {
   background: #f7d6d0;
 }
+
+/* ---------- Bloque "Kafé en los medios" ---------- */
+.kf-medio-row .kf-item-row-fields {
+  grid-template-columns: 1fr 1fr;
+}
+
+/* Enlace, botón de auto-relleno y miniatura ocupan la fila entera. */
+.kf-medio-row .kf-item-row-fields > .kf-field:nth-child(2),
+.kf-medio-row .kf-medio-fetch,
+.kf-medio-row .kf-image-field {
+  grid-column: 1 / -1;
+}
+
+.kf-medio-fetch {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.kf-medio-fetch-status {
+  font-size: 0.82rem;
+  color: #8a8074;
+}
+
+.kf-medio-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.kf-medio-actions .kf-btn-remove-item:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
