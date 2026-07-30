@@ -167,6 +167,30 @@
         "fuente": "El Español",
         "fecha": "2026",
         "imagen": "imagenes/media/1785397271113-2.png"
+      },
+      {
+        "tipo": "video",
+        "url": "https://www.instagram.com/reel/DSqHWOwDbez/?igsh=NDFoaXhrMzAwZGhj",
+        "titulo": "En el Kafé",
+        "fuente": "Instagram",
+        "fecha": "luciadaavila",
+        "imagen": "imagenes/media/1785399707311-3.png"
+      },
+      {
+        "tipo": "video",
+        "url": "https://www.instagram.com/reel/DZSvB06oDyN/",
+        "titulo": "uno de nuestros locales favoritos",
+        "fuente": "Instagram",
+        "fecha": "corunafoodtracking",
+        "imagen": "imagenes/media/1785399747776-4.png"
+      },
+      {
+        "tipo": "video",
+        "url": "https://agalegaaudio.gal/videos/387468-as-resenas-na-internet",
+        "titulo": " críticas nos negocios de hostalería",
+        "fuente": "TVG",
+        "fecha": "2026",
+        "imagen": "imagenes/media/1785399856989-5.jpg"
       }
     ]
   },
