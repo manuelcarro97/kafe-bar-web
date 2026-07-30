@@ -146,15 +146,15 @@
     "items": [
       {
         "tipo": "enlace",
-        "url": "https://www.instagram.com/p/DUsQWU5jAOc/?img_index=1 ",
-        "titulo": "EJEMPLO — sustituir por el vídeo real",
-        "fuente": "YouTube",
-        "fecha": "2025",
-        "imagen": "imagenes/comida1.png"
+        "url": "https://www.laopinioncoruna.es/coruna/2026/02/19/campeonato-tortilla-patatas-galicia-a-coruna-127023820.amp.html",
+        "titulo": "Campeonato tortilla de galicia",
+        "fuente": "La Opinion",
+        "fecha": "FEB 2026",
+        "imagen": "imagenes/media/1785395492490-Capturadepantalla2026-07-30085450.png"
       },
       {
         "tipo": "enlace",
-        "url": "https://www.laopinioncoruna.es/coruna/2026/02/19/campeonato-tortilla-patatas-galicia-a-coruna-127023820.amp.html",
+        "url": "https://www.instagram.com/p/DUsQWU5jAOc/?img_index=1 ",
         "titulo": "Tortilla de patatas croissant y jamon serrano",
         "fuente": "Instagram",
         "fecha": "FEB 2026",
