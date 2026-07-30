@@ -145,8 +145,8 @@
     },
     "items": [
       {
-        "tipo": "youtube",
-        "url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+        "tipo": "enlace",
+        "url": "https://www.instagram.com/p/DUsQWU5jAOc/?img_index=1 ",
         "titulo": "EJEMPLO — sustituir por el vídeo real",
         "fuente": "YouTube",
         "fecha": "2025",
@@ -155,10 +155,10 @@
       {
         "tipo": "enlace",
         "url": "https://www.laopinioncoruna.es/coruna/2026/02/19/campeonato-tortilla-patatas-galicia-a-coruna-127023820.amp.html",
-        "titulo": "La mejor tortilla de Galicia busca dueño",
-        "fuente": "La Opinión",
+        "titulo": "Tortilla de patatas croissant y jamon serrano",
+        "fuente": "Instagram",
         "fecha": "FEB 2026",
-        "imagen": "imagenes/media/1785394511777-Capturadepantalla2026-07-30085450.png"
+        "imagen": "imagenes/media/1785395083194-1.png"
       },
       {
         "tipo": "youtube",
