@@ -161,12 +161,12 @@
         "imagen": "imagenes/media/1785395083194-1.png"
       },
       {
-        "tipo": "youtube",
-        "url": "https://www.elmundo.es/espana/2026/07/29/6a698b6f3e9f6f8c52d3ad22-directo.html",
-        "titulo": "TEST - noticia en el mundo",
-        "fuente": "youtube",
-        "fecha": "feb 2026",
-        "imagen": "imagenes/media/1785338455531-5fco33.png"
+        "tipo": "enlace",
+        "url": "https://www.elespanol.com/quincemil/vivir/gastrogalicia/20260417/galicia-busca-mejor-tortilla-patatas-campeonato-restaurantes-participantes/1003744212261_0.html",
+        "titulo": "Galicia busca la mejor tortilla",
+        "fuente": "El Español",
+        "fecha": "2026",
+        "imagen": "imagenes/media/1785397271113-2.png"
       }
     ]
   },
