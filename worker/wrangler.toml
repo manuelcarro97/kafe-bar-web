@@ -7,4 +7,4 @@ workers_dev = true
 # El secreto GITHUB_TOKEN NO va aquí: se configura con `wrangler secret put GITHUB_TOKEN`.
 [vars]
 GITHUB_REPO = "your-user/your-repo"
-ALLOWED_PUBLISHER_EMAILS = "test@gmail.com"
+ALLOWED_PUBLISHER_EMAILS = "admin@example.com"

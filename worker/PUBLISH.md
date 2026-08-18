@@ -23,9 +23,8 @@ permiso de **Contents: Read and write** sobre el repo configurado en `GITHUB_REP
 - `GITHUB_BRANCH` — opcional, default `"main"`.
 - `ALLOWED_PUBLISHER_EMAILS` — emails separados por coma que pueden publicar
   (se compara contra el claim `email` del ID token de Firebase, case-insensitive).
-  Incluye `test@gmail.com` para pruebas y añade el/los email(s) reales del bar
-  antes de dar acceso en producción. Si se deja vacía/no definida, no se aplica
-  esta restricción adicional (no recomendado).
+  Si se deja vacía o sin definir, NO publica nadie (fail-closed): tener una
+  cuenta de Firebase Auth en el proyecto no basta para publicar.
 
 ## Cómo funciona la verificación del token
 
