@@ -247,12 +247,12 @@
     },
     "cat2": {
       "label": {
-        "es": "♥ NUESTRAS BURGUERS Y BOKADILLOS",
-        "gl": "♥ AS NOSAS BURGUERS E BOKADILLOS"
+        "es": "♥ NUESTRAS HAMBURGUESAS Y BOCADILLOS",
+        "gl": "♥ AS NOSAS HAMBURGUESAS E BOCADILLOS"
       },
       "title": {
-        "es": "Pan, Sabor y Kalidad",
-        "gl": "Pan, Sabor e Kalidade"
+        "es": "Pan, Sabor y Calidad",
+        "gl": "Pan, Sabor e Calidade"
       }
     },
     "cat3": {
@@ -287,7 +287,7 @@
         "image": "images.tapas",
         "items": [
           {
-            "nombre": "Tortilla de patatas (tapa)",
+            "nombre": "Tortilla de patata (tapa)",
             "precio": "2,50 €"
           },
           {
@@ -295,12 +295,16 @@
             "precio": "3,00 €"
           },
           {
-            "nombre": "Kroquetas de jamón (ud.)",
+            "nombre": "Croquetas de jamón (ud.)",
             "precio": "1,50 €"
           },
           {
             "nombre": "Raxo de pollo al roquefort",
-            "precio": "5,50 €"
+            "precio": "5,00 €"
+          },
+          {
+            "nombre": "Albóndigas",
+            "precio": "4,00€"
           }
         ]
       },
@@ -311,37 +315,67 @@
         "image": "images.desayunos",
         "subcategorias": [
           {
-            "nombre": "Bokadillos",
+            "nombre": "Bocadillos de 28cm",
             "items": [
               {
-                "nombre": "Bokadillo Pollo Kompleto",
-                "descripcion": "Pollo, tomate, lechuga y mayonesa",
-                "precio": "5,00 €"
+                "nombre": "Bocadillo de Pollo Crujiente",
+                "descripcion": "Tiras de pechuga de pollo rebozadas con nuestra mezcla de especias y panko",
+                "precio": "7,00 €"
               },
               {
-                "nombre": "Bokadillo de Lomo",
-                "descripcion": "Lomo, queso y pimientos",
-                "precio": "5,00 €"
+                "nombre": "Bocadillo de Lomo con Queso",
+                "descripcion": "Lomo adobado y queso fundido",
+                "precio": "7,00 €"
               },
               {
-                "nombre": "Bokadillo Vegetal",
-                "descripcion": "Lechuga, tomate, cebolla, queso y huevo",
-                "precio": "4,50 €"
+                "nombre": "Bocadillo Vegetal",
+                "descripcion": "Lechuga, tomate, cebolla y queso fundido",
+                "precio": "6,00 €"
+              },
+              {
+                "nombre": "Bocadillo de Tortilla",
+                "precio": "5,50€",
+                "descripcion": "Jugosa tortilla de patata con o sin cebolla"
+              },
+              {
+                "nombre": "Bocadillo de Tortilla Especialidad",
+                "precio": "6,50€",
+                "descripcion": "Pregunta por nuestra selección de tortillas especiales"
+              },
+              {
+                "nombre": "Bocadillo de Calamares con Ali-Oli",
+                "precio": "7,00€",
+                "descripcion": "Calamares de la ría y Ali-Oli Casero"
+              },
+              {
+                "nombre": "Bocadillo de Bacon con Queso",
+                "precio": "6,00€",
+                "descripcion": "Bacon crujiente y queso fundido"
               }
             ]
           },
           {
-            "nombre": "Burguers",
+            "nombre": "Hamburguesas",
             "items": [
               {
-                "nombre": "Burguer de la Kasa",
-                "descripcion": "Pan brioche, bacon, queso golden, tomate, cebolla y lechuga",
-                "precio": "8,50 €"
+                "nombre": "Hamburguesa de la casa",
+                "descripcion": "Pan brioche, salsa burguer, billionaire bacon, queso, tomate, cebolla y lechuga",
+                "precio": "9,50 €"
               },
               {
-                "nombre": "Burguer Doble",
-                "descripcion": "Doble karne, doble queso, bacon y salsa de la kasa",
-                "precio": "9,50 €"
+                "nombre": "Simple",
+                "descripcion": "Pan rústico, carne y queso fundido",
+                "precio": "5,50 €"
+              },
+              {
+                "nombre": "Completa",
+                "precio": "6,50€",
+                "descripcion": "Pan rústico, carne, lechuga, tomate, cebolla y queso fundido"
+              },
+              {
+                "nombre": "Vegetariana",
+                "precio": "10€",
+                "descripcion": "Pan rústico, carne Beyond Meat, lechuga, tomate, cebolla y queso fundido"
               }
             ]
           }
@@ -352,20 +386,24 @@
         "image": "images.postres",
         "items": [
           {
-            "nombre": "Tarta de queso (especialidad)",
-            "precio": "5,50 €"
+            "nombre": "Tarta de Queso Camembert",
+            "precio": "5,50 €",
+            "descripcion": "Cremosa tarta de queso al horno"
           },
           {
-            "nombre": "Tarta de queso del mes",
-            "precio": "6,00 €"
+            "nombre": "Tarta de Queso del Mes",
+            "precio": "6,00 €",
+            "descripcion": "Todos los meses una nueva tarta"
           },
           {
-            "nombre": "Brownie con helado",
-            "precio": "6,00 €"
+            "nombre": "Tarta de la Abuela",
+            "precio": "5,50 €",
+            "descripcion": "Nuestra versión de la tarta de la abuela con chocolate con leche, galleta empapada y sobao pasiego"
           },
           {
             "nombre": "Torrisú",
-            "precio": "7,00 €"
+            "precio": "7,00 €",
+            "descripcion": "Nuestra fusión de una torrija y un tiramisú"
           }
         ]
       }
@@ -376,7 +414,7 @@
           "seccion": "Tapas y Raciones",
           "items": [
             {
-              "nombre": "Tortilla De Patata",
+              "nombre": "Tortilla De Patata Finalista",
               "precio": "2,50 €"
             },
             {
@@ -384,28 +422,28 @@
               "precio": "3,00 €"
             },
             {
-              "nombre": "Kroquetas De Jamón (Ud)",
+              "nombre": "Croquetas De Jamón (Ud)",
               "precio": "1,50 €"
             },
             {
-              "nombre": "Kroquetas De Especialidad (Ud)",
+              "nombre": "Croquetas De Especialidad (Ud)",
               "precio": "1,50 €"
             },
             {
               "nombre": "Ensaladilla",
-              "precio": "3,50 €"
+              "precio": "3,00 €"
             },
             {
               "nombre": "Patatas Braviolis",
               "precio": "3,50 €"
             },
             {
-              "nombre": "Kalamares",
-              "precio": "5,50 €"
+              "nombre": "Calamares",
+              "precio": "5,00 €"
             },
             {
-              "nombre": "Pollo Krujiente",
-              "precio": "4,00 €"
+              "nombre": "Pollo Crujiente",
+              "precio": "5,00 €"
             },
             {
               "nombre": "Huevos Rotos Con Chorizo",
@@ -413,15 +451,11 @@
             },
             {
               "nombre": "Huevos Rotos Con Jamón",
-              "precio": "12,50 €"
-            },
-            {
-              "nombre": "Huevos Rotos Con Gulas",
-              "precio": "12,50 €"
+              "precio": "12,00 €"
             },
             {
               "nombre": "Huevos Rotos Trufados",
-              "precio": "13,00 €"
+              "precio": "12,00 €"
             },
             {
               "nombre": "Raxo De Cerdo",
@@ -429,49 +463,23 @@
             },
             {
               "nombre": "Raxo De Pollo Al Roquefort",
-              "precio": "5,50 €"
+              "precio": "5,00 €"
             },
             {
-              "nombre": "Kriollo Con Patatas (Ud)",
+              "nombre": "Criollo Con Patatas (Ud)",
               "precio": "3,50 €"
             },
             {
-              "nombre": "Kroka De Ternera",
-              "precio": "17,00 €"
-            },
-            {
               "nombre": "Ensalada Mixta",
-              "precio": "9,00 €"
-            }
-          ]
-        },
-        {
-          "seccion": "Hamburguesas",
-          "items": [
-            {
-              "nombre": "Hamburguesa Simple",
-              "precio": "4,50 €"
+              "precio": "5,00 €"
             },
             {
-              "nombre": "Hamburguesa Kompleta",
-              "precio": "5,50 €"
+              "nombre": "Albóndigas",
+              "precio": "4,00€"
             },
             {
-              "nombre": "Hamburguesa Vegetariana",
-              "precio": "6,00 €"
-            }
-          ]
-        },
-        {
-          "seccion": "Ensaladas Templadas",
-          "items": [
-            {
-              "nombre": "Queso De Kabra, Nueces Y Fruta Temporada",
-              "precio": "12,00 €"
-            },
-            {
-              "nombre": "Burrata, Tomate Del País Y Pesto",
-              "precio": "12,50 €"
+              "nombre": "Callos (Todos los Sábados)",
+              "precio": "4,00€"
             }
           ]
         },
@@ -480,35 +488,47 @@
           "items": [
             {
               "nombre": "Agua Plástico",
-              "precio": "1,30 €"
+              "precio": "1,40 €"
             },
             {
-              "nombre": "Agua 1l",
+              "nombre": "Agua 1l (Km0)",
               "precio": "2,00 €"
             },
             {
-              "nombre": "Refreskos",
-              "precio": "2,50 €"
+              "nombre": "Refrescos",
+              "precio": "2,60 €"
             },
             {
               "nombre": "Cerveza Estrella Galicia",
-              "precio": "2,50 €"
+              "precio": "2,60 €"
             },
             {
               "nombre": "Cerveza 1906",
-              "precio": "2,70 €"
-            },
-            {
-              "nombre": "Cerveza Especial",
               "precio": "2,80 €"
             },
             {
-              "nombre": "Cerveza Alhambra",
-              "precio": "2,50 €"
+              "nombre": "Cervezas Especiales",
+              "precio": "2,90 €"
             },
             {
               "nombre": "Sidra Maelok",
               "precio": "2,50 €"
+            },
+            {
+              "nombre": "Tinto de Verano",
+              "precio": "3,50€"
+            },
+            {
+              "nombre": "Vermut ",
+              "precio": "3,50€"
+            },
+            {
+              "nombre": "Chupitos",
+              "precio": "1,60€"
+            },
+            {
+              "nombre": "Combinados",
+              "precio": "6€"
             }
           ]
         }
