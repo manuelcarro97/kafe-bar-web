@@ -786,6 +786,35 @@
               "precio": "4,50 €"
             }
           ]
+        },
+        {
+          "seccion": "Brunch",
+          "items": [
+            {
+              "nombre": "Café, Infusión o Colacao",
+              "precio": ""
+            },
+            {
+              "nombre": "Zumo",
+              "precio": ""
+            },
+            {
+              "nombre": "Bowl de yogurt con fruta y granola",
+              "precio": ""
+            },
+            {
+              "nombre": "Parte salada (tosta, baggel o tortilla)",
+              "precio": ""
+            },
+            {
+              "nombre": "Parte dulce (bizcocho, tarta, dulcería)",
+              "precio": ""
+            },
+            {
+              "nombre": "",
+              "precio": "16,00 € / 18,00 € si te pillas la tarta"
+            }
+          ]
         }
       ],
       "columna2": [
