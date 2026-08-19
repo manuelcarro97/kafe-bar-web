@@ -157,16 +157,22 @@
 
         <div class="hero-inner">
             <div class="hero-content">
-                <p class="hero-tag">— Est. 2025 —</p>
-                <h1 class="hero-title">
-                    Sabores<br />
-                    <span class="hero-accent">Auténticos</span><br />
-                    de Galicia.
-                </h1>
+                <!-- Lockup de marca: logotipo blanco + línea fina + año.
+                     Sustituye al antiguo eyebrow "— Est. 2025 —". -->
+                <div class="hero-lockup">
+                    <img src="{{images.logoBlanco}}" alt="Kafé" class="hero-lockup-logo" width="704" height="289"
+                        loading="eager" />
+                    <span class="hero-lockup-rule" aria-hidden="true"></span>
+                    <span class="hero-lockup-year">Est. 2025</span>
+                </div>
+                <h1 class="hero-title" data-i18n="hero.titulo">Desayunos,<br /><em>brunch</em> y comida<br />casera en A Coruña.</h1>
+                <!-- Dos párrafos, uno visible cada vez: el largo en escritorio y
+                     el corto en móvil (≤640px). Ver .hero-subtitle-movil en el CSS. -->
                 <p class="hero-subtitle" data-i18n="hero.subtitle">
                     Vive la esencia de la kocina gallega en un ambiente perfecto.<br />
                     El mejor Kafé y las recetas de toda la vida.
                 </p>
+                <p class="hero-subtitle hero-subtitle-movil" data-i18n="hero.subtitleMovil">El Kafé de siempre, para disfrutar como nunca.</p>
                 <div class="hero-actions">
                     <a href="#nosotros" class="btn-text" data-i18n="hero.cta.historia">Nuestra Historia</a>
                     <!-- RESERVAS OCULTAS (descomentar para reactivar)
@@ -751,7 +757,8 @@ Muy recomendable"</p>
     <footer class="footer">
         <div class="container footer-inner">
             <div class="footer-brand">
-                <img src="{{images.logo}}" alt="Kafé" class="logo-img footer-logo" />
+                <!-- El footer es marino: usa la versión blanca, no la azul del nav. -->
+                <img src="{{images.logoBlanco}}" alt="Kafé" class="logo-img footer-logo" />
                 <p class="footer-tagline" data-i18n="footer.tagline">Celebrando el alma kulinaria de Galicia a través de
                     la honestidad, el producto y la maestría.</p>
                 <div class="footer-social">

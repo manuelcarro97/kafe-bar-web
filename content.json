@@ -34,6 +34,14 @@
     }
   },
   "hero": {
+    "titulo": {
+      "es": "Desayunos,<br /><em>brunch</em> y comida<br />casera en A Coruña.",
+      "gl": "Almorzos,<br /><em>brunch</em> e comida<br />caseira na Coruña."
+    },
+    "subtitleMovil": {
+      "es": "El Kafé de siempre, para disfrutar como nunca.",
+      "gl": "O Kafé de sempre, para gozar coma nunca."
+    },
     "subtitle": {
       "es": "El Kafé de siempre, para disfrutar como nunca.<br />Un lugar para desayunar sin prisas, comer como en casa, tomar algo con amigos o terminar el día alrededor de una mesa. Buena comida, buen ambiente y, sobre todo, buena gente.",
       "gl": "O Kafé de sempre, para gozar coma nunca.<br />Un lugar para almorzar sen présas, comer coma na casa, tomar algo cos amigos ou rematar o día arredor dunha mesa. Boa comida, bo ambiente e, sobre todo, boa xente."
@@ -1187,7 +1195,8 @@
     "dominio": "kafe-143b5.web.app"
   },
   "images": {
-    "logo": "imagenes/logo-transparente.png",
+    "logo": "imagenes/kafe-logo.png",
+    "logoBlanco": "imagenes/kafe-logo-white.png",
     "heroDish": "imagenes/tortilla-hero.jpg",
     "tapas": "https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=600&q=80",
     "desayunos": "imagenes/comida1.png",

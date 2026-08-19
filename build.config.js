@@ -30,7 +30,9 @@ module.exports = function keyMap(c) {
     'nav.reservar': c.nav.reservar,
 
     // hero
+    'hero.titulo': c.hero.titulo,
     'hero.subtitle': c.hero.subtitle,
+    'hero.subtitleMovil': c.hero.subtitleMovil,
     'hero.cta.carta': c.hero.cta.carta,
     'hero.cta.historia': c.hero.cta.historia,
     'hero.cta.desayunos': c.hero.cta.desayunos,

@@ -756,17 +756,53 @@ ul {
   margin-bottom: 1.5rem;
 }
 
+/* Lockup de marca del hero: logotipo blanco, línea fina que ocupa el hueco
+   restante y el año alineado a la derecha. */
+.hero-lockup {
+  display: flex;
+  align-items: center;
+  gap: 1.125rem;
+  margin-bottom: 1.5rem;
+}
+
+.hero-lockup-logo {
+  height: 40px;
+  width: auto;
+  display: block;
+  flex-shrink: 0;
+}
+
+.hero-lockup-rule {
+  flex: 1;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.28);
+}
+
+.hero-lockup-year {
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--azul-claro);
+  flex-shrink: 0;
+}
+
 .hero-title {
   font-family: var(--font-serif);
-  font-size: clamp(3.5rem, 7vw, 5.5rem);
-  /* Más grande */
+  /* Escala del handoff: 66px en ≥1280, ~54px en 1024-1279, ~46px en tablet
+     y 40px en móvil. Con 5vw la curva cae sola en esos tramos. */
+  font-size: clamp(2.5rem, 5vw, 4.125rem);
   font-weight: 900;
-  line-height: 1.05;
+  line-height: 1.03;
+  letter-spacing: -0.01em;
   color: var(--blanco);
   margin-bottom: 1.5rem;
 }
 
-.hero-accent {
+/* La palabra acento del titular. Se estiliza el <em> para que el texto
+   editable desde /admin sea solo "<em>brunch</em>", sin clases a la vista. */
+.hero-accent,
+.hero-title em {
   color: var(--azul-claro);
   font-style: italic;
 }
@@ -779,6 +815,12 @@ ul {
   max-width: 600px;
   margin-bottom: 2.5rem;
   line-height: 1.6;
+}
+
+/* Versión corta del párrafo, solo para móvil. Oculta por defecto; el
+   intercambio con la larga ocurre en la media query de 640px. */
+.hero-subtitle-movil {
+  display: none;
 }
 
 .hero-actions {
@@ -2508,6 +2550,12 @@ fieldset.form-group {
     padding: 0.3rem 0.65rem;
   }
 
+  /* Logotipo de la barra a la altura del handoff. Se acota con .logo para
+     no alcanzar al del footer, que comparte la clase .logo-img. */
+  .logo .logo-img {
+    height: 20px;
+  }
+
   /* Menú móvil abierto */
   .nav-list.open {
     display: flex;
@@ -2530,13 +2578,67 @@ fieldset.form-group {
     font-size: 1rem;
   }
 
+  /* ---- Hero móvil (handoff opción 1b) ----
+     Objetivo: que el hero entre en una sola pantalla. Alineado a la
+     izquierda, párrafo corto, botones a ancho completo y sin el enlace
+     "Nuestra Historia" (la sección sigue accesible desde el menú). */
+  .hero-inner {
+    text-align: left;
+    padding-block: 2.375rem 2.75rem;
+    padding-inline: 1.5rem;
+    gap: 1.125rem;
+  }
+
   .hero-title {
     font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .hero-lockup-logo {
+    height: 26px;
+  }
+
+  .hero-lockup-year {
+    font-size: 0.625rem;
+    letter-spacing: 0.22em;
+  }
+
+  /* Intercambio de párrafos: fuera el largo, dentro el corto. */
+  .hero-subtitle:not(.hero-subtitle-movil) {
+    display: none;
+  }
+
+  .hero-subtitle-movil {
+    display: block;
+    font-size: 0.875rem;
+    line-height: 1.6;
+    margin-inline: 0;
+    margin-bottom: 1.5rem;
   }
 
   .hero-actions {
     flex-direction: column;
-    align-items: center;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 0.625rem;
+  }
+
+  /* "Nuestra Historia" se omite en móvil (decisión del handoff). */
+  .hero-actions .btn-text {
+    display: none;
+  }
+
+  /* .btn-ghost es inline-flex, así que el centrado va con justify-content;
+     text-align no tendría efecto sobre el contenido flex. */
+  .hero-actions .btn-ghost {
+    width: 100%;
+    justify-content: center;
+    padding: 0.9375rem 1rem;
+    border-radius: 999px;
+  }
+
+  .hero-image-wrap {
+    justify-content: stretch;
   }
 
   /* Intro animación móvil */

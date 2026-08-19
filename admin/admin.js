@@ -282,6 +282,7 @@ const CARD_HEADER_KEYS = new Set(["cat1", "cat2", "cat3"]);
 // categorias[].image).
 const IMAGES_FIELD_LABELS = {
   logo: "Logo",
+  logoBlanco: "Logo blanco (lockup del hero)",
   heroDish: "Foto principal (portada)",
   tapas: "Tarjeta 1 (foto)",
   desayunos: "Tarjeta 2 (foto)",
