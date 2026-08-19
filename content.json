@@ -13,20 +13,20 @@
       "gl": "Almorzos"
     },
     "carta": {
-      "es": "Karta",
-      "gl": "Karta"
+      "es": "Carta",
+      "gl": "Carta"
     },
     "resenas": {
       "es": "Reseñas",
       "gl": "Reseñas"
     },
     "contacto": {
-      "es": "Kontacto",
-      "gl": "Kontacto"
+      "es": "Contacto",
+      "gl": "Contacto"
     },
     "verCarta": {
-      "es": "Ver Karta →",
-      "gl": "Ver Karta →"
+      "es": "Ver Carta →",
+      "gl": "Ver Carta →"
     },
     "reservar": {
       "es": "Reservar",
@@ -40,8 +40,8 @@
     },
     "cta": {
       "carta": {
-        "es": "Ver Karta →",
-        "gl": "Ver Karta →"
+        "es": "Ver Carta →",
+        "gl": "Ver Carta →"
       },
       "historia": {
         "es": "Nuestra Historia",
@@ -65,28 +65,28 @@
   },
   "desayunos": {
     "tag": {
-      "es": "♥☕️ Desayunos",
-      "gl": "♥ ☕️Almorzos"
+      "es": "♥ Desayunos",
+      "gl": "♥ Almorzos"
     },
     "title": {
       "es": "Desayuno y Brunch",
       "gl": "Almorzo e Brunch"
     },
     "parrafo1": {
-      "es": "Empieza el día con nuestros desayunos y brunch en pleno centro de A Coruña: tostas recién hechas, baggels, bollería del día y kafé de especialidad. Un desayuno tranquilo, casero y con producto de verdad.",
-      "gl": "Comeza o día cos nosos almorzos e brunch no centro da Coruña: tostas recén feitas, baggels, boullería do día e kafé de especialidade. Un almorzo tranquilo, caseiro e con produto de verdade."
+      "es": "Empieza el día en Kafé disfrutando de nuestros desayunos y brunch en A Coruña. Café recién hecho, tostadas, baggels, opciones dulces y saladas y propuestas para disfrutar con calma, solo o en buena compañía.",
+      "gl": "Comeza o día en Kafé gozando dos nosos almorzos e brunch na Coruña. Café acabado de facer, torradas, baggels, opcións doces e salgadas e propostas para gozar con calma, só ou en boa compañía."
     },
     "parrafo2": {
-      "es": "Tanto si buscas un desayuno rápido antes del trabajo como un brunch sin prisa el fin de semana, en Kafé tienes opciones dulces y saladas para todos los gustos. Ven a desayunar y descubre por qué somos un rincón favorito en A Coruña.",
-      "gl": "Tanto se buscas un almorzo rápido antes do traballo como un brunch sen présa a fin de semana, en Kafé tes opcións doces e salgadas para todos os gustos. Ven almorzar e descobre por que somos un recuncho favorito na Coruña."
+      "es": "Si buscas dónde desayunar en A Coruña, tomar un buen café o disfrutar de un brunch con amigos, en Kafé encontrarás un ambiente cercano y acogedor, cocina casera y opciones para todos los gustos. Porque algunas mañanas merecen disfrutarse sin prisas.",
+      "gl": "Se buscas onde almorzar na Coruña, tomar un bo café ou gozar dun brunch cos amigos, en Kafé atoparás un ambiente próximo e acolledor, cociña caseira e opcións para todos os gustos. Porque hai mañás que merecen ser gozadas sen présas."
     },
     "nota": {
       "es": "Horario de brunch y desayunos hasta las 12:30h",
       "gl": "Horario de brunch e almorzos ata as 12:30h"
     },
     "cta": {
-      "es": "Ver Karta de Desayunos",
-      "gl": "Ver Karta de Almorzos"
+      "es": "Ver Carta de Desayunos",
+      "gl": "Ver Carta de Almorzos"
     }
   },
   "nosotros": {
