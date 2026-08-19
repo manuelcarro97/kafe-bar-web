@@ -531,6 +531,15 @@
               "precio": "6€"
             }
           ]
+        },
+        {
+          "seccion": "Nueva sección",
+          "items": [
+            {
+              "nombre": "",
+              "precio": ""
+            }
+          ]
         }
       ],
       "columna2": [
@@ -539,44 +548,32 @@
           "items": [
             {
               "nombre": "Tortilla",
-              "precio": "5,00 €"
+              "precio": "5,50 €"
             },
             {
               "nombre": "Tortilla Especialidad",
-              "precio": "6,00 €"
-            },
-            {
-              "nombre": "Milanesa",
               "precio": "6,50 €"
             },
             {
-              "nombre": "Kalamares Con Ali-Oli",
-              "precio": "5,00 €"
+              "nombre": "Pollo Crujiente",
+              "precio": "7,00 €"
+            },
+            {
+              "nombre": "Calamares Con Ali-Oli",
+              "precio": "7,00 €"
             },
             {
               "nombre": "Lomo Con Queso",
-              "precio": "5,00 €"
+              "precio": "6,00 €"
             },
             {
-              "nombre": "Bakon Con Queso",
-              "precio": "5,00 €"
-            },
-            {
-              "nombre": "Jamón",
-              "precio": "5,00 €"
-            },
-            {
-              "nombre": "Chorizo",
-              "precio": "5,00 €"
-            },
-            {
-              "nombre": "Atún, Huevo Y Mahonesa",
-              "precio": "6,50 €"
+              "nombre": "Bacon Con Queso",
+              "precio": "6,00 €"
             },
             {
               "nombre": "Vegetal",
-              "descripcion": "Lechuga, tomate, cebolla, queso",
-              "precio": "5,00 €"
+              "descripcion": "Lechuga, tomate, cebolla y queso",
+              "precio": "6,00 €"
             }
           ]
         },
@@ -584,24 +581,52 @@
           "seccion": "Tostas",
           "items": [
             {
-              "nombre": "Aceite Y Tomate",
+              "nombre": "Tomate y AOVE",
               "precio": "3,50 €"
             },
             {
-              "nombre": "Aceite, Tomate Y Jamón",
+              "nombre": "Tomate, jamón y AOVE",
+              "precio": "5,50 €"
+            },
+            {
+              "nombre": "Queso crema, nueces y miel",
               "precio": "4,50 €"
             },
             {
-              "nombre": "Queso Krema, Nueces Y Miel",
-              "precio": "4,50 €"
-            },
-            {
-              "nombre": "Mantequilla Y Mermelada",
-              "precio": "3,00 €"
+              "nombre": "Mantequilla y mermelada",
+              "precio": "3,50 €"
             },
             {
               "nombre": "Nutella",
-              "precio": "3,00 €"
+              "precio": "3,50 €"
+            },
+            {
+              "nombre": "Hummus y pipas",
+              "precio": "3,50€"
+            },
+            {
+              "nombre": "Hummus, pipas y huevo poché",
+              "precio": "5,50€"
+            },
+            {
+              "nombre": "Tomate y aguacate",
+              "precio": "5,50€"
+            },
+            {
+              "nombre": "Aguacate y huevo poché",
+              "precio": "5,50€"
+            },
+            {
+              "nombre": "Burrata, cherrys confitados y pesto verde",
+              "precio": "8,50€"
+            },
+            {
+              "nombre": "Crema de cacahuete y mermelada",
+              "precio": "5,50€"
+            },
+            {
+              "nombre": "Nutella y fruta de temporada",
+              "precio": "4,50€"
             }
           ]
         },
@@ -609,20 +634,32 @@
           "seccion": "Baggels",
           "items": [
             {
-              "nombre": "Queso Krema, Salmón Y Rúcula",
-              "precio": "5,00 €"
-            },
-            {
-              "nombre": "Queso Krema Y Jamón",
-              "precio": "5,00 €"
-            },
-            {
-              "nombre": "Queso Krema, Aceituna Negra, Tomate Seco Y Albahaka",
+              "nombre": "Queso crema y jamón",
               "precio": "5,50 €"
             },
             {
-              "nombre": "Queso, Bakon Y Huevo Frito",
+              "nombre": "Queso crema, aceituna negra, cherrys confitados y pesto verde",
               "precio": "5,50 €"
+            },
+            {
+              "nombre": "Queso, bacon y huevo frito",
+              "precio": "5,50 €"
+            },
+            {
+              "nombre": "Burrata y aguacate",
+              "precio": "7,00€"
+            },
+            {
+              "nombre": "Crema de cacahuete y mermelada",
+              "precio": "5,00€"
+            },
+            {
+              "nombre": "Nutella",
+              "precio": "4,00€"
+            },
+            {
+              "nombre": "Nutella y fruta de temporada",
+              "precio": "4,50€"
             }
           ]
         },
@@ -630,70 +667,87 @@
           "seccion": "Postres",
           "items": [
             {
-              "nombre": "Tarta De Queso (Especialidad)",
+              "nombre": "Tarta de queso camembert",
               "precio": "5,50 €"
             },
             {
-              "nombre": "Tarta De Queso Del Mes",
+              "nombre": "Tarta de queso del mes",
               "precio": "6,00 €"
             },
             {
-              "nombre": "Tarta De La Abuela",
+              "nombre": "Tarta de la abuela",
               "precio": "5,50 €"
-            },
-            {
-              "nombre": "Brownie Con Helado",
-              "precio": "6,00 €"
             },
             {
               "nombre": "Torrisú",
               "precio": "7,00 €"
-            },
-            {
-              "nombre": "Queso Y Membrillo",
-              "precio": "5,00 €"
             }
           ]
         },
         {
-          "seccion": "Dulces",
+          "seccion": "Dulcería",
           "items": [
             {
-              "nombre": "Porras (Ud)",
+              "nombre": "Churros (Ud)",
+              "precio": "0,35 €"
+            },
+            {
+              "nombre": "Bizcochos caseros",
+              "precio": "3,00 €"
+            },
+            {
+              "nombre": "Muffins",
+              "precio": "2,50 €"
+            },
+            {
+              "nombre": "Galletas caseras",
+              "precio": "3,50 €"
+            },
+            {
+              "nombre": "Bolleria",
               "precio": "2,00 €"
             },
             {
-              "nombre": "Churros (Ud)",
-              "precio": "0,30 €"
+              "nombre": "Bolleria rellena",
+              "precio": "Desde 3,00 €"
             },
             {
-              "nombre": "Bizkochos (Del Día)",
-              "precio": "2,50 €"
-            },
-            {
-              "nombre": "Muffins (Del Día)",
-              "precio": "2,50 €"
-            },
-            {
-              "nombre": "Galletas (Del Día)",
-              "precio": "2,50 €"
-            },
-            {
-              "nombre": "Kroissant",
-              "precio": "2,50 €"
-            },
-            {
-              "nombre": "Napolitanas",
-              "precio": "2,50 €"
+              "nombre": "Tartas",
+              "precio": "3,50€"
             }
           ]
         },
         {
-          "seccion": "Otros",
+          "seccion": "Bowl de Yogurt",
           "items": [
             {
-              "nombre": "Servicio De Pan",
-              "precio": "0,90"
+              "nombre": "Yogurt natural, granola y fruta de temporada",
+              "precio": "4,50€"
+            }
+          ]
+        },
+        {
+          "seccion": "Sandwiches",
+          "items": [
+            {
+              "nombre": "Mixto",
+              "precio": "4,50€"
+            },
+            {
+              "nombre": "Mixto con huevo",
+              "precio": "5,50€"
+            },
+            {
+              "nombre": "Vegetal",
+              "precio": "5,00€"
+            },
+            {
+              "nombre": "Bacon, queso y huevo frito",
+              "precio": "5,50€"
+            },
+            {
+              "nombre": "Jamón, queso, aguacate y huevo frito",
+              "precio": "6,00€"
             }
           ]
         }
