@@ -1337,7 +1337,10 @@ function renderImageField(container, path, keyLabel, opts = {}) {
     try {
       const blob = await compressImage(file, 1600, 0.8);
       const baseName = suggestFilename(originalValue, file.name);
-      const filename = opts.uniqueName ? `${Date.now()}-${sanitizeFilename(file.name)}` : baseName;
+      const rawName = opts.uniqueName ? `${Date.now()}-${sanitizeFilename(file.name)}` : baseName;
+      // compressImage decide PNG o JPEG según haya transparencia, así que la
+      // extensión se ajusta a lo que realmente contiene el blob.
+      const filename = withExtensionFor(rawName, blob.type);
       imageEdits.set(pathKey, {
         blob,
         filename,
@@ -1392,6 +1395,16 @@ function suggestFilename(originalPath, uploadedName) {
   return uploadedName || "imagen.jpg";
 }
 
+/**
+ * Comprime una imagen redimensionándola en un canvas.
+ *
+ * El formato de salida depende de si la imagen tiene transparencia:
+ * PNG si la tiene, JPEG si no. JPEG no soporta canal alfa, así que forzar
+ * siempre JPEG aplanaba las transparencias contra un fondo sólido — que es
+ * como el logo del bar acabó con fondo blanco pese a subirse transparente.
+ * PNG ignora `quality` (es sin pérdida), por eso la salida solo pasa a PNG
+ * cuando de verdad hay alfa: las fotos siguen yendo en JPEG comprimido.
+ */
 function compressImage(file, maxWidth, quality) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -1408,12 +1421,16 @@ function compressImage(file, maxWidth, quality) {
         canvas.height = h;
         const ctx = canvas.getContext("2d");
         ctx.drawImage(image, 0, 0, w, h);
+
+        // El origen es un data: URL del propio FileReader, así que el canvas
+        // no queda "tainted" y getImageData no lanza SecurityError.
+        const type = canvasHasAlpha(ctx, w, h) ? "image/png" : "image/jpeg";
         canvas.toBlob(
           (blob) => {
             if (!blob) reject(new Error("Fallo al comprimir"));
             else resolve(blob);
           },
-          "image/jpeg",
+          type,
           quality
         );
       };
@@ -1421,6 +1438,25 @@ function compressImage(file, maxWidth, quality) {
     };
     reader.readAsDataURL(file);
   });
+}
+
+/** true si algún píxel del canvas no es totalmente opaco. */
+function canvasHasAlpha(ctx, w, h) {
+  const { data } = ctx.getImageData(0, 0, w, h);
+  for (let i = 3; i < data.length; i += 4) {
+    if (data[i] < 255) return true;
+  }
+  return false;
+}
+
+/**
+ * Ajusta la extensión del nombre al formato real del blob, para no acabar con
+ * un fichero ".png" que por dentro son bytes JPEG (o al revés).
+ */
+function withExtensionFor(filename, mimeType) {
+  const ext = mimeType === "image/png" ? "png" : "jpg";
+  const base = filename.replace(/\.[^./]+$/, "");
+  return `${base}.${ext}`;
 }
 
 // ---------------------------------------------------------------------------
@@ -1469,7 +1505,14 @@ async function buildImagesPayload() {
   for (const [pathKey, entry] of imageEdits.entries()) {
     const { blob, filename, originalValue, targetDir, forceNewPath } = entry;
     let path;
-    if (!forceNewPath && typeof originalValue === "string" && originalValue.startsWith("imagenes/")) {
+    // Solo se sobrescribe el fichero original si la extensión coincide con el
+    // formato del blob; si el usuario sube un PNG transparente sobre un .jpg
+    // hay que publicar una ruta nueva en vez de meter bytes PNG en un .jpg.
+    const isLocalPath = typeof originalValue === "string" && originalValue.startsWith("imagenes/");
+    const keepsExtension =
+      isLocalPath &&
+      originalValue.split(".").pop().toLowerCase() === filename.split(".").pop().toLowerCase();
+    if (!forceNewPath && keepsExtension) {
       path = originalValue;
     } else {
       path = `${targetDir || "imagenes/"}${sanitizeFilename(filename)}`;
