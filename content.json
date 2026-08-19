@@ -1014,7 +1014,9 @@
         "gl": "Ver en Google Maps ↗"
       }
     },
-    "telefono": "981 31 82 60 / ‪673 88 98 00‬",
+    "telefono": "981 31 82 60",
+    "whatsapp": "673 88 98 00",
+    "whatsappHref": "34673889800",
     "telefonoHref": "+34981318260",
     "email": "reservaskafebar@gmail.com",
     "direccion": {
