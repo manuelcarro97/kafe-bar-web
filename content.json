@@ -91,8 +91,8 @@
   },
   "nosotros": {
     "badge": {
-      "es": "experiencia kombinada",
-      "gl": "experiencia kombinada"
+      "es": "Experiencia combinada",
+      "gl": "Experiencia combinada"
     },
     "tag": {
       "es": "♥ Quiénes somos",
@@ -108,8 +108,8 @@
         "gl": "Produto Galego"
       },
       "desc": {
-        "es": "Trabajamos con productores gallegos y del entorno para garantizar la máxima freskura y kalidad en cada plato.",
-        "gl": "Traballamos con produtores galegos e do entorno para garantir a máxima frescura e kalidade en cada prato."
+        "es": "Trabajamos con productores gallegos y del entorno para garantizar la máxima frescura y calidad en cada plato.",
+        "gl": "Traballamos con produtores galegos e do entorno para garantir a máxima frescura e calidade en cada prato."
       }
     },
     "feat2": {
@@ -118,14 +118,14 @@
         "gl": "A Visión do Chef"
       },
       "desc": {
-        "es": "Kafé apuesta por la riqueza del kafé y la tierra gallega, con elaboraciones honestas y llenas de sabor.",
-        "gl": "Kafé aposta pola riqueza do kafé e da terra galega, con elaboracións honestas e cheas de sabor."
+        "es": "Kafé apuesta por la riqueza del café y la tierra gallega, con elaboraciones honestas y llenas de sabor.",
+        "gl": "Kafé aposta pola riqueza do café e da terra galega, con elaboracións honestas e cheas de sabor."
       }
     },
     "cta": {
       "carta": {
-        "es": "Ver la Karta",
-        "gl": "Ver a Karta"
+        "es": "Ver la carta",
+        "gl": "Ver a carta"
       }
     }
   },
@@ -948,8 +948,8 @@
       "gl": "Visítanos"
     },
     "lead": {
-      "es": "Estamos en el centro de A Coruña, esperándote con una mesa y un kafé.",
-      "gl": "Estamos no centro de A Coruña, agardándote cunha mesa e un kafé."
+      "es": "Estamos en el Paseo de los Puentes, A Coruña, esperándote con una mesa y un café.",
+      "gl": "Estamos no Paseo das Pontes, A Coruña, agardándote cunha mesa e un café."
     },
     "card1": {
       "title": {
@@ -957,13 +957,13 @@
         "gl": "Horario"
       },
       "note": {
-        "es": "Las kocinas cierran 30 min antes del cierre.",
-        "gl": "As kociñas pechan 30 min antes do peche."
+        "es": "La cocina cierra 30 min antes del cierre.",
+        "gl": "A cociña pecha 30 min antes do peche."
       }
     },
     "card2": {
       "title": {
-        "es": "Kontacto",
+        "es": "Contacto",
         "gl": "Contacto"
       },
       "cta": {
@@ -985,7 +985,7 @@
         "gl": "Ver en Google Maps ↗"
       }
     },
-    "telefono": "981 31 82 60",
+    "telefono": "981 31 82 60 / ‪673 88 98 00‬",
     "telefonoHref": "+34981318260",
     "email": "reservaskafebar@gmail.com",
     "direccion": {
@@ -1000,8 +1000,8 @@
   },
   "footer": {
     "tagline": {
-      "es": "Celebrando el alma kulinaria de Galicia a través de la honestidad, el producto y la maestría.",
-      "gl": "Celebrando a alma kulinaria de Galicia a través da honestidade, o produto e a maestría."
+      "es": "Celebrando el alma culinaria de Galicia a través de la honestidad, el producto y la maestría.",
+      "gl": "Celebrando a alma culinaria de Galicia a través da honestidade, o produto e a maestría."
     },
     "nav": {
       "title": {
@@ -1169,24 +1169,24 @@
   "horario": [
     {
       "dias": {
-        "es": "Lun – Vie",
-        "gl": "Lun – Ven"
+        "es": "Lun – Jue",
+        "gl": "Lun – Xov"
       },
-      "horas": "7:15 – 23:00"
+      "horas": "7:15 – 20:00"
     },
     {
       "dias": {
-        "es": "Sábado",
-        "gl": "Sábado"
+        "es": "Vie-Sab",
+        "gl": "Ven-Sab"
       },
-      "horas": "10:00 – 23:00"
+      "horas": "9:00 - 00:00"
     },
     {
       "dias": {
         "es": "Domingo",
         "gl": "Domingo"
       },
-      "horas": "10:00 – 16:15"
+      "horas": "Cerrado"
     }
   ],
   "alerta": {
