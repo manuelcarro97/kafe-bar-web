@@ -35,8 +35,8 @@
   },
   "hero": {
     "subtitle": {
-      "es": "Vive la esencia de la kocina gallega en un ambiente perfecto.<br />El mejor Kafé y las recetas de toda la vida.",
-      "gl": "Vive a esencia da kociña galega nun ambiente perfecto.<br />O mellor Kafé e as receitas de toda a vida."
+      "es": "El Kafé de siempre, para disfrutar como nunca.<br />Un lugar para desayunar sin prisas, comer como en casa, tomar algo con amigos o terminar el día alrededor de una mesa. Buena comida, buen ambiente y, sobre todo, buena gente.",
+      "gl": "O Kafé de sempre, para gozar coma nunca.<br />Un lugar para almorzar sen présas, comer coma na casa, tomar algo cos amigos ou rematar o día arredor dunha mesa. Boa comida, bo ambiente e, sobre todo, boa xente."
     },
     "cta": {
       "carta": {
@@ -54,8 +54,8 @@
     },
     "card": {
       "signature": {
-        "es": "Signature",
-        "gl": "Signature"
+        "es": "Nuestra especialidad",
+        "gl": "A nosa especialidade"
       },
       "plato": {
         "es": "TORTILLA DE PATATAS",
