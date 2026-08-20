@@ -2903,25 +2903,34 @@ fieldset.form-group {
     margin-bottom: 1.5rem;
   }
 
+  /* Rejilla de 2 columnas: "Menú del Día" arriba a lo ancho y los dos enlaces
+     a las cartas repartiéndose la fila de abajo. Tres píldoras apiladas
+     pesaban demasiado; así el bloque mide lo mismo que los dos botones de
+     antes y cabe la frase corta. */
   .hero-actions {
-    flex-direction: column;
-    align-items: stretch;
-    justify-content: flex-start;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: 0.625rem;
   }
 
-  /* "Nuestra Historia" se omite en móvil (decisión del handoff). */
+  /* Las tres píldoras comparten estética. .btn-ghost es inline-flex, así que
+     el centrado va con justify-content; text-align no tendría efecto sobre el
+     contenido flex. Texto algo menor para que "Ver Desayunos →" no rompa en
+     dos líneas a 375px. */
+  .hero-actions .btn-ghost,
   .hero-actions .btn-text {
-    display: none;
+    justify-content: center;
+    padding: 0.875rem 0.5rem;
+    font-size: 0.8125rem;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 999px;
   }
 
-  /* .btn-ghost es inline-flex, así que el centrado va con justify-content;
-     text-align no tendría efecto sobre el contenido flex. */
-  .hero-actions .btn-ghost {
-    width: 100%;
-    justify-content: center;
-    padding: 0.9375rem 1rem;
-    border-radius: 999px;
+  /* "Menú del Día" ocupa la fila entera; los dos enlaces a las cartas se
+     reparten la de abajo. .btn-text no trae borde ni quita el subrayado. */
+  .hero-actions .btn-text {
+    grid-column: 1 / -1;
+    text-decoration: none;
   }
 
   .hero-image-wrap {

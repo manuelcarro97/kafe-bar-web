@@ -34,7 +34,7 @@ module.exports = function keyMap(c) {
     'hero.subtitle': c.hero.subtitle,
     'hero.subtitleMovil': c.hero.subtitleMovil,
     'hero.cta.carta': c.hero.cta.carta,
-    'hero.cta.historia': c.hero.cta.historia,
+    'hero.cta.menuDia': c.hero.cta.menuDia,
     'hero.cta.desayunos': c.hero.cta.desayunos,
     'hero.card.signature': c.hero.card.signature,
     'hero.card.plato': c.hero.card.plato,
