@@ -22,7 +22,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;0,9..144,900;1,9..144,400&family=DM+Sans:wght@300;400;500;600&display=swap"
         rel="stylesheet" />
-    <link rel="preload" as="image" href="imagenes/tortilla-hero.jpg" />
+    <link rel="preload" as="image" href="imagenes/tortilla-patatas-cebolla.jpg" />
     <link rel="icon" href="favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="css/style.css" />
     <!-- Evitar flash: marcar skip de intro antes de que el DOM se pinte -->
@@ -180,14 +180,24 @@
                 </div>
             </div>
             <div class="hero-image-wrap">
-                <div class="hero-image-card">
-                    <img src="imagenes/tortilla-hero.jpg"
+                <!-- Foto y barra blanca forman UNA sola pieza (el contenedor recorta
+                     ambas con overflow:hidden), en vez de una etiqueta flotando encima
+                     de la imagen: así se lee como enlace y no como pie de foto.
+                     Toda la tarjeta es un único <a>, sin enlaces anidados. El
+                     aria-label evita que el nombre accesible sea el alt de la foto
+                     concatenado con el texto de la barra. -->
+                <a href="menu-printable-tortillas.html" target="_blank" rel="noopener noreferrer"
+                    class="hero-image-card" aria-label="Ver todas nuestras variantes de tortilla">
+                    <img src="imagenes/tortilla-patatas-cebolla.jpg"
                         alt="Tortilla de patatas signature de Kafé" class="hero-dish" loading="eager" />
-                    <div class="hero-label">
-                        <span class="label-script" data-i18n="hero.card.signature">Nuestra especialidad</span>
-                        <span class="label-sub" data-i18n="hero.card.plato">TORTILLA DE PATATAS</span>
-                    </div>
-                </div>
+                    <span class="hero-card-bar">
+                        <span class="hero-card-text">
+                            <span class="hero-card-kicker" data-i18n="hero.card.signature">Nuestra especialidad</span>
+                            <span class="hero-card-title" data-i18n="hero.card.cta">Ver todas nuestras variantes de tortilla</span>
+                        </span>
+                        <span class="hero-card-arrow" aria-hidden="true">&rarr;</span>
+                    </span>
+                </a>
             </div>
         </div>
         <a href="#carta" class="scroll-hint" aria-label="Desplazarse hacia abajo">
@@ -218,6 +228,55 @@
                         alt="Tostas y bollería para desayunar en el centro de A Coruña" loading="lazy" />
                     <img class="dsc-img dsc-small" src="imagenes/desayunos-seo-3.png"
                         alt="Kafé de especialidad para el desayuno en Kafé, A Coruña" loading="lazy" />
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ======================================================
+       MENÚ DEL DÍA: bloque azul entre "desayunos" (blanco) y "karta"
+       (blanco), para romper el ritmo de la página. Misma estructura de
+       tarjeta que la karta, en variante sobre fondo oscuro. La "K" gigante
+       del fondo es la de "nosotros" invertida: allí es oscura sobre blanco,
+       aquí clara sobre azul.
+  ====================================================== -->
+    <section id="menu-dia" class="menudia" aria-labelledby="menudia-title">
+        <div class="container">
+            <div class="menudia-header">
+                <p class="section-tag menudia-tag" data-i18n="menuDia.tag">♥ Menú del Día</p>
+                <h2 class="section-title menudia-title" id="menudia-title" data-i18n="menuDia.title">Menú del Día</h2>
+                <p class="menudia-desc" data-i18n="menuDia.desc">De lunes a viernes, de 13:00 a 16:00h. Cocina casera que cambia cada día.</p>
+            </div>
+
+            <div class="menudia-card">
+                <div class="menudia-card-body">
+                    <p class="menudia-card-tag" data-i18n="menuDia.card.tag">♥ HOY EN LA KOCINA</p>
+                    <h3 class="menudia-card-title" data-i18n="menuDia.card.title">Nuestro menú del día</h3>
+                    <ul class="menudia-platos">
+                        <li class="menudia-plato">
+                            <span class="menudia-plato-nombre">Caldo galego</span><span class="menudia-plato-cat">Primero</span>
+                        </li>
+                        <li class="menudia-plato">
+                            <span class="menudia-plato-nombre">Ensalada de la casa</span><span class="menudia-plato-cat">Primero</span>
+                        </li>
+                        <li class="menudia-plato">
+                            <span class="menudia-plato-nombre">Raxo con patatas</span><span class="menudia-plato-cat">Segundo</span>
+                        </li>
+                        <li class="menudia-plato">
+                            <span class="menudia-plato-nombre">Merluza a la plancha</span><span class="menudia-plato-cat">Segundo</span>
+                        </li>
+                        <li class="menudia-plato">
+                            <span class="menudia-plato-nombre">Tarta de queso</span><span class="menudia-plato-cat">Postre</span>
+                        </li>
+                    </ul>
+                    <div class="menudia-card-footer">
+                        <p class="menudia-precio">13,50 €</p>
+                        <a href="menu-printable.html" target="_blank" rel="noopener noreferrer"
+                            class="btn-primary menudia-cta" data-i18n="menuDia.card.cta">Ver la Karta</a>
+                    </div>
+                </div>
+                <div class="menudia-card-foto">
+                    <img src="imagenes/menu-dia.jpg" alt="Plato del menú del día de Kafé" loading="lazy" />
                 </div>
             </div>
         </div>
@@ -743,7 +802,7 @@ Muy recomendable"</p>
                 <div class="info-header">
                     <p class="section-tag light" data-i18n="info.tag">♥ Encuéntranos</p>
                     <h2 class="section-title light" data-i18n="info.title">Ven a Visitarnos</h2>
-                    <p class="info-lead" data-i18n="info.lead">Estamos en el Paseo de los Puentes, A Coruña, esperándote con una mesa y un café.</p>
+                    <p class="info-lead" data-i18n="info.lead">Estamos en Rúa Nebrija, 1, en A Coruña, muy cerca del Paseo de los Puentes y del Parque de Santa Margarita, esperándote con una mesa y un café.</p>
                 </div>
 
                 <div class="info-cards">
@@ -757,14 +816,18 @@ Muy recomendable"</p>
                         <div class="horario-list">
                             <div class="horario-row">
                                 <span class="horario-dia" data-i18n="horario.0.dias">Lun – Jue</span>
-                                <span class="horario-hora">7:15 – 20:00</span>
+                                <span class="horario-hora">7:00 – 20:00</span>
                             </div>
                             <div class="horario-row">
-                                <span class="horario-dia" data-i18n="horario.1.dias">Vie-Sab</span>
-                                <span class="horario-hora">9:00 - 00:00</span>
+                                <span class="horario-dia" data-i18n="horario.1.dias">Viernes</span>
+                                <span class="horario-hora">7:00 - 23:00</span>
                             </div>
                             <div class="horario-row">
-                                <span class="horario-dia" data-i18n="horario.2.dias">Domingo</span>
+                                <span class="horario-dia" data-i18n="horario.2.dias">Sábado</span>
+                                <span class="horario-hora">9:00 - 23:00</span>
+                            </div>
+                            <div class="horario-row">
+                                <span class="horario-dia" data-i18n="horario.3.dias">Domingo</span>
                                 <span class="horario-hora">Cerrado</span>
                             </div>
                         </div>
@@ -876,7 +939,7 @@ Muy recomendable"</p>
                         <div class="feature-icon">&#127869;</div>
                         <div>
                             <strong data-i18n="nosotros.feat2.title">La Visión del Chef</strong>
-                            <p data-i18n="nosotros.feat2.desc">Kafé apuesta por la riqueza del café y la tierra gallega, con elaboraciones honestas y llenas de sabor.</p>
+                            <p data-i18n="nosotros.feat2.desc">Kafé apuesta por la cocina gallega y producto local de A Coruña , con elaboraciones honestas y llenas de sabor.</p>
                         </div>
                     </div>
                 </div>
@@ -1032,9 +1095,10 @@ Muy recomendable"</p>
             </div>
             <div class="footer-hours">
                 <h4 data-i18n="info.card1.title">Horario</h4>
-                <p data-i18n="horario.0.footer">Lun – Jue: 7:15 – 20:00</p>
-                <p data-i18n="horario.1.footer">Vie-Sab: 9:00 - 00:00</p>
-                <p data-i18n="horario.2.footer">Domingo: Cerrado</p>
+                <p data-i18n="horario.0.footer">Lun – Jue: 7:00 – 20:00</p>
+                <p data-i18n="horario.1.footer">Viernes: 7:00 - 23:00</p>
+                <p data-i18n="horario.2.footer">Sábado: 9:00 - 23:00</p>
+                <p data-i18n="horario.3.footer">Domingo: Cerrado</p>
             </div>
             <div class="footer-contact">
                 <h4 data-i18n="info.card2.title">Contacto</h4>

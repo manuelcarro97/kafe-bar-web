@@ -38,6 +38,7 @@ module.exports = function keyMap(c) {
     'hero.cta.desayunos': c.hero.cta.desayunos,
     'hero.card.signature': c.hero.card.signature,
     'hero.card.plato': c.hero.card.plato,
+    'hero.card.cta': c.hero.card.cta,
 
     // nosotros
     // desayunos (bloque SEO entre hero y karta)
@@ -47,6 +48,16 @@ module.exports = function keyMap(c) {
     'desayunos.parrafo2': c.desayunos.parrafo2,
     'desayunos.nota': c.desayunos.nota,
     'desayunos.cta': c.desayunos.cta,
+
+    // menu del dia (bloque entre desayunos y karta). Los platos NO llevan
+    // data-i18n: igual que los platos de la karta, se renderizan como HTML
+    // plano. El precio tampoco (es una cifra, no texto traducible).
+    'menuDia.tag': c.menuDia.tag,
+    'menuDia.title': c.menuDia.title,
+    'menuDia.desc': c.menuDia.desc,
+    'menuDia.card.tag': c.menuDia.card.tag,
+    'menuDia.card.title': c.menuDia.card.title,
+    'menuDia.card.cta': c.menuDia.card.cta,
 
     // nosotros
     'nosotros.badge': c.nosotros.badge,
