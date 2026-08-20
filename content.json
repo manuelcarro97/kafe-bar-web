@@ -1212,14 +1212,21 @@
         "es": "Lun – Jue",
         "gl": "Lun – Xov"
       },
-      "horas": "7:15 – 20:00"
+      "horas": "7:00 – 20:00"
     },
     {
       "dias": {
-        "es": "Vie-Sab",
-        "gl": "Ven-Sab"
+        "es": "Viernes",
+        "gl": "Venres"
       },
-      "horas": "9:00 - 00:00"
+      "horas": "7:00 - 23:00"
+    },
+    {
+      "dias": {
+        "es": "Sábado",
+        "gl": "Sábado"
+      },
+      "horas": "9:00 - 23:00"
     },
     {
       "dias": {
