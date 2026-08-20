@@ -857,7 +857,9 @@ function renderCartaSection(body, path) {
   // --- Sub-bloque A: Menú destacado (web) ---
   const subA = document.createElement("details");
   subA.className = "kf-subsection kf-carta-sub-destacado";
-  subA.open = prevOpenA === undefined ? true : prevOpenA;
+  // Los cuatro sub-bloques arrancan cerrados: al abrir Karta se ve de un
+  // vistazo qué cartas hay, en vez de la primera desplegada tapando el resto.
+  subA.open = prevOpenA === undefined ? false : prevOpenA;
   const summaryA = document.createElement("summary");
   summaryA.textContent = "Menú destacado (web)";
   subA.appendChild(summaryA);
