@@ -68,6 +68,10 @@
       "plato": {
         "es": "TORTILLA DE PATATAS",
         "gl": "TORTILLA DE PATACAS"
+      },
+      "cta": {
+        "es": "Ver todas nuestras variantes de tortilla",
+        "gl": "Ver todas as nosas variantes de tortilla"
       }
     }
   },
@@ -973,6 +977,19 @@
           ]
         }
       ]
+    },
+    "menuTortillas": {
+      "columna1": [
+        {
+          "seccion": "Nuestras Tortillas",
+          "items": [
+            {
+              "nombre": "Tortilla test",
+              "precio": "4,50 €"
+            }
+          ]
+        }
+      ]
     }
   },
   "info": {
@@ -1197,14 +1214,15 @@
   "images": {
     "logo": "imagenes/kafe-logo.png",
     "logoBlanco": "imagenes/kafe-logo-white.png",
-    "heroDish": "imagenes/tortilla-hero.jpg",
+    "heroDish": "imagenes/tortilla-patatas-cebolla.jpg",
     "tapas": "https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=600&q=80",
     "desayunos": "imagenes/comida1.png",
     "postres": "imagenes/postre.png",
     "nosotros": "imagenes/duo.png",
     "desayunosSeo1": "imagenes/desayunos-seo-1.png",
     "desayunosSeo2": "imagenes/desayunos-seo-2.jpg",
-    "desayunosSeo3": "imagenes/desayunos-seo-3.png"
+    "desayunosSeo3": "imagenes/desayunos-seo-3.png",
+    "menuDia": "imagenes/menu-dia.jpg"
   },
   "horario": [
     {
@@ -1242,5 +1260,56 @@
       "es": "Cerramos el sábado 25",
       "gl": "Pechamos o sábado 25"
     }
+  },
+  "menuDia": {
+    "tag": {
+      "es": "♥ Menú del Día",
+      "gl": "♥ Menú do Día"
+    },
+    "title": {
+      "es": "Menú del Día",
+      "gl": "Menú do Día"
+    },
+    "desc": {
+      "es": "De lunes a viernes, de 13:00 a 16:00h. Cocina casera que cambia cada día.",
+      "gl": "De luns a venres, de 13:00 a 16:00h. Cociña caseira que cambia cada día."
+    },
+    "card": {
+      "tag": {
+        "es": "♥ HOY EN LA KOCINA",
+        "gl": "♥ HOXE NA KOCIÑA"
+      },
+      "title": {
+        "es": "Nuestro menú del día",
+        "gl": "O noso menú do día"
+      },
+      "cta": {
+        "es": "Ver la Karta",
+        "gl": "Ver a Karta"
+      }
+    },
+    "precio": "13,50 €",
+    "platos": [
+      {
+        "nombre": "Caldo galego",
+        "categoria": "Primero"
+      },
+      {
+        "nombre": "Ensalada de la casa",
+        "categoria": "Primero"
+      },
+      {
+        "nombre": "Raxo con patatas",
+        "categoria": "Segundo"
+      },
+      {
+        "nombre": "Merluza a la plancha",
+        "categoria": "Segundo"
+      },
+      {
+        "nombre": "Tarta de queso",
+        "categoria": "Postre"
+      }
+    ]
   }
 }

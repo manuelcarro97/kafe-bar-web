@@ -726,8 +726,8 @@ ul {
   margin-inline: auto;
   padding-inline: 2rem;
   display: grid;
-  grid-template-columns: 1.1fr 0.9fr;
-  /* Más espacio para texto */
+  grid-template-columns: 1fr 1fr;
+  /* Columnas iguales: la tarjeta del hero necesita ancho */
   align-items: center;
   gap: 2rem;
   padding-block: 4rem;
@@ -834,6 +834,7 @@ ul {
   display: flex;
   align-items: center;
   justify-content: center;
+  padding-left: 2rem;
   opacity: 0;
   transform: translateY(40px);
   transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1) 0.15s, transform 1s cubic-bezier(0.16, 1, 0.3, 1) 0.15s;
@@ -846,15 +847,26 @@ ul {
 
 .hero-image-card {
   position: relative;
-  width: min(520px, 90%);
-  /* Imagen más grande */
+  width: 100%;
+  max-width: 620px;
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--blanco);
+  box-shadow: var(--shadow-lg);
+  text-decoration: none;
+}
+
+.hero-image-card:focus-visible {
+  outline: 2px solid var(--azul-acento);
+  outline-offset: 3px;
 }
 
 .hero-dish {
   width: 100%;
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-lg);
-  aspect-ratio: 4/3;
+  display: block;
+  aspect-ratio: 3/2;
   object-fit: cover;
   transition: transform 0.6s ease;
 }
@@ -863,32 +875,54 @@ ul {
   transform: scale(1.02);
 }
 
-.hero-label {
-  position: absolute;
-  bottom: -1.5rem;
-  left: 1.5rem;
-  background: var(--blanco);
-  border-radius: var(--radius);
-  padding: 0.75rem 1.25rem;
-  box-shadow: var(--shadow);
+/* Barra-enlace bajo la foto. Antes era una etiqueta flotando sobre la imagen,
+   que se leía como pie de foto y no como enlace; ahora foto y barra son una
+   sola pieza y la barra no tapa nada de la imagen. */
+.hero-card-bar {
   display: flex;
-  flex-direction: column;
-  gap: 0.15rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 18px 22px;
+  transition: background 0.2s ease;
 }
 
-.label-script {
-  font-family: var(--font-serif);
-  font-size: 1.1rem;
-  font-style: italic;
+.hero-image-card:hover .hero-card-bar {
+  background: var(--gris-claro);
+}
+
+.hero-card-text {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.hero-card-kicker {
+  font-size: 0.625rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--texto-suave);
+}
+
+.hero-card-title {
+  font-size: 1rem;
+  font-weight: 700;
   color: var(--azul-oscuro);
 }
 
-.label-sub {
-  font-size: 0.65rem;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  color: var(--texto-suave);
-  text-transform: uppercase;
+/* flex:none para que el círculo no se deforme si el titular ocupa dos líneas. */
+.hero-card-arrow {
+  flex: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  background: var(--azul-acento);
+  color: var(--blanco);
+  font-size: 1.0625rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* Flecha de scroll */
@@ -1190,6 +1224,205 @@ ul {
 
 .cta-tel:hover {
   color: var(--azul-acento);
+}
+
+/* =====================================================
+   MENÚ DEL DÍA
+   Bloque azul entre "desayunos" y "karta", ambos claros: rompe el ritmo
+   de la página. La tarjeta repite la estructura de la karta (mitad texto,
+   mitad foto) en variante sobre fondo oscuro.
+   ===================================================== */
+.menudia {
+  padding: 5rem 0 5.5rem;
+  background: linear-gradient(160deg, #16304f 0%, var(--azul-oscuro) 60%, #0b1a2c 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Misma "K" de marca que en "nosotros", invertida: allí es oscura sobre
+   blanco, aquí clara sobre el azul. */
+.menudia::before {
+  content: 'K';
+  position: absolute;
+  right: -4%;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--font-serif);
+  font-size: 65vw;
+  font-weight: 900;
+  line-height: 0.85;
+  color: rgba(127, 168, 232, 0.06);
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+}
+
+.menudia .container {
+  position: relative;
+  z-index: 1;
+}
+
+.menudia-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.menudia-tag {
+  color: #7fa8e8;
+  letter-spacing: 0.2em;
+}
+
+.menudia-title {
+  color: var(--blanco);
+}
+
+.menudia-desc {
+  max-width: 540px;
+  margin: 0.875rem auto 0;
+  color: #c8d4e4;
+  line-height: 1.6;
+}
+
+/* minmax(0, 1fr) en ambas columnas: sin él la foto desborda la rejilla. */
+.menudia-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  background: var(--blanco);
+  border-radius: 14px;
+  overflow: hidden;
+  /* Token del sistema, no un hex propio: es la sombra fuerte que ya usa el
+     hero. Va sobre fondo oscuro, así que necesita más peso que la var(--shadow)
+     de las tarjetas de Platos Estrella. */
+  box-shadow: var(--shadow-lg);
+}
+
+.menudia-card-body {
+  padding: 3rem 3.25rem;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.menudia-card-tag {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--azul-acento);
+}
+
+.menudia-card-title {
+  font-family: var(--font-serif);
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: var(--azul-oscuro);
+  margin-top: 0.375rem;
+}
+
+.menudia-platos {
+  list-style: none;
+  margin-top: 1.375rem;
+}
+
+.menudia-plato {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 0.9375rem 0;
+  border-bottom: 1px solid var(--gris-medio);
+}
+
+.menudia-plato:last-child {
+  border-bottom: none;
+}
+
+.menudia-plato-nombre {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: var(--texto);
+}
+
+.menudia-plato-cat {
+  font-size: 0.8125rem;
+  font-style: italic;
+  color: var(--texto-suave);
+  white-space: nowrap;
+}
+
+/* Mismo hover por plato que en las tarjetas de Platos Estrella (.menu-item).
+   Bajo (hover: hover) para que en táctil no se quede "pegado" tras el toque. */
+@media (hover: hover) {
+  .menudia-plato {
+    border-radius: 6px;
+    padding-inline: 0.625rem;
+    margin-inline: -0.625rem;
+    transition: transform 0.2s ease-out, box-shadow 0.2s ease-out, background 0.2s ease-out;
+  }
+
+  .menudia-plato:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(13, 33, 55, 0.08);
+    background: rgba(59, 158, 255, 0.04);
+  }
+}
+
+/* Entrada escalonada al hacer scroll, como los precios de la karta: allí entra
+   el precio, aquí la categoría. El delay por fila lo pone script.js. */
+.js .menudia-card .menudia-plato-cat {
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.35s ease-out, transform 0.35s ease-out;
+}
+
+.js .menudia-card.visible .menudia-plato-cat {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* row-reverse en vez de reordenar el HTML: en el DOM el precio sigue antes que
+   el botón (que es el orden en que interesa leerlo), pero en pantalla el botón
+   queda a la izquierda y el precio a la derecha. */
+.menudia-card-footer {
+  margin-top: 1.625rem;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.menudia-precio {
+  font-family: var(--font-serif);
+  font-size: 2.125rem;
+  font-weight: 700;
+  color: var(--azul-acento);
+}
+
+/* El botón usa .btn-primary, el mismo que "Ver Karta de Desayunos", para que
+   todos los CTA de la web sean uniformes. Aquí solo lo que es propio de esta
+   tarjeta. */
+.menudia-cta:focus-visible {
+  outline: 2px solid var(--azul-claro);
+  outline-offset: 3px;
+}
+
+/* La foto va a sangre dentro de la tarjeta: sin radio propio, lo recorta el
+   overflow:hidden de .menudia-card. El position:absolute permite que estire
+   con la altura de la lista, tenga esta 3 platos o 6. */
+.menudia-card-foto {
+  position: relative;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.menudia-card-foto img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 /* =====================================================
@@ -2456,6 +2689,22 @@ fieldset.form-group {
     min-height: auto;
   }
 
+  /* La tarjeta del menú del día pasa a una columna con la foto arriba. Al
+     dejar de ser rejilla de dos columnas, la foto necesita un alto propio:
+     sin él, el position:absolute de la imagen la dejaría sin altura. */
+  .menudia-card {
+    grid-template-columns: 1fr;
+  }
+
+  .menudia-card-foto {
+    order: -1;
+    height: 260px;
+  }
+
+  .menudia-card-body {
+    padding: 2rem 1.75rem 2.25rem;
+  }
+
   .hero-inner {
     grid-template-columns: 1fr;
     gap: 2rem;
@@ -2478,6 +2727,11 @@ fieldset.form-group {
 
   .hero-image-wrap {
     justify-content: center;
+    padding-left: 0;
+  }
+
+  .hero-image-card {
+    max-width: none;
   }
 
   .nosotros {
@@ -2535,6 +2789,39 @@ fieldset.form-group {
   .header-inner {
     padding: 0.875rem 1.25rem;
     gap: 1rem;
+  }
+
+  /* Menú del día en móvil. Se muestran TODOS los platos, no solo tres: la
+     lista la edita el cliente desde /admin y ocultar filas por CSS
+     escondería platos reales sin que nadie se entere. */
+  .menudia {
+    padding: 2.75rem 0;
+  }
+
+  .menudia-card-foto {
+    height: 180px;
+  }
+
+  .menudia-card-body {
+    padding: 1.625rem 1.375rem 1.875rem;
+  }
+
+  .menudia-card-footer {
+    display: block;
+  }
+
+  .menudia-precio {
+    font-size: 1.75rem;
+    text-align: right;
+  }
+
+  /* CTA a ancho completo, como el resto de botones del móvil. */
+  .menudia-cta {
+    display: flex;
+    justify-content: center;
+    margin-top: 0.75rem;
+    padding: 0.9375rem;
+    text-align: center;
   }
 
   .nav-list,

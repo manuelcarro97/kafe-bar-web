@@ -6,6 +6,8 @@
  *   - js/translations.generated.js  (window.translations = { es:{...}, gl:{...} })
  *   - index.html                    (desde templates/index.template.html)
  *   - menu-printable.html           (desde templates/menu-printable.template.html)
+ *   - menu-printable-desayunos.html (desde templates/desayunos-printable.template.html)
+ *   - menu-printable-tortillas.html (desde templates/tortillas-printable.template.html)
  *
  * Sin dependencias externas: solo módulos built-in de Node.
  */
@@ -129,6 +131,25 @@ function renderHomeCategoria(cat) {
       .join('\n');
   }
   return renderHomeItems(cat.items);
+}
+
+/**
+ * Renderiza un plato del menú del día: nombre a la izquierda, categoría
+ * (Primero/Segundo/Postre) a la derecha. Sin data-i18n, igual que los platos
+ * de la karta: el contenido lo edita el cliente desde /admin, no se traduce.
+ */
+function renderMenuDiaPlato(plato) {
+  return (
+    '                        <li class="menudia-plato">\n' +
+    `                            <span class="menudia-plato-nombre">${plato.nombre}</span>` +
+    `<span class="menudia-plato-cat">${plato.categoria}</span>\n` +
+    '                        </li>'
+  );
+}
+
+/** Renderiza la lista completa de platos del menú del día. */
+function renderMenuDiaPlatosHtml(platos) {
+  return (platos || []).map(renderMenuDiaPlato).join('\n');
 }
 
 /** Renderiza una fila de horario de la tarjeta info (index.html). */
@@ -302,6 +323,11 @@ function main() {
   content.carta.menuDesayunos.columna1Html = renderMenuColumn(content.carta.menuDesayunos.columna1);
   content.carta.menuDesayunos.columna2Html = renderMenuColumn(content.carta.menuDesayunos.columna2);
 
+  // Carta imprimible de tortillas: a diferencia de las otras dos, es de UNA
+  // sola columna centrada, así que solo tiene columna1 (ver el spec en
+  // docs/specs). Reutiliza igualmente renderMenuColumn.
+  content.carta.menuTortillas.columna1Html = renderMenuColumn(content.carta.menuTortillas.columna1);
+
   // Pre-renderiza los platos de cada tarjeta destacada de la home y los cuelga
   // como marcador {{carta.categorias.N.homeHtml}} en la plantilla.
   content.carta.categorias.forEach((cat) => {
@@ -315,6 +341,9 @@ function main() {
   content.horarioInfoHtml = renderHorarioInfoHtml(content.horario);
   content.horarioFooterHtml = renderHorarioFooterHtml(content.horario);
   Object.assign(keyMap, buildHorarioKeyMap(content.horario));
+
+  // Lista de platos del menú del día ({{menuDia.platosHtml}} en la plantilla).
+  content.menuDia.platosHtml = renderMenuDiaPlatosHtml(content.menuDia.platos);
 
   // Barra de aviso (marquee bajo el nav). '' si no está activa.
   content.alertaHtml = renderAlertaHtml(content.alerta);
@@ -331,12 +360,14 @@ function main() {
   buildHtmlFile('index.template.html', 'index.html', content, keyMap);
   buildHtmlFile('menu-printable.template.html', 'menu-printable.html', content, keyMap);
   buildHtmlFile('desayunos-printable.template.html', 'menu-printable-desayunos.html', content, keyMap);
+  buildHtmlFile('tortillas-printable.template.html', 'menu-printable-tortillas.html', content, keyMap);
 
   console.log('Build OK:');
   console.log('  - js/translations.generated.js');
   console.log('  - index.html');
   console.log('  - menu-printable.html');
   console.log('  - menu-printable-desayunos.html');
+  console.log('  - menu-printable-tortillas.html');
 }
 
 main();

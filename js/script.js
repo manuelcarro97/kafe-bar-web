@@ -227,6 +227,7 @@ document.addEventListener('DOMContentLoaded', () => {
     '.nosotros-img-wrap, .nosotros-content, ' +
     '.carta-block, .info-card, ' +
     '.carta-header, .info-header, ' +
+    '.menudia-header, .menudia-card, ' +
     '.resenas-header, .resenas-cta, ' +
     '.medios-header'
   );
@@ -256,6 +257,15 @@ document.addEventListener('DOMContentLoaded', () => {
     block.querySelectorAll('.menu-item').forEach((item, i) => {
       const price = item.querySelector('.menu-item-price');
       if (price) price.style.transitionDelay = (0.3 + i * 0.15) + 's';
+    });
+  });
+
+  // Mismo escalonado en el menú del día: allí el elemento que entra es la
+  // categoría (Primero/Segundo/Postre), que ocupa el lugar del precio.
+  document.querySelectorAll('.menudia-card').forEach(card => {
+    card.querySelectorAll('.menudia-plato').forEach((plato, i) => {
+      const cat = plato.querySelector('.menudia-plato-cat');
+      if (cat) cat.style.transitionDelay = (0.3 + i * 0.15) + 's';
     });
   });
 

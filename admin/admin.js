@@ -68,6 +68,10 @@ let horarioBodyEl = null;
 // patrón que cartaBodyEl / horarioBodyEl).
 let mediosBodyEl = null;
 
+// Referencia al <div class="kf-section-body"> de la sección "menuDia" (mismo
+// patrón que cartaBodyEl / horarioBodyEl).
+let menuDiaBodyEl = null;
+
 // path (string) -> { blob, filename, originalValue, targetDir }
 // targetDir: carpeta destino cuando la referencia original no es una ruta
 // local (p. ej. imágenes nuevas de medios → "imagenes/media/").
@@ -210,6 +214,7 @@ const SECTION_TITLES = {
   hero: "Portada (Hero)",
   desayunos: "Desayunos (bloque SEO)",
   nosotros: "Nosotros",
+  menuDia: "Menú del día",
   carta: "Karta",
   menu: "Menú destacado",
   info: "Información / Kontacto",
@@ -230,7 +235,7 @@ const SECTION_TITLES = {
 // (agrupador de fotos) va al final. Las claves no listadas se añaden al final
 // como cola de seguridad para que nada desaparezca si se añade una sección
 // nueva al JSON.
-const SECTION_ORDER = ["nav", "hero", "desayunos", "carta", "info", "horario", "nosotros", "medios", "footer", "images", "alerta"];
+const SECTION_ORDER = ["nav", "hero", "desayunos", "menuDia", "carta", "info", "horario", "nosotros", "medios", "footer", "images", "alerta"];
 
 // Claves puramente estructurales que nunca se muestran como campo editable,
 // pero que se conservan intactas en workingContent (no se tocan, así que
@@ -260,6 +265,7 @@ const CARTA_FIELD_LABELS = {
   label: "Nombre de la tarjeta",
   categorias: "Categorías destacadas (tarjetas de la home)",
   menuCompleto: "Carta completa (imprimible)",
+  menuTortillas: "Carta de tortillas (imprimible)",
   columna1: "Columna 1",
   columna2: "Columna 2",
   seccion: "Nombre de la sección",
@@ -314,6 +320,7 @@ const CARTA_HIDDEN_TEXT_KEYS = new Set(["more", "footer"]);
 function renderAllSections() {
   sectionsContainer.innerHTML = "";
   cartaBodyEl = null;
+  menuDiaBodyEl = null;
   horarioBodyEl = null;
 
   // Orden web (SECTION_ORDER) primero; cualquier clave no listada se añade al
@@ -358,6 +365,9 @@ function renderAllSections() {
     if (topKey === "carta") {
       cartaBodyEl = body;
       renderCartaSection(body, [topKey]);
+    } else if (topKey === "menuDia") {
+      menuDiaBodyEl = body;
+      renderMenuDiaSection(body, [topKey]);
     } else if (topKey === "medios") {
       mediosBodyEl = body;
       renderMediosSection(body, [topKey]);
@@ -686,12 +696,148 @@ function rerenderCarta() {
   flashSaveStatus();
 }
 
+/** Etiquetas legibles de los campos de "menuDia". */
+const MENUDIA_FIELD_LABELS = {
+  tag: "Etiqueta del bloque",
+  title: "Título del bloque",
+  desc: "Texto bajo el título (horario)",
+  cardTag: "Etiqueta de la tarjeta",
+  cardTitle: "Título de la tarjeta",
+  cardCta: "Texto del botón",
+  precio: "Precio del menú",
+};
+
+/**
+ * Re-renderiza SOLO la sección "menuDia" tras añadir o quitar un plato
+ * (mismo patrón que rerenderCarta).
+ */
+function rerenderMenuDia() {
+  if (!menuDiaBodyEl) return;
+  renderMenuDiaSection(menuDiaBodyEl, ["menuDia"]);
+  flashSaveStatus();
+}
+
+/**
+ * Renderiza la sección "Menú del día": los textos del bloque y de la tarjeta,
+ * el precio, y la lista de platos con sus botones de añadir/quitar.
+ *
+ * Los platos son {nombre, categoria}, no {nombre, precio} como los de la
+ * karta, así que no se puede reutilizar renderItemsArray (que tiene esos dos
+ * campos fijos). El menú lleva un único precio para todo, no uno por plato.
+ */
+function renderMenuDiaSection(body, path) {
+  const menuDia = getAtPath(workingContent, path);
+  body.innerHTML = "";
+
+  const textos = makeStaticSubsection(body, "Textos del bloque");
+  renderNode(textos, menuDia.tag, [...path, "tag"], MENUDIA_FIELD_LABELS.tag);
+  renderNode(textos, menuDia.title, [...path, "title"], MENUDIA_FIELD_LABELS.title);
+  renderNode(textos, menuDia.desc, [...path, "desc"], MENUDIA_FIELD_LABELS.desc);
+
+  const tarjeta = makeStaticSubsection(body, "Tarjeta del menú");
+  renderNode(tarjeta, menuDia.card.tag, [...path, "card", "tag"], MENUDIA_FIELD_LABELS.cardTag);
+  renderNode(tarjeta, menuDia.card.title, [...path, "card", "title"], MENUDIA_FIELD_LABELS.cardTitle);
+  renderNode(tarjeta, menuDia.card.cta, [...path, "card", "cta"], MENUDIA_FIELD_LABELS.cardCta);
+
+  const platos = makeStaticSubsection(body, "Platos del menú");
+  renderMenuDiaPlatos(platos, [...path, "platos"], menuDia.platos);
+
+  const precio = makeStaticSubsection(body, "Precio del menú");
+  renderPlainField(precio, [...path, "precio"], MENUDIA_FIELD_LABELS.precio);
+}
+
+/**
+ * Crea un bloque con el mismo marco y cabecera que los sub-bloques de Karta
+ * pero SIN desplegable: aquí hay pocos campos y esconderlos no aporta nada.
+ * Devuelve el cuerpo, para colgar dentro los campos.
+ */
+function makeStaticSubsection(container, titleText) {
+  const block = document.createElement("div");
+  block.className = "kf-subsection kf-subsection-static";
+
+  const title = document.createElement("div");
+  title.className = "kf-subsection-title";
+  title.textContent = titleText;
+  block.appendChild(title);
+
+  const body = document.createElement("div");
+  body.className = "kf-subsection-body";
+  block.appendChild(body);
+
+  container.appendChild(block);
+  return body;
+}
+
+/**
+ * Lista de platos del menú del día: cada fila es nombre + categoría
+ * (Primero / Segundo / Postre) con un botón "−" para quitarla, más un
+ * "+ Añadir plato" al final.
+ */
+function renderMenuDiaPlatos(container, path, platos) {
+  const wrap = document.createElement("div");
+  wrap.className = "kf-items-array";
+
+  const title = document.createElement("div");
+  title.className = "kf-array-title";
+  title.textContent = "Platos del menú";
+  wrap.appendChild(title);
+
+  platos.forEach((plato, idx) => {
+    const platoPath = [...path, idx];
+
+    const row = document.createElement("div");
+    row.className = "kf-item-row";
+
+    const content = document.createElement("div");
+    content.className = "kf-item-content";
+
+    const fields = document.createElement("div");
+    fields.className = "kf-item-row-fields";
+    renderPlainField(fields, [...platoPath, "nombre"], "Nombre");
+    renderPlainField(fields, [...platoPath, "categoria"], "Categoría");
+    content.appendChild(fields);
+
+    row.appendChild(content);
+
+    const actions = document.createElement("div");
+    actions.className = "kf-item-actions";
+
+    const removeBtn = document.createElement("button");
+    removeBtn.type = "button";
+    removeBtn.className = "kf-btn-remove-item";
+    removeBtn.title = "Eliminar plato";
+    removeBtn.textContent = "−";
+    removeBtn.addEventListener("click", () => {
+      platos.splice(idx, 1);
+      rerenderMenuDia();
+    });
+    actions.appendChild(removeBtn);
+
+    row.appendChild(actions);
+    wrap.appendChild(row);
+  });
+
+  const addBtn = document.createElement("button");
+  addBtn.type = "button";
+  addBtn.className = "kf-btn-add-item";
+  addBtn.textContent = "+ Añadir plato";
+  addBtn.addEventListener("click", () => {
+    platos.push({ nombre: "", categoria: "" });
+    rerenderMenuDia();
+  });
+  wrap.appendChild(addBtn);
+
+  container.appendChild(wrap);
+}
+
 /**
  * Renderiza la sección "carta" con dos sub-bloques colapsables, separados
  * con claridad:
  *  - "Menú destacado (web)": textos de carta (tag/title/desc/cat1-3/more/
  *    footer) + los bloques "categorias" (tarjetas de la home).
  *  - "Carta completa (imprimible)": menuCompleto (columna1 + columna2).
+ *  - "Carta desayunos (imprimible)": menuDesayunos (columna1 + columna2).
+ *  - "Carta tortillas (imprimible)": menuTortillas (columna1, columna única).
  */
 function renderCartaSection(body, path) {
   const carta = getAtPath(workingContent, path);
@@ -699,6 +845,7 @@ function renderCartaSection(body, path) {
   const prevOpenA = body.querySelector(":scope > .kf-carta-sub-destacado")?.open;
   const prevOpenB = body.querySelector(":scope > .kf-carta-sub-completa")?.open;
   const prevOpenC = body.querySelector(":scope > .kf-carta-sub-desayunos")?.open;
+  const prevOpenD = body.querySelector(":scope > .kf-carta-sub-tortillas")?.open;
   // Estado abierto/cerrado de cada tarjeta (por id) para no cerrarlas al
   // re-renderizar tras añadir/quitar un plato (rerenderCarta reconstruye todo).
   const prevCardOpen = {};
@@ -725,7 +872,7 @@ function renderCartaSection(body, path) {
   bodyA.appendChild(textsHeading);
 
   for (const k of Object.keys(carta)) {
-    if (k === "categorias" || k === "menuCompleto" || k === "menuDesayunos") continue;
+    if (k === "categorias" || k === "menuCompleto" || k === "menuDesayunos" || k === "menuTortillas") continue;
     // cat1/cat2/cat3 (etiqueta + título de cada tarjeta) NO van aquí: se
     // muestran dentro de su propia tarjeta agrupada, junto a sus platos.
     if (CARD_HEADER_KEYS.has(k)) continue;
@@ -779,6 +926,30 @@ function renderCartaSection(body, path) {
   renderMenuCompleto(bodyC, [...path, "menuDesayunos"], carta.menuDesayunos);
 
   body.appendChild(subC);
+
+  // --- Sub-bloque D: Carta de tortillas (imprimible) ---
+  // A diferencia de las otras dos cartas imprimibles, esta es de UNA sola
+  // columna centrada, así que menuTortillas solo tiene columna1 y usa
+  // renderMenuColumnaUnica. Alimenta menu-printable-tortillas.html, enlazada
+  // desde la tarjeta del hero.
+  const subD = document.createElement("details");
+  subD.className = "kf-subsection kf-carta-sub-tortillas";
+  subD.open = prevOpenD === undefined ? false : prevOpenD;
+  const summaryD = document.createElement("summary");
+  summaryD.textContent = "Carta tortillas (imprimible)";
+  subD.appendChild(summaryD);
+
+  const bodyD = document.createElement("div");
+  bodyD.className = "kf-subsection-body";
+  subD.appendChild(bodyD);
+
+  // El admin puede cargar un content.json anterior a esta funcionalidad (p. ej.
+  // mientras la rama no esté mergeada): sin esta guarda el editor entero
+  // reventaría al leer menuTortillas.columna1.
+  if (!carta.menuTortillas) carta.menuTortillas = { columna1: [] };
+  renderMenuColumnaUnica(bodyD, [...path, "menuTortillas"], carta.menuTortillas);
+
+  body.appendChild(subD);
 }
 
 /**
@@ -898,6 +1069,36 @@ function renderMenuCompleto(container, path, menuCompleto) {
   });
 
   addRow.appendChild(select);
+  addRow.appendChild(addBtn);
+  container.appendChild(addRow);
+}
+
+/**
+ * Variante de una sola columna de renderMenuCompleto, para menuTortillas.
+ * No se reutiliza renderMenuCompleto porque este da por hecho que existen
+ * columna1 Y columna2 (revienta al leer columna2.length). Rellenar el JSON
+ * con una columna2 vacía solo para reutilizarlo le dejaría al cliente un
+ * campo "Columna 2" en el editor cuyos platos no saldrían nunca en la
+ * página imprimible: un fallo silencioso.
+ */
+function renderMenuColumnaUnica(container, path, menu) {
+  renderSeccionesArray(container, [...path, "columna1"], menu.columna1);
+
+  const addRow = document.createElement("div");
+  addRow.className = "kf-add-section-row";
+
+  const addBtn = document.createElement("button");
+  addBtn.type = "button";
+  addBtn.className = "kf-btn-add-section";
+  addBtn.textContent = "+ Añadir sección";
+  addBtn.addEventListener("click", () => {
+    menu.columna1.push({
+      seccion: "Nueva sección",
+      items: [{ nombre: "", precio: "" }],
+    });
+    rerenderCarta();
+  });
+
   addRow.appendChild(addBtn);
   container.appendChild(addRow);
 }

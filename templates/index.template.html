@@ -185,14 +185,24 @@
                 </div>
             </div>
             <div class="hero-image-wrap">
-                <div class="hero-image-card">
+                <!-- Foto y barra blanca forman UNA sola pieza (el contenedor recorta
+                     ambas con overflow:hidden), en vez de una etiqueta flotando encima
+                     de la imagen: así se lee como enlace y no como pie de foto.
+                     Toda la tarjeta es un único <a>, sin enlaces anidados. El
+                     aria-label evita que el nombre accesible sea el alt de la foto
+                     concatenado con el texto de la barra. -->
+                <a href="menu-printable-tortillas.html" target="_blank" rel="noopener noreferrer"
+                    class="hero-image-card" aria-label="Ver todas nuestras variantes de tortilla">
                     <img src="{{images.heroDish}}"
                         alt="Tortilla de patatas signature de Kafé" class="hero-dish" loading="eager" />
-                    <div class="hero-label">
-                        <span class="label-script" data-i18n="hero.card.signature">Signature</span>
-                        <span class="label-sub" data-i18n="hero.card.plato">TORTILLA DE PATATAS</span>
-                    </div>
-                </div>
+                    <span class="hero-card-bar">
+                        <span class="hero-card-text">
+                            <span class="hero-card-kicker" data-i18n="hero.card.signature">Nuestra especialidad</span>
+                            <span class="hero-card-title" data-i18n="hero.card.cta">Ver todas nuestras variantes de tortilla</span>
+                        </span>
+                        <span class="hero-card-arrow" aria-hidden="true">&rarr;</span>
+                    </span>
+                </a>
             </div>
         </div>
         <a href="#carta" class="scroll-hint" aria-label="Desplazarse hacia abajo">
@@ -227,6 +237,41 @@
                         alt="Tostas y bollería para desayunar en el centro de A Coruña" loading="lazy" />
                     <img class="dsc-img dsc-small" src="{{images.desayunosSeo3}}"
                         alt="Kafé de especialidad para el desayuno en Kafé, A Coruña" loading="lazy" />
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ======================================================
+       MENÚ DEL DÍA: bloque azul entre "desayunos" (blanco) y "karta"
+       (blanco), para romper el ritmo de la página. Misma estructura de
+       tarjeta que la karta, en variante sobre fondo oscuro. La "K" gigante
+       del fondo es la de "nosotros" invertida: allí es oscura sobre blanco,
+       aquí clara sobre azul.
+  ====================================================== -->
+    <section id="menu-dia" class="menudia" aria-labelledby="menudia-title">
+        <div class="container">
+            <div class="menudia-header">
+                <p class="section-tag menudia-tag" data-i18n="menuDia.tag">&#9829; Menú del Día</p>
+                <h2 class="section-title menudia-title" id="menudia-title" data-i18n="menuDia.title">Menú del Día</h2>
+                <p class="menudia-desc" data-i18n="menuDia.desc">De lunes a viernes, de 13:00 a 16:00h.</p>
+            </div>
+
+            <div class="menudia-card">
+                <div class="menudia-card-body">
+                    <p class="menudia-card-tag" data-i18n="menuDia.card.tag">&#9829; HOY EN LA KOCINA</p>
+                    <h3 class="menudia-card-title" data-i18n="menuDia.card.title">Nuestro Menú</h3>
+                    <ul class="menudia-platos">
+{{menuDia.platosHtml}}
+                    </ul>
+                    <div class="menudia-card-footer">
+                        <p class="menudia-precio">{{menuDia.precio}}</p>
+                        <a href="menu-printable.html" target="_blank" rel="noopener noreferrer"
+                            class="btn-primary menudia-cta" data-i18n="menuDia.card.cta">Ver la Karta</a>
+                    </div>
+                </div>
+                <div class="menudia-card-foto">
+                    <img src="{{images.menuDia}}" alt="Plato del menú del día de Kafé" loading="lazy" />
                 </div>
             </div>
         </div>
