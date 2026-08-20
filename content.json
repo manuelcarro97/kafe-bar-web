@@ -1263,16 +1263,16 @@
   },
   "menuDia": {
     "tag": {
-      "es": "♥ Menú del Día",
-      "gl": "♥ Menú do Día"
+      "es": "♥ Hoy para komer",
+      "gl": "♥ Hoxe para komer"
     },
     "title": {
       "es": "Menú del Día",
       "gl": "Menú do Día"
     },
     "desc": {
-      "es": "De lunes a viernes, de 13:00 a 16:00h. Cocina casera que cambia cada día.",
-      "gl": "De luns a venres, de 13:00 a 16:00h. Cociña caseira que cambia cada día."
+      "es": "De lunes a viernes de 13:00 a 15:30h",
+      "gl": "De luns a venres de 13:00 a 15:30h."
     },
     "card": {
       "tag": {
