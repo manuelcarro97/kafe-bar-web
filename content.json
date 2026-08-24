@@ -24,6 +24,10 @@
       "es": "Contacto",
       "gl": "Contacto"
     },
+    "eventos": {
+      "es": "Eventos",
+      "gl": "Eventos"
+    },
     "verCarta": {
       "es": "Ver Carta →",
       "gl": "Ver Carta →"
@@ -1223,6 +1227,29 @@
     "desayunosSeo2": "imagenes/desayunos-seo-2.jpg",
     "desayunosSeo3": "imagenes/desayunos-seo-3.png",
     "menuDia": "imagenes/menu-dia.jpg"
+  },
+  "celebra": {
+    "activo": true,
+    "tag": {
+      "es": "♥ Celebra con nosotros",
+      "gl": "♥ Celebra con nós"
+    },
+    "subtitulo": {
+      "es": "Tus eventos en Kafé",
+      "gl": "Os teus eventos no Kafé"
+    },
+    "desc": {
+      "es": "Celebra con nosotros tus eventos y momentos más especiales. Reserva nuestro local completo o nuestra zona de eventos: nosotros nos encargamos del resto.",
+      "gl": "Celebra con nós os teus eventos e momentos máis especiais. Reserva o noso local completo ou a nosa zona de eventos: nós encargámonos de todo."
+    },
+    "video": "imagenes/video/evento-video.mp4",
+    "fotos": [
+      "imagenes/eventos/evento-1.png",
+      "imagenes/eventos/evento-2.png",
+      "imagenes/eventos/evento-3.png",
+      "imagenes/eventos/evento-4.jpg",
+      "imagenes/eventos/evento-5.jpg"
+    ]
   },
   "horario": [
     {

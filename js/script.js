@@ -814,4 +814,121 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   })();
 
+  /* ---------- Galería de "Celebra con nosotros" ---------- */
+  // Un slot grande (stage) + 2 miniaturas. Al pulsar una miniatura, esa media
+  // pasa al slot grande y la que estaba baja a miniatura. En el stage, el vídeo
+  // arranca solo la primera carga (mudo, sin loop) y luego se controla con clic
+  // (play/pausa; si terminó, reinicia). Como miniatura el vídeo muestra su
+  // primer fotograma (preload=metadata) SIN reproducirse.
+  try {
+  const celebraGallery = document.querySelector('[data-celebra-gallery]');
+  if (celebraGallery) {
+    const stage = celebraGallery.querySelector('.celebra-stage');
+    // Todas las miniaturas se muestran (la activa resaltada). Se leen del DOM
+    // que genera build.js: 1 vídeo + N fotos, cada una con data-type/data-src.
+    const thumbEls = Array.from(celebraGallery.querySelectorAll('.celebra-thumbs > *'));
+    const items = thumbEls.map((el) => ({ type: el.dataset.type, src: el.dataset.src, el }));
+    let firstRender = true;
+
+    function buildStageMedia(item, allowAutoplay) {
+      if (item.type === 'video') {
+        const wrap = document.createElement('div');
+        wrap.className = 'celebra-video-wrap is-paused';
+        const video = document.createElement('video');
+        video.className = 'celebra-video';
+        video.src = item.src;
+        video.muted = true;
+        video.playsInline = true;
+        video.preload = 'metadata';
+        if (allowAutoplay) video.autoplay = true;
+        const overlay = document.createElement('span');
+        overlay.className = 'celebra-video-overlay';
+        overlay.setAttribute('aria-hidden', 'true');
+        overlay.innerHTML = '&#9654;';
+        wrap.appendChild(video);
+        wrap.appendChild(overlay);
+
+        const syncPaused = () => wrap.classList.toggle('is-paused', video.paused || video.ended);
+        video.addEventListener('click', () => {
+          if (video.paused || video.ended) {
+            if (video.ended) video.currentTime = 0;
+            video.play();
+          } else {
+            video.pause();
+          }
+        });
+        video.addEventListener('play', syncPaused);
+        video.addEventListener('pause', syncPaused);
+        video.addEventListener('ended', syncPaused);
+        syncPaused();
+        return wrap;
+      }
+      const img = document.createElement('img');
+      img.className = 'celebra-stage-img';
+      img.src = item.src;
+      img.alt = '';
+      return img;
+    }
+
+    function setActive(index) {
+      const item = items[index];
+      if (!item) return;
+      stage.innerHTML = '';
+      stage.appendChild(buildStageMedia(item, firstRender));
+      firstRender = false;
+      items.forEach((it, i) => it.el.classList.toggle('celebra-thumb-active', i === index));
+    }
+
+    thumbEls.forEach((el, i) => {
+      el.addEventListener('click', () => setActive(i));
+    });
+    setActive(0);
+
+    // Drag-to-scroll de la tira (arrastrar como en reseñas, pero sin auto-loop).
+    // Si el puntero se movió más de un umbral, se considera arrastre y se anula
+    // el click (para no cambiar de foto al soltar tras deslizar).
+    const strip = celebraGallery.querySelector('.celebra-thumbs');
+    if (strip) {
+      let isDown = false;
+      let startX = 0;
+      let startScroll = 0;
+      let moved = false;
+
+      // NO se usa setPointerCapture: capturar el puntero impide que el navegador
+      // dispare el `click` en la miniatura, y entonces no se puede seleccionar.
+      // En su lugar, el arrastre escucha en window (sigue aunque el puntero
+      // salga de la tira) y el click nativo de cada miniatura funciona normal.
+      strip.addEventListener('pointerdown', (e) => {
+        isDown = true;
+        moved = false;
+        startX = e.clientX;
+        startScroll = strip.scrollLeft;
+        strip.classList.add('is-dragging');
+      });
+      window.addEventListener('pointermove', (e) => {
+        if (!isDown) return;
+        const dx = e.clientX - startX;
+        if (Math.abs(dx) > 5) moved = true;
+        strip.scrollLeft = startScroll - dx;
+      });
+      window.addEventListener('pointerup', () => {
+        if (!isDown) return;
+        isDown = false;
+        strip.classList.remove('is-dragging');
+      });
+      // Si hubo arrastre real (> umbral), se anula el click para no cambiar la
+      // imagen grande al soltar tras deslizar. Un click limpio (sin arrastre)
+      // pasa y selecciona.
+      strip.addEventListener('click', (e) => {
+        if (moved) {
+          e.stopPropagation();
+          e.preventDefault();
+        }
+      }, true);
+    }
+  }
+  } catch (err) {
+    console.error('[celebra] galería:', err);
+  }
+
 });

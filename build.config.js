@@ -26,6 +26,7 @@ module.exports = function keyMap(c) {
     'nav.carta': c.nav.carta,
     'nav.resenas': c.nav.resenas,
     'nav.contacto': c.nav.contacto,
+    'nav.eventos': c.nav.eventos,
     'nav.verCarta': c.nav.verCarta,
     'nav.reservar': c.nav.reservar,
 
@@ -75,6 +76,12 @@ module.exports = function keyMap(c) {
     'medios.tag': c.medios.tag,
     'medios.titulo': c.medios.titulo,
     'medios.desc': c.medios.desc,
+
+    // celebra (bloque "Celebra con nosotros", zona de eventos). Los teléfonos
+    // no llevan data-i18n (son cifras, no texto traducible).
+    'celebra.tag': c.celebra.tag,
+    'celebra.subtitulo': c.celebra.subtitulo,
+    'celebra.desc': c.celebra.desc,
 
     // carta
     'carta.tag': c.carta.tag,

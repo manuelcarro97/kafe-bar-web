@@ -72,6 +72,11 @@ let mediosBodyEl = null;
 // patrón que cartaBodyEl / horarioBodyEl).
 let menuDiaBodyEl = null;
 
+// Referencia al <div class="kf-section-body"> de la sección "Eventos" (celebra),
+// para re-renderizarla al añadir/quitar fotos de la galería (mismo patrón que
+// mediosBodyEl / rerenderMedios).
+let celebraBodyEl = null;
+
 // path (string) -> { blob, filename, originalValue, targetDir }
 // targetDir: carpeta destino cuando la referencia original no es una ruta
 // local (p. ej. imágenes nuevas de medios → "imagenes/media/").
@@ -226,6 +231,7 @@ const SECTION_TITLES = {
   horario: "Horario",
   alerta: "Alerta / Aviso (barra superior)",
   medios: "Kafé en los medios (vídeos y reportajes)",
+  celebra: "Eventos (zona de celebraciones)",
 };
 
 // Orden en que se muestran las secciones en el editor, siguiendo el orden de
@@ -235,7 +241,7 @@ const SECTION_TITLES = {
 // (agrupador de fotos) va al final. Las claves no listadas se añaden al final
 // como cola de seguridad para que nada desaparezca si se añade una sección
 // nueva al JSON.
-const SECTION_ORDER = ["nav", "hero", "desayunos", "menuDia", "carta", "info", "horario", "nosotros", "medios", "footer", "images", "alerta"];
+const SECTION_ORDER = ["nav", "hero", "desayunos", "menuDia", "carta", "info", "celebra", "horario", "nosotros", "medios", "footer", "images", "alerta"];
 
 // Claves puramente estructurales que nunca se muestran como campo editable,
 // pero que se conservan intactas en workingContent (no se tocan, así que
@@ -322,6 +328,7 @@ function renderAllSections() {
   cartaBodyEl = null;
   menuDiaBodyEl = null;
   horarioBodyEl = null;
+  celebraBodyEl = null;
 
   // Orden web (SECTION_ORDER) primero; cualquier clave no listada se añade al
   // final para no perderla nunca.
@@ -348,6 +355,26 @@ function renderAllSections() {
       body.className = "kf-section-body";
       panel.appendChild(body);
       renderAlertaSection(body, [topKey]);
+      sectionsContainer.appendChild(panel);
+      continue;
+    }
+
+    // Eventos (celebra): un único panel con toggle + textos + vídeo + la lista
+    // dinámica de fotos de la galería. Toda la media vive aquí (ya no en
+    // "Imágenes"). El vídeo y las fotos NO usan el render genérico: sus rutas
+    // empiezan por "imagenes/" y renderNode las trataría como imágenes de
+    // canvas (el vídeo petaría al comprimir).
+    if (topKey === "celebra") {
+      const panel = document.createElement("details");
+      panel.className = "kf-section";
+      const summary = document.createElement("summary");
+      summary.textContent = SECTION_TITLES.celebra;
+      panel.appendChild(summary);
+      const body = document.createElement("div");
+      body.className = "kf-section-body";
+      panel.appendChild(body);
+      celebraBodyEl = body;
+      renderCelebraSection(body, [topKey]);
       sectionsContainer.appendChild(panel);
       continue;
     }
@@ -443,6 +470,127 @@ function renderAlertaSection(container, path) {
   paintStatus();
 
   renderBilingualField(container, [...path, "texto"], "Texto del aviso");
+}
+
+/**
+ * Elimina del Map imageEdits cualquier subida pendiente de la galería de fotos
+ * de eventos (claves "celebra.fotos.N.*"). Se llama ANTES de un splice sobre
+ * celebra.fotos: como imageEdits va indexado por posición, borrar una foto
+ * correría los índices y una subida pendiente acabaría escribiéndose sobre la
+ * foto equivocada al publicar. Purgar es la opción segura (se pierde una subida
+ * sin publicar, pero nunca se corrompe otra). Índices no sobreviven al reordenar.
+ */
+function dropPendingFotoEdits(path) {
+  const prefix = [...path, "fotos"].join(".") + ".";
+  for (const key of Array.from(imageEdits.keys())) {
+    if (key.startsWith(prefix)) imageEdits.delete(key);
+  }
+}
+
+/**
+ * Re-renderiza SOLO la sección "Eventos" (tras añadir/quitar una foto), igual
+ * que rerenderMedios/rerenderHorario.
+ */
+function rerenderCelebra() {
+  if (!celebraBodyEl) return;
+  renderCelebraSection(celebraBodyEl, ["celebra"]);
+  flashSaveStatus();
+}
+
+/**
+ * Renderiza la sección "Eventos": toggle de visibilidad, textos bilingües, el
+ * vídeo y la galería dinámica de fotos (añadir/quitar/subir cada una). Cada foto
+ * se sube con nombre único a "imagenes/eventos/" para que NO comparta ruta con
+ * ninguna otra imagen del sitio (cambiar una no toca las demás).
+ */
+function renderCelebraSection(body, path) {
+  const celebra = getAtPath(workingContent, path);
+  // Guarda defensiva: un content.json anterior a esta funcionalidad no trae
+  // fotos; sin esto el forEach de abajo reventaría el editor entero.
+  if (!Array.isArray(celebra.fotos)) celebra.fotos = [];
+  body.innerHTML = "";
+
+  const toggleRow = document.createElement("label");
+  toggleRow.className = "kf-check";
+  const toggle = document.createElement("input");
+  toggle.type = "checkbox";
+  toggle.checked = !!celebra.activo;
+  toggle.addEventListener("change", () => {
+    setAtPath(workingContent, [...path, "activo"], toggle.checked);
+    flashSaveStatus();
+  });
+  const toggleTxt = document.createElement("span");
+  toggleTxt.textContent = "Mostrar la sección en la web";
+  toggleRow.appendChild(toggle);
+  toggleRow.appendChild(toggleTxt);
+  body.appendChild(toggleRow);
+
+  const textsHeading = document.createElement("div");
+  textsHeading.className = "kf-subsection-heading";
+  textsHeading.textContent = "Textos de la sección";
+  body.appendChild(textsHeading);
+
+  renderBilingualField(body, [...path, "tag"], "Etiqueta superior");
+  renderBilingualField(body, [...path, "subtitulo"], "Título");
+  renderBilingualField(body, [...path, "desc"], "Descripción");
+
+  const videoHeading = document.createElement("div");
+  videoHeading.className = "kf-subsection-heading";
+  videoHeading.textContent = "Vídeo";
+  body.appendChild(videoHeading);
+
+  renderVideoField(body, [...path, "video"], "Vídeo de la sección", {
+    targetDir: "imagenes/video/",
+  });
+
+  const fotosHeading = document.createElement("div");
+  fotosHeading.className = "kf-subsection-heading";
+  fotosHeading.textContent = "Fotos de la galería";
+  body.appendChild(fotosHeading);
+
+  celebra.fotos.forEach((_f, idx) => {
+    const rowWrap = document.createElement("div");
+    rowWrap.className = "kf-item-row";
+
+    const fieldWrap = document.createElement("div");
+    fieldWrap.className = "kf-item-row-fields";
+    renderImageField(fieldWrap, [...path, "fotos", idx], `Foto ${idx + 1}`, {
+      targetDir: "imagenes/eventos/",
+      uniqueName: true,
+    });
+    rowWrap.appendChild(fieldWrap);
+
+    const removeBtn = document.createElement("button");
+    removeBtn.type = "button";
+    removeBtn.className = "kf-btn-remove-item";
+    removeBtn.title = "Eliminar foto";
+    removeBtn.textContent = "−";
+    removeBtn.addEventListener("click", () => {
+      dropPendingFotoEdits(path);
+      celebra.fotos.splice(idx, 1);
+      rerenderCelebra();
+    });
+    rowWrap.appendChild(removeBtn);
+
+    body.appendChild(rowWrap);
+  });
+
+  const addBtn = document.createElement("button");
+  addBtn.type = "button";
+  addBtn.className = "kf-btn-add-item";
+  addBtn.textContent = "+ Añadir foto";
+  addBtn.addEventListener("click", () => {
+    celebra.fotos.push("");
+    rerenderCelebra();
+  });
+  body.appendChild(addBtn);
+
+  const note = document.createElement("p");
+  note.className = "kf-medio-nota";
+  note.textContent =
+    "El orden de las fotos aquí es el orden de la tira de miniaturas en la web. " +
+    "Cada foto se sube con nombre propio, no pisa a ninguna otra imagen del sitio.";
+  body.appendChild(note);
 }
 
 /**
@@ -1576,6 +1724,104 @@ function renderImageField(container, path, keyLabel, opts = {}) {
 
   actions.appendChild(changeBtn);
   actions.appendChild(downloadBtn);
+  actions.appendChild(changedTag);
+  info.appendChild(actions);
+
+  wrap.appendChild(info);
+  wrap.appendChild(fileInput);
+  container.appendChild(wrap);
+}
+
+// Tope de tamaño del vídeo. No hay compresor de vídeo en el navegador (el de
+// imágenes usa canvas, que no aplica a vídeo), así que lo que se sube va tal
+// cual al publish. El worker limita el body a 10 MB y el base64 infla ×1.33;
+// 6,5 MB deja margen para content.json y la inflación.
+const MAX_VIDEO_BYTES = Math.round(6.5 * 1024 * 1024);
+
+/**
+ * Campo de vídeo (preview + subida con tope de tamaño). Reutiliza el Map
+ * imageEdits y buildImagesPayload (que trabaja con cualquier Blob), y el worker
+ * acepta la ruta porque empieza por "imagenes/". A diferencia de las imágenes,
+ * el vídeo NO se comprime: por eso el tope duro de tamaño.
+ *
+ * El nombre del fichero se mantiene estable (basename de la ruta original) para
+ * sobrescribir siempre el mismo vídeo, en vez de acumular ficheros nuevos.
+ */
+function renderVideoField(container, path, keyLabel, opts = {}) {
+  const originalValue = getAtPath(workingContent, path);
+  const pathKey = path.join(".");
+  const pendingEdit = imageEdits.get(pathKey);
+
+  const wrap = document.createElement("div");
+  wrap.className = "kf-image-field kf-video-field";
+
+  const video = document.createElement("video");
+  video.className = "kf-image-preview kf-video-preview";
+  video.muted = true;
+  video.playsInline = true;
+  video.controls = true;
+  video.preload = "metadata";
+  video.src = pendingEdit ? URL.createObjectURL(pendingEdit.blob) : resolveImageSrc(originalValue);
+  wrap.appendChild(video);
+
+  const info = document.createElement("div");
+  info.className = "kf-image-info";
+
+  const label = document.createElement("div");
+  label.className = "kf-label";
+  label.textContent = keyLabel || pathKey;
+  info.appendChild(label);
+
+  const pathLine = document.createElement("div");
+  pathLine.className = "kf-image-path";
+  pathLine.textContent = originalValue;
+  info.appendChild(pathLine);
+
+  const hint = document.createElement("div");
+  hint.className = "kf-image-path";
+  hint.textContent = "MP4, máximo 6,5 MB. Vídeo corto y mudo (en la web arranca solo una vez).";
+  info.appendChild(hint);
+
+  const actions = document.createElement("div");
+  actions.className = "kf-image-actions";
+
+  const fileInput = document.createElement("input");
+  fileInput.type = "file";
+  fileInput.accept = "video/mp4";
+  fileInput.hidden = true;
+
+  const changeBtn = document.createElement("button");
+  changeBtn.type = "button";
+  changeBtn.textContent = "Cambiar vídeo";
+  changeBtn.addEventListener("click", () => fileInput.click());
+
+  const changedTag = document.createElement("span");
+  changedTag.className = "kf-image-changed-tag";
+  changedTag.hidden = !pendingEdit;
+  changedTag.textContent = "✓ vídeo nuevo listo";
+
+  fileInput.addEventListener("change", () => {
+    const file = fileInput.files && fileInput.files[0];
+    if (!file) return;
+    if (file.size > MAX_VIDEO_BYTES) {
+      alert("El archivo es demasiado pesado.");
+      fileInput.value = "";
+      return;
+    }
+    const filename = suggestFilename(originalValue, file.name);
+    imageEdits.set(pathKey, {
+      blob: file,
+      filename,
+      originalValue,
+      targetDir: opts.targetDir,
+      forceNewPath: false,
+    });
+    video.src = URL.createObjectURL(file);
+    changedTag.hidden = false;
+    flashSaveStatus();
+  });
+
+  actions.appendChild(changeBtn);
   actions.appendChild(changedTag);
   info.appendChild(actions);
 
