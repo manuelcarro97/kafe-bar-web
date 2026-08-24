@@ -70,8 +70,8 @@
         "gl": "TORTILLA DE PATACAS"
       },
       "cta": {
-        "es": "Ver todas nuestras variantes de tortilla",
-        "gl": "Ver todas as nosas variantes de tortilla"
+        "es": "Ver todas nuestras tortillas",
+        "gl": "Ver todas as nosas tortillas"
       }
     }
   },
@@ -984,8 +984,115 @@
           "seccion": "Nuestras Tortillas",
           "items": [
             {
-              "nombre": "Tortilla test",
-              "precio": "4,50 €"
+              "nombre": "Sin cebolla",
+              "precio": "18,00€"
+            },
+            {
+              "nombre": "Con cebolla",
+              "precio": "18,00€"
+            },
+            {
+              "nombre": "Chorizo",
+              "precio": "21,00€"
+            },
+            {
+              "nombre": "Chorizo picante",
+              "precio": "21,00€"
+            },
+            {
+              "nombre": "Chorizo y queso",
+              "precio": "21,00€"
+            },
+            {
+              "nombre": "Chorizo picante y queso",
+              "precio": "21,00€"
+            },
+            {
+              "nombre": "Croissant y jamón",
+              "precio": "21,00€"
+            },
+            {
+              "nombre": "Croissant y camembert",
+              "precio": "21,00€"
+            },
+            {
+              "nombre": "4 quesos",
+              "precio": "21,00€"
+            },
+            {
+              "nombre": "Bacon y queso",
+              "precio": "21,00€"
+            },
+            {
+              "nombre": "Burrata y pesto verde",
+              "precio": "21,00€"
+            },
+            {
+              "nombre": "Cecina de buey y queso de cabra",
+              "precio": "21,00€"
+            },
+            {
+              "nombre": "Cebolla caramelizada y queso de cabra",
+              "precio": "21,00€"
+            },
+            {
+              "nombre": "Chistorra",
+              "precio": "21,00€"
+            },
+            {
+              "nombre": "Chistorra y queso",
+              "precio": "21,00€"
+            },
+            {
+              "nombre": "Chorizo y pimientos",
+              "precio": "21,00€"
+            },
+            {
+              "nombre": "Jamón y pimientos",
+              "precio": "21,00€"
+            },
+            {
+              "nombre": "Jamón y queso",
+              "precio": "21,00€"
+            },
+            {
+              "nombre": "Jamón cocido y queso",
+              "precio": "21,00€"
+            },
+            {
+              "nombre": "Calabacín",
+              "precio": "21,00€"
+            },
+            {
+              "nombre": "Campera",
+              "precio": "21,00€",
+              "descripcion": "Calabacín, pimientos y cebolla"
+            },
+            {
+              "nombre": "Carbonara",
+              "precio": "21,00€",
+              "descripcion": "Guancciale, pimienta negra y galmesano"
+            },
+            {
+              "nombre": "Completa (Fria)",
+              "precio": "21,00€",
+              "descripcion": "Lechuga, tomate, cebolla y mayonesa"
+            },
+            {
+              "nombre": "Morcilla",
+              "precio": "21,00€"
+            },
+            {
+              "nombre": "Torreznos de soria y pimientos de Padrón",
+              "precio": "28,00€"
+            },
+            {
+              "nombre": "Trufa",
+              "precio": "21,00€"
+            },
+            {
+              "nombre": "Trufa y queso",
+              "precio": "21,00€"
             }
           ]
         }
@@ -1263,8 +1370,8 @@
   },
   "menuDia": {
     "tag": {
-      "es": "♥ Hoy para komer",
-      "gl": "♥ Hoxe para komer"
+      "es": "♥ Hoy para comer",
+      "gl": "♥ Hoxe para comer"
     },
     "title": {
       "es": "Menú del Día",
@@ -1276,38 +1383,38 @@
     },
     "card": {
       "tag": {
-        "es": "♥ HOY EN LA KOCINA",
-        "gl": "♥ HOXE NA KOCIÑA"
+        "es": "♥ HOY EN LA COCINA",
+        "gl": "♥ HOXE NA COCIÑA"
       },
       "title": {
         "es": "Nuestro menú del día",
         "gl": "O noso menú do día"
       },
       "cta": {
-        "es": "Ver la Karta",
-        "gl": "Ver a Karta"
+        "es": "Ver la Carta",
+        "gl": "Ver a Carta"
       }
     },
-    "precio": "13,50 €",
+    "precio": "13,00 €",
     "platos": [
       {
-        "nombre": "Caldo galego",
+        "nombre": "Enfadadilla Rusa",
         "categoria": "Primero"
       },
       {
-        "nombre": "Ensalada de la casa",
-        "categoria": "Primero"
+        "nombre": "",
+        "categoria": ""
       },
       {
-        "nombre": "Raxo con patatas",
+        "nombre": "Arroz con quejas",
         "categoria": "Segundo"
       },
       {
-        "nombre": "Merluza a la plancha",
-        "categoria": "Segundo"
+        "nombre": "",
+        "categoria": ""
       },
       {
-        "nombre": "Tarta de queso",
+        "nombre": "Gritamisú",
         "categoria": "Postre"
       }
     ]
