@@ -856,3 +856,11 @@ body {
   color: #8a8074;
   margin: 10px 0 0;
 }
+
+/* Preview del vídeo: más ancho que las miniaturas de imagen para que los
+   controles nativos sean usables. */
+.kf-video-preview {
+  width: 260px;
+  height: auto;
+  aspect-ratio: 16 / 9;
+}

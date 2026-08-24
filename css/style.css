@@ -3048,3 +3048,264 @@ fieldset.form-group {
   text-align: right;
   font-weight: 500;
 }
+
+/* =====================================================
+   Celebra con nosotros (zona de eventos)
+   Bloque de fondo blanco entre las tarjetas de info y el
+   mapa. Misma retícula que "nosotros"/"desayunos-seo":
+   dos columnas con align-items:center (el texto queda
+   centrado verticalmente respecto a la media).
+   Media = vídeo arriba + 2 fotos pequeñas debajo.
+   ===================================================== */
+.celebra-block {
+  background-color: var(--blanco);
+  background-image: radial-gradient(rgba(13, 33, 55, 0.04) 1px, transparent 1px);
+  background-size: 28px 28px;
+  padding: clamp(2rem, 4vw, 3rem) 0 clamp(4rem, 8vw, 6rem);
+  position: relative;
+  overflow: hidden;
+}
+
+/* La línea azul de .mapa-wrap separaba el bloque oscuro de info del mapa;
+   con la sección celebra (blanca) en medio sobra, así que se quita solo
+   cuando celebra va justo antes del mapa. */
+.celebra-block + .mapa-wrap {
+  border-top: none;
+}
+
+/* K de marca al fondo, igual que en la sección "nosotros". */
+.celebra-block::before {
+  content: 'K';
+  position: absolute;
+  right: -4%;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--font-serif);
+  font-size: 65vw;
+  font-weight: 900;
+  line-height: 0.85;
+  color: rgba(59, 158, 255, 0.07);
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+}
+
+.celebra-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: clamp(2.5rem, 4vw, 4rem);
+  align-items: center;
+  position: relative;
+  z-index: 2;
+}
+
+/* --- Media: vídeo (grande) + tira de miniaturas --- */
+.celebra-media {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  /* Ítem de grid: sin esto min-width:auto deja que la tira de miniaturas se
+     expanda a lo ancho (todas las fotos en fila) y empuje la columna de texto
+     fuera de pantalla. min-width:0 obliga al strip a limitarse al ancho del
+     vídeo y hacer scroll. */
+  min-width: 0;
+}
+
+.celebra-video-wrap {
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  cursor: pointer;
+  background: var(--gris-claro);
+}
+
+.celebra-video {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+/* Overlay ▶: solo visible cuando el vídeo está en pausa o terminado
+   (js/script.js añade/quita .is-paused sobre .celebra-video-wrap). */
+.celebra-video-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  color: var(--blanco);
+  background: rgba(13, 33, 55, 0.35);
+  opacity: 0;
+  transition: opacity var(--transition);
+  pointer-events: none;
+}
+
+.celebra-video-wrap.is-paused .celebra-video-overlay {
+  opacity: 1;
+}
+
+/* Slot grande (stage): vídeo o foto promocionada. */
+.celebra-stage-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Tira de miniaturas: scroll horizontal (vídeo + N fotos). El wrap lleva una
+   máscara que difumina el borde derecho para sugerir que hay más a la derecha
+   (mask en vez de gradiente pintado, para no borrar la trama de puntos). */
+.celebra-thumbs-wrap {
+  position: relative;
+  -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 48px), transparent);
+  mask-image: linear-gradient(to right, #000 calc(100% - 48px), transparent);
+}
+
+/* Tira arrastrable (drag-to-scroll, la gestiona js/script.js). Sin barra de
+   scroll visible y sin snap: se desliza libre pulsando y arrastrando. */
+.celebra-thumbs {
+  display: flex;
+  gap: 0.75rem;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  cursor: grab;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  min-width: 0;
+}
+
+.celebra-thumbs::-webkit-scrollbar {
+  display: none;
+}
+
+.celebra-thumbs.is-dragging {
+  cursor: grabbing;
+}
+
+/* Miniatura pequeña de tamaño fijo (como antes): en web entran ~4-5 en el ancho
+   del vídeo; en móvil ~3. El resto se ve arrastrando. */
+.celebra-thumb {
+  flex: 0 0 clamp(100px, 30vw, 130px);
+  /* min-width:auto (defecto en flex) usaría el ancho intrínseco de la imagen e
+     ignoraría el flex-basis → miniaturas gigantes. min-width:0 deja mandar al
+     basis. */
+  min-width: 0;
+  aspect-ratio: 4 / 3;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  object-fit: cover;
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+
+.celebra-thumb-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.celebra-thumb:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Arrastrar no debe seleccionar texto/imágenes de las miniaturas. */
+.celebra-thumbs img {
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* Miniatura de vídeo: primer fotograma (no reproduce) + distintivo ▶. */
+.celebra-thumb-video {
+  position: relative;
+  overflow: hidden;
+  background: var(--gris-claro);
+}
+
+.celebra-thumb-video video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  pointer-events: none;
+}
+
+.celebra-thumb-play {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  color: var(--blanco);
+  background: rgba(13, 33, 55, 0.3);
+  pointer-events: none;
+}
+
+/* --- Texto: tipografía del sitio (section-tag/section-title) --- */
+.celebra-content .section-tag,
+.celebra-content .section-title {
+  text-align: left;
+}
+
+.celebra-text {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--texto-suave);
+  margin-bottom: 1.75rem;
+}
+
+.celebra-contacto {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 1.25rem 1.75rem;
+}
+
+.celebra-tel {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-sans);
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--azul-oscuro);
+  text-decoration: none;
+  transition: color var(--transition);
+}
+
+.celebra-tel:hover {
+  color: var(--azul-acento);
+}
+
+.celebra-tel-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--azul-acento);
+}
+
+@media (max-width: 768px) {
+  .celebra-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .celebra-media {
+    order: 2;
+  }
+
+  .celebra-content {
+    order: 1;
+  }
+
+  .celebra-contacto {
+    justify-content: center;
+  }
+}
