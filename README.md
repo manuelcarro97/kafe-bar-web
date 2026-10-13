@@ -4,6 +4,8 @@ Web completa para **Kafé**, un bar-restaurante de A Coruña: diseño, desarroll
 
 **Demo (entorno provisional):** https://kafe-143b5.web.app/
 
+![Captura de la web en escritorio y móvil](docs/img/preview.png)
+
 > Código publicado como muestra de portfolio. Ver [Derechos](#derechos).
 
 ## Qué hace
@@ -12,7 +14,7 @@ Web completa para **Kafé**, un bar-restaurante de A Coruña: diseño, desarroll
 - **Carta, desayunos, menú del día y eventos** generados desde un único `content.json`.
 - **Cartas imprimibles** (HTML optimizado para PDF) y **códigos QR** para las mesas.
 - **Panel de administración** para que el propio negocio edite la carta y los textos sin tocar código.
-- **Formulario de reservas** que envía un email al bar.
+- **Formulario de reservas** que envía un email al bar (implementado; pendiente de activar en la versión final).
 - **SEO**: datos estructurados schema.org, `sitemap.xml` y Google Analytics 4.
 
 ## Arquitectura del panel de administración
@@ -44,7 +46,7 @@ Detalle técnico del endpoint: [`worker/PUBLISH.md`](worker/PUBLISH.md).
 | Front-end | HTML5, CSS3, JavaScript (vanilla, sin frameworks) |
 | Build | Node.js, script propio sin dependencias (`build.js`) |
 | Panel admin | JavaScript + Firebase Authentication |
-| API | Cloudflare Workers (publicación + reservas vía Resend) |
+| API | Cloudflare Workers (publicación; reservas vía Resend pendientes de activar) |
 | CI/CD | GitHub Actions |
 | Hosting | Firebase Hosting (con cabecera Content-Security-Policy) |
 
@@ -58,7 +60,7 @@ Detalle técnico del endpoint: [`worker/PUBLISH.md`](worker/PUBLISH.md).
 
 Si falta una clave en `content.json`, el build falla con un error explícito en lugar de publicar una web incompleta.
 
-Los archivos generados se versionan en el repositorio para que la web se pueda servir sin ejecutar el build; aun así, el pipeline lo ejecuta en cada despliegue.
+Los archivos generados no se versionan (están en `.gitignore`): `content.json` es la única fuente de verdad y GitHub Actions ejecuta el build en cada despliegue.
 
 ## Estructura
 

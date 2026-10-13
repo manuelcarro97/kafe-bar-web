@@ -1,3 +1,8 @@
+# Generados por build.js (se regeneran en CI)
+/index.html
+/menu-printable*.html
+js/translations.generated.js
+
 # Dependencies
 node_modules/
 
