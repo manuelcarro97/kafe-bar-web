@@ -6,6 +6,11 @@ on:
   push:
     branches:
       - main
+    paths-ignore:
+      - worker/**
+      - LICENSE
+      - README.md
+      - .github/workflows/**
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
