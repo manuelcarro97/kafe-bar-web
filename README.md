@@ -102,6 +102,14 @@ Los valores reales no están en el repositorio. Para desplegar una copia propia 
 | `worker/wrangler.toml` | `GITHUB_REPO`, `ALLOWED_PUBLISHER_EMAILS` |
 | Secretos del Worker | `GITHUB_TOKEN`, `RESEND_API_KEY` (con `wrangler secret put`) |
 
+## Tests
+
+El Worker tiene tests con el runner nativo de Node, sin dependencias. Cubren la verificación real del JWT (RS256 con claves generadas en el test), la allowlist fail-closed, CORS, la validación de reservas y publicaciones, y el commit en GitHub con las APIs externas simuladas.
+
+```bash
+node --test "worker/*.test.mjs"
+```
+
 ## Herramientas internas
 
 - `scripts/generate-qr.js`: genera los códigos QR de la carta con el logo del bar.
@@ -110,7 +118,7 @@ Los valores reales no están en el repositorio. Para desplegar una copia propia 
 ## Próximas mejoras
 
 - Dividir `admin/admin.js` en módulos (autenticación, editor, publicación).
-- Tests automáticos para `build.js` y para la verificación del token del Worker.
+- Tests automáticos para `build.js`.
 - Dominio propio.
 
 ## Derechos
