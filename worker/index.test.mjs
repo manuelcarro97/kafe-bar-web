@@ -2,9 +2,9 @@ import assert from 'node:assert/strict';
 import { beforeEach, describe, it } from 'node:test';
 import worker from './index.js';
 
-const PROJECT_ID = 'kafe-143b5';
+const PROJECT_ID = 'your-firebase-project';
 const ISSUER = `https://securetoken.google.com/${PROJECT_ID}`;
-const SITE = 'https://kafe-143b5.web.app';
+const SITE = 'https://your-firebase-project.web.app';
 const WORKER = 'https://kafe.example.workers.dev';
 const KID = 'test-key';
 
@@ -13,6 +13,7 @@ const ENV = {
   GITHUB_REPO: 'owner/repo',
   GITHUB_TOKEN: 'test-token',
   RESEND_API_KEY: 'test-resend-key',
+  MAIL_TO: 'bar@example.test',
 };
 
 const RSA = { name: 'RSASSA-PKCS1-v1_5', modulusLength: 2048, publicExponent: new Uint8Array([1, 0, 1]), hash: 'SHA-256' };
@@ -225,7 +226,7 @@ describe('POST /publish: commit en GitHub', () => {
 describe('/publish: CORS', () => {
   const preflight = (origin) => new Request(`${WORKER}/publish`, { method: 'OPTIONS', headers: { Origin: origin } });
 
-  for (const origin of [SITE, 'https://kafe-143b5.firebaseapp.com', 'https://kafe-143b5--preview-1.web.app']) {
+  for (const origin of [SITE, 'https://your-firebase-project.firebaseapp.com', 'https://your-firebase-project--preview-1.web.app']) {
     it(`permite ${origin}`, async () => {
       const res = await worker.fetch(preflight(origin), ENV);
       assert.equal(res.status, 204);
@@ -233,7 +234,7 @@ describe('/publish: CORS', () => {
     });
   }
 
-  for (const origin of ['https://evil.example', 'https://kafe-143b5.web.app.evil.example', 'http://kafe-143b5.web.app']) {
+  for (const origin of ['https://evil.example', 'https://your-firebase-project.web.app.evil.example', 'http://your-firebase-project.web.app']) {
     it(`no permite ${origin}`, async () => {
       const res = await worker.fetch(preflight(origin), ENV);
       assert.equal(res.headers.get('Access-Control-Allow-Origin'), null);
@@ -252,7 +253,16 @@ describe('Reservas', () => {
     assert.deepEqual(await res.json(), { success: true });
     assert.equal(res.headers.get('Access-Control-Allow-Origin'), SITE);
     assert.equal(callsTo('api.resend.com').length, 1);
+    assert.equal(JSON.parse(callsTo('api.resend.com')[0].body).to, ENV.MAIL_TO);
   });
+
+  for (const missing of ['MAIL_TO', 'RESEND_API_KEY']) {
+    it(`responde 503 y no envía nada si falta ${missing}`, async () => {
+      const res = await worker.fetch(reservaRequest(VALID_RESERVA), { ...ENV, [missing]: undefined });
+      assert.equal(res.status, 503);
+      assert.equal(callsTo('api.resend.com').length, 0);
+    });
+  }
 
   it('escapa el HTML de los datos del cliente', async () => {
     await worker.fetch(reservaRequest({ ...VALID_RESERVA, nombre: '<script>alert(1)</script>' }), ENV);

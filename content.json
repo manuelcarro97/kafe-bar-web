@@ -1312,7 +1312,7 @@
     }
   },
   "site": {
-    "url": "https://kafe-143b5.web.app",
+    "url": "https://your-firebase-project.web.app",
     "nombre": "Kafé",
     "descripcionSchema": "Bar-restaurante gallego en A Coruña. Kocina tradicional gallega con producto local.",
     "geo": {
@@ -1320,7 +1320,7 @@
       "lng": -8.4155189
     },
     "googleMapsPlaceUrl": "https://www.google.com/maps/place/Kafe/@43.3621488,-8.4180992,16z",
-    "dominio": "kafe-143b5.web.app"
+    "dominio": "your-firebase-project.web.app"
   },
   "images": {
     "logo": "imagenes/kafe-logo.png",

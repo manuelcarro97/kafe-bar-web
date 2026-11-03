@@ -5,6 +5,54 @@ workers_dev = true
 
 # Variables NO secretas para el endpoint /publish. Ver worker/PUBLISH.md.
 # El secreto GITHUB_TOKEN NO va aquí: se configura con `wrangler secret put GITHUB_TOKEN`.
+# Tampoco RESEND_API_KEY ni TURNSTILE_SECRET_KEY: se configuran igual (en local, en `.dev.vars`).
 [vars]
 GITHUB_REPO = "your-user/your-repo"
 ALLOWED_PUBLISHER_EMAILS = "admin@example.com"
+# Destinatario de los avisos por email. Sin MAIL_TO (o sin RESEND_API_KEY) no se envía nada.
+MAIL_TO = "bar@example.com"
+# Interruptor de las reservas online: se activa a mano cuando todo está desplegado.
+RESERVAS_ABIERTAS = "false"
+
+# D1 de reservas. Con un id de marcador solo vale para tests y `wrangler dev` en local.
+# Para desplegar: `wrangler d1 create` y copiar aquí el database_id real.
+[[d1_databases]]
+binding = "DB"
+database_name = "kafe-reservas"
+database_id = "YOUR_D1_DATABASE_ID"
+migrations_dir = "migrations"
+
+# Logs del Worker en el panel de Cloudflare (solo se registra error.name, nunca datos personales).
+[observability]
+enabled = true
+
+# Mantenimiento horario: caduca pendientes y purga datos personales (ver reservas/db.js).
+[triggers]
+crons = ["0 * * * *"]
+
+# Entorno de preview aislado: Worker y D1 propios, sin GitHub ni /publish.
+# Las vars no se heredan del entorno principal, por eso se repiten aquí.
+# Despliegue: `wrangler deploy --env preview`.
+[env.preview]
+name = "kafe-reservas-preview"
+workers_dev = true
+
+[env.preview.vars]
+RESERVAS_ABIERTAS = "true"
+ALLOWED_PUBLISHER_EMAILS = "admin@example.com"
+MAIL_TO = "bar@example.com"
+MAIL_SUBJECT_PREFIX = "[PRUEBA] "
+# Enlace del email al panel del canal de preview (sin esto apuntaría al panel de producción).
+PANEL_URL = "https://your-firebase-project--preview.web.app/admin/reservas/"
+
+[[env.preview.d1_databases]]
+binding = "DB"
+database_name = "kafe-reservas-preview"
+database_id = "YOUR_D1_DATABASE_ID"
+migrations_dir = "migrations"
+
+[env.preview.observability]
+enabled = true
+
+[env.preview.triggers]
+crons = ["0 * * * *"]

@@ -113,6 +113,7 @@
                 <!-- RESERVAS OCULTAS (visible desactivado; lógica intacta en script.js/modal). Descomentar para reactivar.
                 <a href="#" class="btn-reserva btn-abrir-reserva" data-i18n="nav.reservar">Reservar</a>
                 -->
+                <a href="/reservas/" class="btn-reserva btn-reserva-plano" data-i18n="nav.reservar" hidden>Reservar</a>
                 <button class="hamburger" id="hamburger" aria-label="Menú móvil" aria-expanded="false">
                     <span></span><span></span><span></span>
                 </button>
@@ -179,6 +180,7 @@
                     <!-- RESERVAS OCULTAS (descomentar para reactivar)
                     <a href="#" class="btn-ghost btn-abrir-reserva" data-i18n="nav.reservar">Reservar</a>
                     -->
+                    <a href="/reservas/" class="btn-ghost btn-reserva-plano" data-i18n="nav.reservar" hidden>Reservar</a>
                     <a href="menu-printable-desayunos.html" target="_blank" rel="noopener noreferrer" class="btn-ghost" data-i18n="hero.cta.desayunos">Ver Desayunos
                         &rarr;</a>
                     <a href="menu-printable.html" target="_blank" rel="noopener noreferrer" class="btn-ghost" data-i18n="hero.cta.carta">Ver Karta
@@ -341,6 +343,8 @@
                     <button type="button" class="btn-primary btn-abrir-reserva" data-i18n="carta.footer.cta">Reserva una
                         Mesa</button>
                     -->
+                    <a href="/reservas/" class="btn-primary btn-reserva-plano" data-i18n="carta.footer.cta" hidden>Reserva una
+                        Mesa</a>
                     <a href="menu-printable.html" target="_blank" rel="noopener noreferrer" class="btn-primary" data-i18n="carta.footer.pdf">Ver
                         Karta</a>
                 </div>
@@ -942,6 +946,14 @@ Muy recomendable"</p>
 
     <script src="js/translations.generated.js"></script>
     <script src="js/script.js"></script>
+    <!-- Reservas con plano: los enlaces a /reservas/ solo se muestran en local y en preview. -->
+    <script type="module">
+        import { isPreviewHost } from '/js/api-config.js';
+        const host = location.hostname;
+        if (isPreviewHost(host) || host === 'localhost' || host === '127.0.0.1') {
+            document.querySelectorAll('.btn-reserva-plano').forEach((el) => { el.hidden = false; });
+        }
+    </script>
 </body>
 
 </html>

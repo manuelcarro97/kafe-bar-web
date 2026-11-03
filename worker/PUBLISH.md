@@ -36,8 +36,8 @@ permiso de **Contents: Read and write** sobre el repo configurado en `GITHUB_REP
    para no pedirlas en cada request.
 3. Verifica la firma RS256 del JWT con WebCrypto contra la clave pública que
    corresponde al `kid` del header del token.
-4. Verifica los claims: `aud === "kafe-143b5"`, `iss ===
-   "https://securetoken.google.com/kafe-143b5"`, `exp` no expirado, `iat` no
+4. Verifica los claims: `aud === "your-firebase-project"`, `iss ===
+   "https://securetoken.google.com/your-firebase-project"`, `exp` no expirado, `iat` no
    futuro (con 60s de margen de reloj) y `sub` no vacío.
 5. Si la firma o cualquier claim no es válido → `401`.
 6. Si `ALLOWED_PUBLISHER_EMAILS` está definida y el email del token no está en
@@ -62,7 +62,7 @@ permiso de **Contents: Read and write** sobre el repo configurado en `GITHUB_REP
 
 Tras cada cambio en el worker, comprobar:
 
-1. Que un ID token real de Firebase Auth (del proyecto `kafe-143b5`) es
+1. Que un ID token real de Firebase Auth (del proyecto `your-firebase-project`) es
    aceptado (200/success) y uno caducado o de otro proyecto es rechazado (401).
 2. Que un email fuera de `ALLOWED_PUBLISHER_EMAILS` recibe 403.
 3. Que el commit aparece en GitHub con `content.json` correctamente formateado
