@@ -2,7 +2,7 @@
   "name": "kafe-bar-web",
   "version": "1.0.0",
   "private": true,
-  "description": "Web bilingüe para bar-restaurante con panel de administración, build en Node.js, Cloudflare Workers y despliegue continuo en Firebase Hosting",
+  "description": "Web bilingüe para bar-restaurante con panel de administración, build en Node.js, Cloudflare Workers (publicación y reservas con D1) y Firebase Hosting",
   "scripts": {
     "build": "node build.js"
   },

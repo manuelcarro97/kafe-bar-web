@@ -30,5 +30,8 @@ error_dump.html
 .DS_Store
 Thumbs.db
 
+# Documentación de trabajo local (specs, planes, capturas): no se versiona
+docs/
+
 # Variables locales del Worker (también .dev.vars.<entorno>, p. ej. .dev.vars.preview)
 .dev.vars*
