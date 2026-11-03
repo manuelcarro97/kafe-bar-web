@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Reserva tu mesa – Kafé</title>
+    <meta name="description" content="Elige tu mesa en el plano de Kafé, en A Coruña, y envía tu solicitud de reserva. El bar la confirma por WhatsApp." />
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700&family=DM+Sans:wght@400;600&display=swap" />
+    <link rel="stylesheet" href="/css/plano.css" />
+    <link rel="stylesheet" href="/reservas/reservas.css" />
+</head>
+<body>
+    <div class="wrap">
+        <header>
+            <h1>Reserva tu mesa</h1>
+            <a class="back" href="/">Volver a la web de Kafé</a>
+        </header>
+        <p class="match">Partidos de fútbol: las reservas son solo por teléfono, en el <strong>981 31 82 60</strong>.</p>
+        <div class="legend">
+            <span><i style="background:var(--free)"></i>Libre</span>
+            <span><i style="background:var(--sel)"></i>Tu selección</span>
+            <span><i style="background:var(--pending)"></i>Pendiente o sin reserva online</span>
+            <span><i style="background:var(--taken)"></i>Reservada</span>
+        </div>
+        <div class="stage">
+            <button class="plan-toggle" type="button" data-plan-toggle aria-controls="plan" aria-expanded="true">Ocultar plano</button>
+            <svg id="plan"></svg>
+            <picture class="plan-logo"><source srcset="/imagenes/kafe-logo-white.png" media="(prefers-color-scheme: dark)"><img src="/imagenes/kafe-logo.png" alt=""></picture>
+            <section class="panel" aria-live="polite">
+                <div id="view" class="view"></div>
+                <div id="turnstile"></div>
+            </section>
+        </div>
+    </div>
+
+    <script>window.turnstileReady = new Promise((resolve) => { window.onTurnstileLoad = resolve; });</script>
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&amp;onload=onTurnstileLoad" async defer></script>
+    <script type="module" src="/reservas/reservas.js"></script>
+</body>
+</html>

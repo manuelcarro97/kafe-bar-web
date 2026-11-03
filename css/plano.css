@@ -1,0 +1,31 @@
+/* Plano de mesas: estilos del SVG que dibuja js/plano.js. Los colores de estado
+   (--free, --sel, --pending, --taken) los define la página que lo usa. */
+.plano { display: block; width: 100%; height: auto; -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+.t { cursor: pointer; outline: none; -webkit-tap-highlight-color: transparent; }
+.t .top { stroke: #4a6080; stroke-width: 2.5; fill: var(--free); }
+.t.free .top, .t.partner .top { fill: url(#tabletop); filter: url(#wood); }
+.t.selected .top { fill: var(--sel); stroke: #17613f; stroke-width: 6; }
+.t.partner .top { stroke: var(--sel); stroke-width: 6; stroke-dasharray: 12 8; }
+.t.pending .top, .t.blocked .top { fill: var(--pending); }
+.t.confirmed .top { fill: var(--taken); }
+.t.pending, .t.confirmed, .t.blocked { cursor: not-allowed; }
+.t.pending .seat, .t.confirmed .seat, .t.blocked .seat { filter: grayscale(1); opacity: .65; }
+.t:focus-visible .top { stroke: var(--accent); stroke-width: 8; }
+.seat-box { fill: url(#cushion); stroke: #0d2137; stroke-width: 1.5; }
+.seat-back { fill: none; stroke: #0d2137; stroke-width: 8; stroke-linecap: round; }
+.shadow { filter: drop-shadow(3px 6px 5px rgba(0, 0, 0, .5)); }
+.badge { fill: #0d2137; opacity: .88; pointer-events: none; }
+.tag { fill: #fff; font: 600 22px var(--sans); text-anchor: middle; dominant-baseline: central; pointer-events: none; }
+.wall-stone { fill: none; stroke: #b9c9dc; stroke-width: 34; }
+.wall-band { fill: none; stroke: #0d2137; stroke-width: 44; }
+.wall-line { fill: none; stroke: #081626; stroke-width: 12; }
+.glass-frame { stroke: #fff; stroke-width: 26; }
+.glass { stroke: #3b9eff; stroke-width: 8; }
+.door { fill: none; stroke: #fff; stroke-width: 3; }
+
+/* Plano plegable: solo móvil. En web el botón no existe y el plano siempre se ve. */
+.plan-toggle { display: none; }
+@media (max-width: 760px) {
+  .plan-toggle { display: block; justify-self: end; min-height: 38px; }
+  .plan-closed .plano, .plan-closed .legend { display: none; }
+}

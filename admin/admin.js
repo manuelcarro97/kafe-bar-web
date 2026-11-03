@@ -9,18 +9,10 @@ import {
   onAuthStateChanged,
   signOut,
 } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js";
+import { FIREBASE_CONFIG } from "./firebase-config.js";
+import { isPreviewHost } from "../js/api-config.js";
 
-const firebaseConfig = {
-  apiKey: "YOUR_FIREBASE_API_KEY",
-  authDomain: "kafe-143b5.firebaseapp.com",
-  projectId: "kafe-143b5",
-  storageBucket: "kafe-143b5.firebasestorage.app",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-  appId: "YOUR_FIREBASE_APP_ID",
-  measurementId: "G-XXXXXXXXXX",
-};
-
-const app = initializeApp(firebaseConfig);
+const app = initializeApp(FIREBASE_CONFIG);
 const auth = getAuth(app);
 
 const PUBLISH_URL = "https://your-worker.your-account.workers.dev/publish";
@@ -45,6 +37,13 @@ const saveStatus = document.getElementById("save-status");
 const loadError = document.getElementById("load-error");
 const loadingMsg = document.getElementById("loading-msg");
 const sectionsContainer = document.getElementById("sections-container");
+
+// En preview no se publica: el botón queda desactivado y nada lo reactiva.
+const publishDisabledInPreview = isPreviewHost(location.hostname);
+if (publishDisabledInPreview) {
+  publishBtn.disabled = true;
+  publishBtn.textContent = "Publicar desactivado en preview";
+}
 
 // ---------------------------------------------------------------------------
 // Estado en memoria
@@ -1978,6 +1977,7 @@ async function buildImagesPayload() {
 }
 
 publishBtn.addEventListener("click", async () => {
+  if (publishDisabledInPreview) return;
   if (!workingContent || !auth.currentUser) {
     alert("Sesión expirada, vuelve a entrar.");
     return;

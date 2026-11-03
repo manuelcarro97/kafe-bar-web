@@ -1,18 +1,21 @@
+import { handleReservasApi } from "./reservas/routes.js";
+import { runMaintenance } from "./reservas/db.js";
+
 const RESEND_TIMEOUT_MS = 10000;
-const ALLOWED_ORIGIN = "https://kafe-143b5.web.app";
+const ALLOWED_ORIGIN = "https://your-firebase-project.web.app";
 
 // Orígenes permitidos para el endpoint /publish (panel admin).
 // Incluye producción, el dominio alternativo de Firebase y los canales de
-// preview (formato https://kafe-143b5--<canal>.web.app).
-const ALLOWED_PUBLISH_ORIGIN_RE = /^https:\/\/kafe-143b5(--[a-z0-9-]+)?\.(web\.app|firebaseapp\.com)$/;
+// preview (formato https://your-firebase-project--<canal>.web.app).
+export const ALLOWED_PUBLISH_ORIGIN_RE = /^https:\/\/your-firebase-project(--[a-z0-9-]+)?\.(web\.app|firebaseapp\.com)$/;
 
-const FIREBASE_PROJECT_ID = "kafe-143b5";
+const FIREBASE_PROJECT_ID = "your-firebase-project";
 const FIREBASE_ISSUER = `https://securetoken.google.com/${FIREBASE_PROJECT_ID}`;
 const GOOGLE_JWK_URL = "https://www.googleapis.com/service_accounts/v1/jwk/securetoken@system.gserviceaccount.com";
 const CLOCK_SKEW_SECONDS = 60;
 const MAX_BODY_BYTES = 10 * 1024 * 1024; // ~10 MB
 
-function escapeHtml(str) {
+export function escapeHtml(str) {
   return String(str ?? '')
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
@@ -94,7 +97,7 @@ async function getGooglePublicKey(kid, ctx) {
  *
  * IMPORTANTE: nunca loguear el token completo ni partes sensibles.
  */
-async function verifyFirebaseIdToken(idToken, ctx) {
+export async function verifyFirebaseIdToken(idToken, ctx) {
   if (!idToken || typeof idToken !== 'string') return null;
 
   const parts = idToken.split('.');
@@ -160,7 +163,7 @@ async function verifyFirebaseIdToken(idToken, ctx) {
   return payload;
 }
 
-function isEmailAllowedToPublish(email, env) {
+export function isEmailAllowedToPublish(email, env) {
   // FALLA-CERRADO: el registro público de Firebase (Email/Password) está abierto
   // por defecto — cualquiera puede crearse una cuenta con el apiKey público y
   // obtener un token válido. Por eso, sin allowlist configurada NO se permite
@@ -445,6 +448,14 @@ async function handleReservas(request, env) {
     });
   }
 
+  // Sin destinatario ni clave de Resend configurados no se envía nada.
+  if (!env.RESEND_API_KEY || !env.MAIL_TO) {
+    return Response.json({ error: "El envío de reservas no está configurado" }, {
+      status: 503,
+      headers: { "Access-Control-Allow-Origin": ALLOWED_ORIGIN, "Vary": "Origin" },
+    });
+  }
+
   try {
     const res = await fetch("https://api.resend.com/emails", {
       method: "POST",
@@ -455,7 +466,7 @@ async function handleReservas(request, env) {
       signal: AbortSignal.timeout(RESEND_TIMEOUT_MS),
       body: JSON.stringify({
         from: "Reservas Kafe <onboarding@resend.dev>",
-        to: "reservaskafebar@gmail.com",
+        to: env.MAIL_TO,
         subject: `Nueva Reserva: ${escapeHtml(nombre)} — ${escapeHtml(fecha)}`,
         html: `
 <!DOCTYPE html>
@@ -560,6 +571,21 @@ export default {
       return handlePublish(request, env, ctx);
     }
 
+    if (url.pathname.startsWith("/api/")) {
+      const response = await handleReservasApi(request, env, ctx);
+      if (response) return response;
+    }
+
     return handleReservas(request, env);
+  },
+
+  // Mantenimiento horario (cron de wrangler.toml): caduca pendientes y purga datos.
+  async scheduled(event, env, ctx) {
+    ctx.waitUntil(
+      runMaintenance(env.DB, new Date()).catch((error) => {
+        console.error(`Mantenimiento de reservas: ${error.name}`);
+        throw error;
+      }),
+    );
   },
 };

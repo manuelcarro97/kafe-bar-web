@@ -1,0 +1,91 @@
+/* Panel del bar. Se apoya en reservas/reservas.css (colores, botones, avisos) y en css/plano.css. */
+[hidden] { display: none !important; }
+.row { display: flex; flex-wrap: wrap; gap: 6px; }
+a.action { color: var(--ink); border: 1.5px solid var(--line); border-radius: var(--pill); padding: 9px 18px; font-weight: 600; text-decoration: none; }
+a.action:hover { border-color: var(--accent); }
+a.action.primary { background: var(--btn); border-color: var(--btn); color: var(--on-accent); }
+/* Abrir en verde y cerrar en rojo; deshabilitados conservan el gris de reservas.css. */
+button.btn-open:not(:disabled) { background: #1f7a4d; border-color: #1f7a4d; color: #fff; font-weight: 600; }
+button.btn-close:not(:disabled) { background: #b8342b; border-color: #b8342b; color: #fff; font-weight: 600; }
+.res { border-top: 1px solid var(--line); padding-top: 8px; display: grid; gap: 6px; font-size: 14px; }
+.res strong { font-weight: 600; }
+.pill { font-size: 12px; padding: 2px 10px; color: #fff; border-radius: var(--pill); }
+.pill.pending { background: #5f6c7c; }
+.pill.confirmed { background: #b8342b; }
+.login { min-height: 100dvh; display: grid; place-items: center; padding: 16px; }
+.login-box { width: min(100%, 380px); display: grid; gap: 12px; background: var(--sheet); border: 1px solid var(--line); border-radius: var(--radius-lg); box-shadow: var(--shadow); padding: 24px; }
+.login-box h1 { font-size: 24px; }
+
+/* Plano y controles fijos; solo se desplaza la lista de reservas. */
+.admin-mode { height: 100dvh; overflow: hidden; }
+.admin-mode .wrap { height: 100%; max-width: 1180px; grid-template-rows: auto auto minmax(0, 1fr); }
+.admin-mode .stage { min-height: 0; display: grid; grid-template-columns: minmax(0, 1fr) 390px; gap: 12px; }
+.admin-mode #plan { height: 100%; min-height: 0; }
+.admin-mode .panel { position: static; display: flex; flex-direction: column; gap: 10px; min-height: 0; overflow: hidden; }
+.fixed-part { display: grid; gap: 10px; }
+.scroll-part { flex: 1; min-height: 0; overflow-y: auto; display: grid; gap: 10px; align-content: start; }
+/* En web estos envoltorios no generan caja: los controles quedan como hijos directos de .fixed-part. */
+.controls, .closures { display: contents; }
+.closures .row { order: 1; }
+.hint-closed { display: none; }
+
+/* Móvil: plano cerrado, barra fina y lista grande; plano abierto, controles en el hueco de la L. */
+@media (max-width: 760px) {
+  body.admin-mode { padding: 0 env(safe-area-inset-right, 0px) 0 env(safe-area-inset-left, 0px); }
+  .admin-mode .legend, .admin-mode header h1 { display: none; }
+  .admin-mode .wrap { grid-template-rows: auto minmax(0, 1fr); gap: 0; }
+  .admin-mode #app:not(.plan-closed) { grid-template-rows: minmax(0, 1fr); }
+  .admin-mode #app:not(.plan-closed) header { display: none; }
+  .admin-mode header { justify-content: flex-end; padding: 4px 8px 0; }
+  .admin-mode header .action, .admin-mode header button { font-size: 13px; padding: 4px 12px; }
+  .admin-mode .stage { --plan-w: min(100cqw, 75dvh * 1160 / 1365); container-type: inline-size;
+    grid-template-columns: minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr); gap: 0; }
+  .admin-mode .plan-closed .stage { grid-template-rows: minmax(0, 1fr); }
+  .admin-mode #plan { width: var(--plan-w); height: auto; }
+  /* #panel sigue estático: así los controles abiertos se colocan respecto a .stage. */
+  .admin-mode .panel { padding: 8px; gap: 6px; border-width: 1px 0 0; border-radius: 0; box-shadow: none; overflow: visible; }
+  .admin-mode .panel h2 { font-size: 16px; }
+  /* Mismo alto en los dos estados: abrir o cerrar el plano no mueve la lista. */
+  .plan-closed .hint-open { display: none; }
+  .plan-closed .hint-closed { display: inline; }
+  .admin-mode .fixed-part { gap: 6px; }
+  .pending-count { flex-wrap: nowrap; align-items: baseline; white-space: nowrap; }
+  .pending-count .small { overflow: hidden; text-overflow: ellipsis; }
+
+  .controls { display: flex; flex-wrap: wrap; gap: 4px; position: relative; order: -1; }
+  .controls .pair { display: flex; flex: 1 1 0; gap: 4px; }
+  .controls .pair .field:first-child { flex: 1 1 0; }
+  .controls .field { font-size: 0; gap: 0; }
+  .controls input, .controls select, .controls button { font-size: 14px; min-height: 36px; padding: 5px 10px; }
+  /* Cierres siempre visibles: debajo de día y turno, separados por una línea. */
+  .closures { display: block; flex: 0 0 100%; order: 1; border-top: 2px solid var(--muted); margin-top: 6px; padding-top: 10px; }
+  .closures .row { gap: 8px; }
+  .closures .row button { flex: 1 1 0; }
+}
+@media (max-width: 760px) and (min-height: 521px) {
+  /* Fracciones del viewBox del plano: a la derecha de la pared y por debajo de su esquina diagonal. */
+  .admin-mode #app:not(.plan-closed) .controls { position: absolute; left: calc(var(--plan-w) * .552); top: calc(var(--plan-w) * .517);
+    width: calc(var(--plan-w) * .448 - 8px); height: calc(var(--plan-w) * .6235); flex-flow: column nowrap; }
+  .admin-mode #app:not(.plan-closed) .controls .pair { flex: 0 0 auto; flex-direction: column; }
+  .admin-mode #app:not(.plan-closed) .controls .pair .field:first-child { flex: 0 0 auto; }
+  .admin-mode #app:not(.plan-closed) .controls { gap: 8px; }
+  .admin-mode #app:not(.plan-closed) .controls .pair { gap: 8px; }
+  /* Entre día/turno y el botón de ocultar, que queda abajo, junto al suelo de la sala. */
+  .admin-mode #app:not(.plan-closed) .closures { order: 0; flex: 0 0 auto; margin-top: 2px; padding-top: 10px; }
+  .admin-mode #app:not(.plan-closed) .closures .row { flex-direction: column; gap: 6px; }
+  .admin-mode #app:not(.plan-closed) .closures .row button { flex: 0 0 auto; min-height: 34px; }
+  .admin-mode #app:not(.plan-closed) .controls .plan-toggle { margin-top: auto; }
+}
+@media (max-width: 359px) and (min-height: 521px) {
+  /* El hueco mide .6235 * --plan-w de alto (~199px a 320px de ancho): aquí no da para los espacios normales. */
+  .admin-mode #app:not(.plan-closed) .controls, .admin-mode #app:not(.plan-closed) .controls .pair { gap: 3px; }
+  .admin-mode #app:not(.plan-closed) .closures { margin-top: 0; padding-top: 4px; }
+  .admin-mode #app:not(.plan-closed) .closures .row { gap: 3px; }
+  .admin-mode #app:not(.plan-closed) .closures .row button { min-height: 30px; }
+}
+@media (max-width: 760px) and (max-height: 520px) {
+  /* Móvil apaisado: el hueco no da para los controles; se quedan en la barra. */
+  .admin-mode .stage { --plan-w: min(100cqw, 45dvh * 1160 / 1365); }
+  .admin-mode #plan { margin-inline: auto; }
+}
+.followup { border: 1px solid var(--accent); border-radius: var(--radius); padding: 10px; }

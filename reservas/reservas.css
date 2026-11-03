@@ -1,0 +1,64 @@
+/* El plano manda: el panel de reserva ocupa el hueco de la L del local. */
+:root {
+  --paper: #f4f6f9; --sheet: #ffffff; --ink: #0d2137; --muted: #4a6080; --line: #d8e0ea;
+  --accent: #1e6fbf; --on-accent: #ffffff; --warn: #b42318; --warn-bg: #fdecea;
+  --free: #ffffff; --sel: #2f9e68; --pending: #8b98a8; --taken: #d2453b;
+  --serif: "Fraunces", Georgia, serif; --sans: "DM Sans", system-ui, sans-serif;
+  /* Mismos valores que css/style.css, para que reservas continúe la web y las kartas. */
+  --btn: #0d2137; --radius: 12px; --radius-lg: 24px; --pill: 50px;
+  --shadow: 0 8px 40px rgba(13, 33, 55, .12); --transition: .35s cubic-bezier(.4, 0, .2, 1);
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --paper: #0d2137; --sheet: #12293f; --ink: #ffffff; --muted: #a9bdd4; --line: #2b4f78;
+  --accent: #3b9eff; --on-accent: #0d2137; --warn: #ffb4a8; --warn-bg: #4a1f1c; --btn: #3b9eff; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --paper: #0d2137; --sheet: #12293f; --ink: #ffffff; --muted: #a9bdd4; --line: #2b4f78;
+  --accent: #3b9eff; --on-accent: #0d2137; --warn: #ffb4a8; --warn-bg: #4a1f1c; --btn: #3b9eff; color-scheme: dark }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--paper); color: var(--ink); font: 15px/1.45 var(--sans);
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 16px; }
+.wrap { max-width: 900px; margin: 0 auto; display: grid; gap: 12px; }
+header { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; justify-content: space-between; }
+h1 { margin: 0; font: 700 30px/1.1 var(--serif); text-wrap: balance; }
+h2 { margin: 0; font: 700 19px/1.2 var(--serif); }
+.back { font-size: 14px; font-weight: 600; color: var(--ink); text-decoration: none; border: 1.5px solid var(--line); border-radius: var(--pill); padding: 7px 16px; transition: border-color var(--transition); }
+.back:hover { border-color: var(--accent); }
+.match { margin: 0; font-size: 13px; color: var(--ink); background: var(--sheet); border: 1px solid var(--line); border-radius: var(--radius); padding: 10px 14px; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 13px; color: var(--muted); }
+.legend span { display: inline-flex; gap: 6px; align-items: center; }
+.legend i { width: 14px; height: 14px; border: 1px solid var(--muted); border-radius: 4px; }
+.stage { position: relative; }
+.panel { position: absolute; left: 59%; right: 0; top: 40%; bottom: 0; overflow-y: auto;
+  background: var(--sheet); border: 1px solid var(--line); border-radius: var(--radius-lg); box-shadow: var(--shadow); padding: 18px; display: grid; gap: 12px; align-content: start; }
+.pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.view { display: grid; gap: 10px; align-content: start; }
+label.field { display: grid; gap: 3px; font-size: 13px; color: var(--muted); min-width: 0; }
+input, select { font: inherit; color: var(--ink); background: var(--paper); border: 1.5px solid var(--line); border-radius: var(--radius); padding: 9px 12px; width: 100%; min-width: 0; transition: border-color var(--transition), box-shadow var(--transition); }
+input:focus, select:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(30, 111, 191, .15); }
+label.check { display: grid; grid-template-columns: 18px minmax(0, 1fr); gap: 8px; font-size: 13px; align-items: start; }
+label.check input { width: 16px; height: 16px; margin: 2px 0 0; }
+button { font: inherit; font-weight: 600; color: var(--ink); background: transparent; border: 1.5px solid var(--line); border-radius: var(--pill); padding: 9px 18px; cursor: pointer;
+  transition: background var(--transition), border-color var(--transition), transform var(--transition), box-shadow var(--transition); }
+button:hover { border-color: var(--accent); }
+button.primary { background: var(--btn); border-color: var(--btn); color: var(--on-accent); }
+button.primary:hover { background: var(--accent); border-color: var(--accent); }
+/* Solo con ratón: en móvil el hover se queda pegado tras tocar. */
+@media (hover: hover) { button:not(:disabled):hover { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(30, 111, 191, .3); } }
+button:disabled, button:disabled:hover { background: var(--pending); border-color: var(--pending); color: #fff; cursor: not-allowed; }
+button:focus-visible, input:focus-visible, select:focus-visible, a:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+a { color: var(--accent); }
+.chosen { margin: 0; font-weight: 600; }
+.notice { margin: 0; padding: 10px 14px; font-size: 13px; color: var(--warn); background: var(--warn-bg); border-radius: var(--radius); }
+.small { margin: 0; font-size: 13px; color: var(--muted); }
+#turnstile:empty { display: none; }
+/* Logo en el hueco de la L: solo móvil con el plano abierto. */
+.plan-logo { display: none; }
+.plan-logo img { display: block; width: 100%; height: 100%; object-fit: contain; }
+@media (max-width: 760px) {
+  .panel { position: static; }
+  .stage { container-type: inline-size; }
+  .wrap:not(.plan-closed) > .stage > .plan-logo { display: block; position: absolute; left: 58cqw; right: 8px; top: calc(52cqw + 12px); height: calc(62cqw - 62px); }
+  /* Plano abierto: abajo a la derecha, en el hueco de la L; 114cqw es el suelo de la sala en el viewBox. */
+  .wrap:not(.plan-closed) > .stage > .plan-toggle { position: absolute; right: 0; top: calc(114cqw - 38px); }
+  .plan-closed > .stage > .plan-toggle { margin: 0 0 12px auto; }
+}
